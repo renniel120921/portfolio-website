@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salazar Renniel's Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <!-- Google Fonts - Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2eT0qG9yFwY3s0zW9h90B2o9D/W7k6N1fW1Ff+L" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0c10;
+            color: #d1d5db;
+            scroll-behavior: smooth;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        /* Light Mode Styles */
+        .light-theme {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .light-theme .card-bg {
+            background-color: #ffffff;
+            color: #1f2937;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .light-theme .text-white {
+            color: #1f2937;
+        }
+
+        .light-theme .text-gray-300, .light-theme .text-gray-400, .light-theme .text-gray-500 {
+            color: #6b7280;
+        }
+
+        .light-theme .border-gray-700 {
+            border-color: #e5e7eb;
+        }
+
+        .light-theme footer {
+            background-color: #e5e7eb;
+        }
+
+        .light-theme::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+
+        .light-theme::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+        }
+
+        /* Dark Mode Styles (default) */
+        .dark-theme {
+            background-color: #0b0c10;
+            color: #d1d5db;
+        }
+
+        .dark-theme .card-bg {
+            background-color: #1a1e26;
+        }
+
+        .dark-theme .border-gray-700 {
+            border-color: #374151;
+        }
+
+        /* Custom Colors */
+        .text-neon-cyan {
+            color: #38bdf8;
+        }
+        .bg-gradient-hero {
+            background-image: linear-gradient(to right, #2563eb, #1e40af);
+        }
+        .skill-icon {
+            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+        }
+        .project-card, .skill-card, .service-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .project-card:hover, .skill-card:hover, .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+        #scroll-to-top-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #d1d5db;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        .light-theme .theme-toggle-btn {
+            color: #1f2937;
+        }
+
+        /* Dynamic Animated Background */
+        .hero-bg-animated {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .hero-bg-animated::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #1f2937, #111827, #0b0c10);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+            opacity: 0.8;
+            filter: blur(5px);
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particles for the background */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-fall linear infinite;
+        }
+
+        @keyframes particle-fall {
+            0% { transform: translateY(-100px) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-80 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
+            <a href="#" class="text-2xl md:text-3xl font-extrabold text-cyan-400 tracking-wide">
+            Salazar Renniel
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+            <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">About</a>
+            <a href="#skills" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Skills</a>
+            <a href="#services" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Services</a>
+            <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Projects</a>
+            <a href="#testimonials" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Testimonials</a>
+            <a href="#blog" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Blog</a>
+            <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Contact</a>
+            <button id="theme-toggle-btn" class="theme-toggle-btn ml-4">
+                <i class="fas fa-sun"></i>
+            </button>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-50">
+            <span class="block w-full h-1 bg-white rounded transition-transform duration-300"></span>
+            <span class="block w-full h-1 bg-white rounded transition-opacity duration-300"></span>
+            <span class="block w-full h-1 bg-white rounded transition-transform duration-300"></span>
+            </button>
+        </nav>
+
+            <div id="mobile-menu"
+                class="fixed top-0 right-0 h-full w-64 bg-gray-900 bg-opacity-95 text-gray-300 font-medium shadow-lg
+                transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center space-y-6 py-6">
+                <a href="#about" class="hover:text-cyan-400">About</a>
+                <a href="#skills" class="hover:text-cyan-400">Skills</a>
+                <a href="#services" class="hover:text-cyan-400">Services</a>
+                <a href="#projects" class="hover:text-cyan-400">Projects</a>
+                <a href="#testimonials" class="hover:text-cyan-400">Testimonials</a>
+                <a href="#blog" class="hover:text-cyan-400">Blog</a>
+                <a href="#contact" class="hover:text-cyan-400">Contact</a>
+            </div>
+    </header>
+    <main>
+        <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+        <!-- Animated Hero Background -->
+        <div class="hero-bg-animated"></div>
+        <!-- Particles Container -->
+        <div class="particles-container"></div>
+
+        <div class="relative z-20 max-w-5xl px-4 md:px-8">
+            <!-- Heading -->
+            <h1
+                class="text-4xl md:text-6xl font-extrabold leading-tight text-white mb-4"
+                data-aos="fade-up"
+                data-aos-duration="1200"
+            >
+                Hi I'm a
+                <span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600"></span>
+            </h1>
+
+            <!-- Subtext -->
+            <p
+                class="text-lg md:text-xl text-gray-300 mb-8"
+                data-aos="fade-up"
+                data-aos-delay="200"
+                data-aos-duration="1200"
+            >
+                I turn ideas into reality by creating beautiful and functional websites.
+            </p>
+
+            <!-- Call to Action -->
+            <a
+                href="#projects"
+                class="inline-flex items-center py-4 px-10 text-white font-semibold rounded-full shadow-lg
+                    bg-gradient-to-r from-blue-500 to-indigo-600 transition-transform transform hover:scale-105"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                data-aos-duration="1200"
+            >
+                View My Work
+                <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+        <section id="about" class="py-16 md:py-24 bg-gray-900 text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                    <div class="mb-12 lg:mb-0 transform hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-duration="1200">
+                        <img src="my photo.png" alt="Your Photo" class="w-full h-auto rounded-full shadow-2xl border-4 border-neon-cyan transform hover:rotate-3 transition-transform duration-500">
+                    </div>
+                    <div data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 transform hover:translate-x-2 transition-transform duration-300">
+                            About Me
+                        </h2>
+                        <p class="text-base sm:text-lg lg:text-xl leading-relaxed mb-4 transform hover:translate-x-1 transition-transform duration-300">
+                            A web developer with a passion for clean code and user-centric design. I use modern technologies to create websites that are not only functional but also aesthetically pleasing.
+                        </p>
+                        <p class="text-base sm:text-lg lg:text-xl leading-relaxed transform hover:translate-x-1 transition-transform duration-300">
+                            With a solid background in front-end and a growing expertise in back-end development, I am capable of building full-stack applications from concept to deployment. I thrive on problem-solving and am constantly seeking new challenges to expand my skill set. My goal is to deliver exceptional digital experiences that meet both business and user needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 card-bg">
+            <div class="container mx-auto px-4 md:px-8">
+                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">My Skills</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <!-- Skill Card - HTML -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fa-brands fa-html5 text-5xl text-orange-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">HTML5</h3>
+                    </div>
+                    <!-- Skill Card - CSS -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fa-brands fa-css3-alt text-5xl text-blue-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">CSS3</h3>
+                    </div>
+                    <!-- Skill Card - JS -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fa-brands fa-js text-5xl text-yellow-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">JavaScript</h3>
+                    </div>
+                    <!-- Skill Card - React -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="400">
+                        <i class="fa-brands fa-react text-5xl text-neon-cyan skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">React.js</h3>
+                    </div>
+                    <!-- Skill Card - Node.js -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="500">
+                        <i class="fa-brands fa-node-js text-5xl text-green-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">Node.js</h3>
+                    </div>
+                    <!-- Skill Card - Git -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="600">
+                        <i class="fa-brands fa-git-alt text-5xl text-red-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">Git</h3>
+                    </div>
+                    <!-- New Skill Card - Python -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="700">
+                        <i class="fa-brands fa-python text-5xl text-blue-400 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">Python</h3>
+                    </div>
+                    <!-- New Skill Card - Figma -->
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="800">
+                        <i class="fa-brands fa-figma text-5xl text-purple-500 skill-icon mb-4"></i>
+                        <h3 class="text-lg font-semibold text-white">Figma</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Services Section -->
+        <section id="services" class="py-24">
+            <div class="container mx-auto px-4 md:px-8">
+                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Services I Offer</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Service Card 1 -->
+                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="100">
+                        <i class="fa-solid fa-code text-5xl text-neon-cyan mb-6"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Front-End Development</h3>
+                        <p class="text-sm leading-relaxed">Crafting responsive and interactive user interfaces using modern frameworks like React and Vue.js.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="200">
+                        <i class="fa-solid fa-server text-5xl text-neon-cyan mb-6"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Back-End Development</h3>
+                        <p class="text-sm leading-relaxed">Building robust and scalable server-side applications and APIs with Node.js and Python.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="300">
+                        <i class="fa-solid fa-palette text-5xl text-neon-cyan mb-6"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">UI/UX Design</h3>
+                        <p class="text-sm leading-relaxed">Creating intuitive and visually appealing user experiences with tools like Figma and Adobe XD.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 card-bg">
+            <div class="container mx-auto px-4 md:px-8">
+                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Featured Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Project Card 1 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="100">
+                        <img src="ecommerce.png" alt="Project 1" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">E-commerce Platform</h3>
+                            <p class="text-sm mb-4">A full-stack e-commerce site with product listings, user authentication, and a secure payment gateway.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="200">
+                        <img src="chorale.png" alt="Project 2" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">AOFLA CHORALE SYSTEM</h3>
+                            <p class="text-sm mb-4">AOFLA Chorale System is a web-based platform designed to manage chorale activities, members, and performances. It provides features for organizing events, tracking attendance, storing musical pieces, and streamlining communication among members..</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="300">
+                        <img src="school.png" alt="Project 3" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">Class Record System</h3>
+                            <p class="text-sm mb-4">Class Record System is a digital platform that helps teachers efficiently manage student grades, attendance, and performance. It provides an organized way to record, calculate, and track academic progress while minimizing manual errors..</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- New Project Card 4 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="400">
+                        <img src="recipe.png" alt="Project 4" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">Recipe Sharing App</h3>
+                            <p class="text-sm mb-4">A mobile-first web app for users to share and discover new recipes with detailed instructions.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- New Project Card 5 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="500">
+                        <img src="travel.png" alt="Project 5" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">Travel Blog</h3>
+                            <p class="text-sm mb-4">A personal travel blog with a custom CMS, allowing for easy content creation and management.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- New Project Card 6 -->
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="600">
+                        <img src="chatbot.png" alt="Project 6" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-white mb-2">AI Chatbot Interface</h3>
+                            <p class="text-sm mb-4">A sleek, modern chat interface integrated with a generative AI model for conversational interactions.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Testimonials Section -->
+        <section id="testimonials" class="py-24">
+            <div class="container mx-auto px-4 md:px-8">
+                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">What People Say</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
+                        <p class="text-lg italic leading-relaxed">"Working with Renniel was a fantastic experience. He delivered a high-quality product on time and was always professional and responsive."</p>
+                        <div class="flex items-center mt-6">
+                            <img src="ceo.png" alt="Client 1" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold text-white">Juan Dela Cruz</h4>
+                                <p class="text-sm text-gray-400">CEO, Tech Solutions Inc.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
+                        <p class="text-lg italic leading-relaxed">"The website built by Renniel exceeded our expectations. The design is stunning and the functionality is flawless. Highly recommended!"</p>
+                        <div class="flex items-center mt-6">
+                            <img src="market.png" alt="Client 2" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold text-white">Maria Santos</h4>
+                                <p class="text-sm text-gray-400">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
+                        <p class="text-lg italic leading-relaxed">"Renniel has a keen eye for detail and is a true expert in web development. He turned our vision into a reality with precision and creativity."</p>
+                        <div class="flex items-center mt-6">
+                            <img src="ecommerce1.png" alt="Client 3" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold text-white">Jose Reyes</h4>
+                                <p class="text-sm text-gray-400">Founder, E-commerce Startup</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Blog Section -->
+        <section id="blog" class="py-24 card-bg">
+            <div class="container mx-auto px-4 md:px-8">
+                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Latest Blog Posts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <img src="blog1.png" alt="Blog Post 1" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <p class="text-xs text-gray-400 mb-2">March 25, 2024</p>
+                            <h3 class="text-2xl font-bold text-white mb-2">10 Essential Tips for Clean Code</h3>
+                            <p class="text-sm mb-4">Learn how to write code that is easy to read, maintain, and scale for any project size.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <img src="blog2.png" alt="Blog Post 2" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <p class="text-xs text-gray-400 mb-2">February 14, 2024</p>
+                            <h3 class="text-2xl font-bold text-white mb-2">The Future of UI/UX in Web Development</h3>
+                            <p class="text-sm mb-4">Exploring the latest trends and tools that are shaping the future of user interface design.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <img src="blog3.png" alt="Blog Post 3" class="w-full h-auto object-cover">
+                        <div class="p-8">
+                            <p class="text-xs text-gray-400 mb-2">January 5, 2024</p>
+                            <h3 class="text-2xl font-bold text-white mb-2">A Beginner's Guide to React.js</h3>
+                            <p class="text-sm mb-4">A simple and comprehensive guide to get started with building powerful applications using React.</p>
+                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24">
+            <div class="container mx-auto px-4 md:px-8">
+                <div class="text-center" data-aos="fade-up" data-aos-duration="1200">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Get In Touch</h2>
+                    <p class="text-lg max-w-2xl mx-auto mb-10">
+                        I am available for new opportunities. Feel free to send me a message!
+                    </p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-8">
+                    <a href="https://mail.google.com/" class="contact-card card-bg p-8 rounded-xl shadow-xl w-full max-w-sm text-center border border-gray-700" data-aos="fade-right" data-aos-delay="100">
+                        <i class="fa-solid fa-envelope text-4xl text-neon-cyan mb-4"></i>
+                        <h3 class="text-xl font-semibold text-white mb-1">Email</h3>
+                        <p id="email-text" class="text-gray-400">rennielsalazar948@gmail.com</p>
+                    </a>
+                    <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" class="contact-card card-bg p-8 rounded-xl shadow-xl w-full max-w-sm text-center border border-gray-700" data-aos="fade-left" data-aos-delay="200">
+                        <i class="fa-brands fa-linkedin text-4xl text-neon-cyan mb-4"></i>
+                        <h3 class="text-xl font-semibold text-white mb-1">LinkedIn</h3>
+                        <p class="text-gray-400">Renniel Salazar</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scroll-to-top button -->
+    <button id="scroll-to-top-btn" class="bg-neon-cyan text-white shadow-lg opacity-0 hover:bg-blue-600 transition-colors duration-300">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2024 Salazar Renniel. All rights reserved.</p>
+    </footer>
+
+    <!-- Typed.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new Typed("#typed-text", {
+        strings: ["Fullstack Developer", "Programmer"], // add some titles
+        typeSpeed: 70,
+        backSpeed: 50,
+        backDelay: 1500,
+        loop: true,
+        showCursor: true,
+        cursorChar: "|",
+        });
+    });
+    </script>
+
+    <!-- Humburger Script -->
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const bars = menuToggle.querySelectorAll("span");
+
+        let isOpen = false;
+
+        menuToggle.addEventListener("click", () => {
+            isOpen = !isOpen;
+
+            // Slide in/out menu
+            if (isOpen) {
+            mobileMenu.classList.remove("translate-x-full");
+            mobileMenu.classList.add("translate-x-0");
+
+            // Animate hamburger to X
+            bars[0].classList.add("rotate-45", "translate-y-2");
+            bars[1].classList.add("opacity-0");
+            bars[2].classList.add("-rotate-45", "-translate-y-2");
+            } else {
+            mobileMenu.classList.remove("translate-x-0");
+            mobileMenu.classList.add("translate-x-full");
+
+            // Back to hamburger
+            bars[0].classList.remove("rotate-45", "translate-y-2");
+            bars[1].classList.remove("opacity-0");
+            bars[2].classList.remove("-rotate-45", "-translate-y-2");
+            }
+        });
+    </script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // AOS (Animate On Scroll) Initialization
+        // This script initializes the AOS library for scroll-based animations.
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 1000, // Duration of the animation in milliseconds
+                easing: 'ease-in-out', // Easing function
+                once: true, // Whether animation should only happen once
+                delay: 50, // Delay for the animation
+            });
+
+            // Theme Toggle Functionality
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const body = document.body;
+
+            if (themeToggleBtn) {
+                // Function to set and save the user's preferred theme
+                const setTheme = (theme) => {
+                    const isLight = theme === 'light';
+                    body.classList.toggle('light-theme', isLight);
+                    body.classList.toggle('dark-theme', !isLight);
+                    themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+                    themeToggleBtn.dataset.theme = theme; // Store theme state in a data attribute
+                    localStorage.setItem('theme', theme);
+                };
+
+                // Initialize theme based on user's saved preference or default to 'dark'
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                setTheme(savedTheme);
+
+                // Toggle theme on button click
+                themeToggleBtn.addEventListener('click', () => {
+                    const currentTheme = themeToggleBtn.dataset.theme;
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    setTheme(newTheme);
+                });
+            }
+
+            // Scroll-to-Top Button Functionality
+            const scrollToTopBtn = document.getElementById("scroll-to-top-btn");
+
+            if (scrollToTopBtn) {
+                // Add a CSS class to control the visibility and transition
+                scrollToTopBtn.style.transition = 'opacity 0.3s ease-in-out';
+                scrollToTopBtn.style.opacity = '0';
+                scrollToTopBtn.style.display = 'none';
+
+                // Listen for scroll events to show/hide the button
+                window.addEventListener("scroll", () => {
+                    const isScrolled = document.body.scrollTop > 200 || document.documentElement.scrollTop > 200;
+                    if (isScrolled) {
+                        scrollToTopBtn.style.display = "block";
+                        setTimeout(() => scrollToTopBtn.style.opacity = '1', 10);
+                    } else {
+                        scrollToTopBtn.style.opacity = "0";
+                        setTimeout(() => scrollToTopBtn.style.display = 'none', 300);
+                    }
+                });
+
+                // Handle click event to smoothly scroll to the top
+                scrollToTopBtn.addEventListener("click", () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                });
+            }
+
+            // Particle Background Animation
+            const createParticles = () => {
+                const container = document.querySelector('.particles-container');
+                if (!container) return; // Exit if the container element is not found
+
+                const particleCount = 50;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+
+                    // Randomize particle size, position, and animation properties
+                    const size = Math.random() * 4 + 2; // Size between 2px and 6px
+                    const left = Math.random() * 100; // Position from 0% to 100%
+                    const duration = Math.random() * 15 + 10; // Duration between 10s and 25s
+                    const delay = Math.random() * 10; // Delay up to 10s
+
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${left}%`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `-${delay}s`;
+
+                    container.appendChild(particle);
+                }
+            };
+
+            createParticles();
+        });
+    </script>
+</body>
+</html>
