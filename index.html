@@ -1,690 +1,592 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth light-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salazar Renniel's Portfolio</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Salazar Renniel's Portfolio | Web Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    <!-- Google Fonts - Inter for a clean, modern look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2eT0qG9yFwY3s0zW9h90B2o9D/W7k6N1fW1Ff+L" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0b0c10;
-            color: #d1d5db;
             scroll-behavior: smooth;
             transition: background-color 0.5s, color 0.5s;
         }
 
-        /* Light Mode Styles */
+
         .light-theme {
-            background-color: #f3f4f6;
+            background-color: #f7f7f7;
             color: #1f2937;
         }
 
         .light-theme .card-bg {
             background-color: #ffffff;
             color: #1f2937;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .light-theme .text-white {
+        .light-theme .text-primary {
             color: #1f2937;
         }
 
-        .light-theme .text-gray-300, .light-theme .text-gray-400, .light-theme .text-gray-500 {
+        .light-theme .text-secondary {
             color: #6b7280;
         }
 
-        .light-theme .border-gray-700 {
+        .light-theme .border-card {
             border-color: #e5e7eb;
         }
 
-        .light-theme footer {
-            background-color: #e5e7eb;
-        }
 
-        .light-theme::-webkit-scrollbar-track {
-            background: #e5e7eb;
-        }
-
-        .light-theme::-webkit-scrollbar-thumb {
-            background: #9ca3af;
-        }
-
-        /* Dark Mode Styles (default) */
         .dark-theme {
-            background-color: #0b0c10;
+            background-color: #1f2937;
             color: #d1d5db;
         }
 
         .dark-theme .card-bg {
-            background-color: #1a1e26;
+            background-color: #374151;
+            color: #d1d5db;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .dark-theme .border-gray-700 {
-            border-color: #374151;
+        .dark-theme .text-primary {
+            color: #ffffff;
         }
 
-        /* Custom Colors */
-        .text-neon-cyan {
-            color: #38bdf8;
+        .dark-theme .text-secondary {
+            color: #9ca3af;
         }
-        .bg-gradient-hero {
-            background-image: linear-gradient(to right, #2563eb, #1e40af);
+
+        .dark-theme .border-card {
+            border-color: #4b5563;
         }
-        .skill-icon {
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+
+
+        .text-accent {
+            color: #2563eb;
         }
-        .project-card, .skill-card, .service-card {
+
+        .bg-accent {
+            background-color: #2563eb;
+        }
+
+
+        .project-card, .skill-card, .service-card, .contact-card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid var(--border-color, #e5e7eb);
         }
-        .project-card:hover, .skill-card:hover, .service-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+
+        .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .dark-theme .project-card:hover, .dark-theme .skill-card:hover, .dark-theme .service-card:hover, .dark-theme .contact-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
-        ::-webkit-scrollbar-track {
-            background: #111827;
+
+
+        .profile-photo {
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out;
+            border: 4px solid #fff;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #374151;
-            border-radius: 10px;
+
+        #profile-img-container {
+            position: relative;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
+
+        #default-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            z-index: 10;
         }
+
+        #hover-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            z-index: 5;
+        }
+
+
+        .light-theme .profile-photo {
+            border-color: #fff;
+            box-shadow: 0 0 0 8px #fff;
+        }
+        .dark-theme .profile-photo {
+            border-color: #374151;
+            box-shadow: 0 0 0 8px #374151;
+        }
+
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f3f4f6; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .dark-theme::-webkit-scrollbar-track { background: #111827; }
+        .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
+        .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+        /* Scroll to Top Button */
         #scroll-to-top-btn {
-            display: none;
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 15px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            transition: background-color 0.3s, opacity 0.3s;
-        }
-        .theme-toggle-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #d1d5db;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-        .light-theme .theme-toggle-btn {
-            color: #1f2937;
-        }
-
-        /* Dynamic Animated Background */
-        .hero-bg-animated {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-        .hero-bg-animated::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(-45deg, #1f2937, #111827, #0b0c10);
-            background-size: 400% 400%;
-            animation: gradient-shift 15s ease infinite;
-            opacity: 0.8;
-            filter: blur(5px);
-        }
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Particles for the background */
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            background-color: #38bdf8;
-            border-radius: 50%;
-            opacity: 0;
-            animation: particle-fall linear infinite;
-        }
-
-        @keyframes particle-fall {
-            0% { transform: translateY(-100px) scale(0); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
     </style>
 </head>
-    <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-80 shadow-lg">
+<body class="light-theme">
+
+    <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-95 shadow-md border-b border-gray-100 dark:border-gray-800">
         <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
-            <a href="#" class="text-2xl md:text-3xl font-extrabold text-cyan-400 tracking-wide">
-            renz.dev
+            <a href="#" class="text-2xl md:text-3xl font-extrabold text-accent tracking-wide hover:text-indigo-700 transition-colors duration-300">
+                renz.dev
             </a>
 
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">About</a>
-            <a href="#skills" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Skills</a>
-            <a href="#services" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Services</a>
-            <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Projects</a>
-            <a href="#testimonials" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Testimonials</a>
-            <a href="#blog" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Blog</a>
-            <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Contact</a>
-            <button id="theme-toggle-btn" class="theme-toggle-btn ml-4">
-                <i class="fas fa-sun"></i>
-            </button>
+                <a href="#about" class="text-primary hover:text-accent transition-colors duration-300">About</a>
+                <a href="#skills" class="text-primary hover:text-accent transition-colors duration-300">Skills</a>
+                <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
+                <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
+                <button id="theme-toggle-btn" class="theme-toggle-btn ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fas fa-moon light-theme-icon"></i>
+                    <i class="fas fa-sun dark-theme-icon hidden"></i>
+                </button>
             </div>
 
-            <button id="menu-toggle" class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-50">
-            <span class="block w-full h-1 bg-white rounded transition-transform duration-300"></span>
-            <span class="block w-full h-1 bg-white rounded transition-opacity duration-300"></span>
-            <span class="block w-full h-1 bg-white rounded transition-transform duration-300"></span>
+            <button id="menu-toggle" class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-50 theme-toggle-btn">
+                <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
+                <span class="block w-full h-1 bg-primary rounded transition-opacity duration-300 menu-bar-middle"></span>
+                <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
             </button>
         </nav>
 
-            <div id="mobile-menu"
-                class="fixed top-0 right-0 h-full w-64 bg-gray-900 bg-opacity-95 text-gray-300 font-medium shadow-lg
-                transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center space-y-6 py-6">
-                <a href="#about" class="hover:text-cyan-400">About</a>
-                <a href="#skills" class="hover:text-cyan-400">Skills</a>
-                <a href="#services" class="hover:text-cyan-400">Services</a>
-                <a href="#projects" class="hover:text-cyan-400">Projects</a>
-                <a href="#testimonials" class="hover:text-cyan-400">Testimonials</a>
-                <a href="#blog" class="hover:text-cyan-400">Blog</a>
-                <a href="#contact" class="hover:text-cyan-400">Contact</a>
-            </div>
-    </header>
-    <main>
-        <!-- Hero Section -->
-    <section id="hero" class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-        <!-- Animated Hero Background -->
-        <div class="hero-bg-animated"></div>
-        <!-- Particles Container -->
-        <div class="particles-container"></div>
+        <div id="mobile-menu"
+            class="fixed top-0 right-0 h-full w-64 card-bg text-primary font-medium shadow-2xl
+            transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center space-y-8 pt-24 pb-8 border-l border-gray-200 dark:border-gray-700">
 
-        <div class="relative z-20 max-w-5xl px-4 md:px-8">
-            <!-- Heading -->
-            <h1
-                class="text-4xl md:text-6xl font-extrabold leading-tight text-white mb-4"
-                data-aos="fade-up"
-                data-aos-duration="1200"
-            >
-                Hi I'm a
-                <span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600"></span>
-            </h1>
+            <a href="#about" class="hover:text-accent text-xl menu-item">About</a>
+            <a href="#skills" class="hover:text-accent text-xl menu-item">Skills</a>
+            <a href="#projects" class="hover:text-accent text-xl menu-item">Projects</a>
+            <a href="#services" class="hover:text-accent text-xl menu-item">Services</a>
+            <a href="#contact" class="hover:text-accent text-xl menu-item">Contact</a>
 
-            <!-- Subtext -->
-            <p
-                class="text-lg md:text-xl text-gray-300 mb-8"
-                data-aos="fade-up"
-                data-aos-delay="200"
-                data-aos-duration="1200"
-            >
-                I turn ideas into reality by creating beautiful and functional websites.
-            </p>
-
-            <!-- Call to Action -->
-            <a
-                href="#projects"
-                class="inline-flex items-center py-4 px-10 text-white font-semibold rounded-full shadow-lg
-                    bg-gradient-to-r from-blue-500 to-indigo-600 transition-transform transform hover:scale-105"
-                data-aos="fade-up"
-                data-aos-delay="400"
-                data-aos-duration="1200"
-            >
-                View My Work
-                <i class="fa-solid fa-arrow-right ml-2"></i>
-            </a>
-        </div>
-    </section>
-        <section id="about" class="py-16 md:py-24 bg-gray-900 text-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-                    <div class="mb-12 lg:mb-0 transform hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-duration="1200">
-                        <img src="my photo.png" alt="Your Photo" class="w-full h-auto rounded-full shadow-2xl border-4 border-neon-cyan transform hover:rotate-3 transition-transform duration-500">
-                    </div>
-                    <div data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
-                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 transform hover:translate-x-2 transition-transform duration-300">
-                            About Me
-                        </h2>
-                        <p class="text-base sm:text-lg lg:text-xl leading-relaxed mb-4 transform hover:translate-x-1 transition-transform duration-300">
-                            A web developer with a passion for clean code and user-centric design. I use modern technologies to create websites that are not only functional but also aesthetically pleasing.
-                        </p>
-                        <p class="text-base sm:text-lg lg:text-xl leading-relaxed transform hover:translate-x-1 transition-transform duration-300">
-                            With a solid background in front-end and a growing expertise in back-end development, I am capable of building full-stack applications from concept to deployment. I thrive on problem-solving and am constantly seeking new challenges to expand my skill set. My goal is to deliver exceptional digital experiences that meet both business and user needs.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Skills Section -->
-        <section id="skills" class="py-24 card-bg">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">My Skills</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    <!-- Skill Card - HTML -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
-                        <i class="fa-brands fa-html5 text-5xl text-orange-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">HTML5</h3>
-                    </div>
-                    <!-- Skill Card - CSS -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
-                        <i class="fa-brands fa-css3-alt text-5xl text-blue-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">CSS3</h3>
-                    </div>
-                    <!-- Skill Card - JS -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
-                        <i class="fa-brands fa-js text-5xl text-yellow-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">JavaScript</h3>
-                    </div>
-                    <!-- Skill Card - React -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="400">
-                        <i class="fa-brands fa-react text-5xl text-neon-cyan skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">React.js</h3>
-                    </div>
-                    <!-- Skill Card - Node.js -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="500">
-                        <i class="fa-brands fa-node-js text-5xl text-green-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">Node.js</h3>
-                    </div>
-                    <!-- Skill Card - Git -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="600">
-                        <i class="fa-brands fa-git-alt text-5xl text-red-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">Git</h3>
-                    </div>
-                    <!-- New Skill Card - Python -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="700">
-                        <i class="fa-brands fa-python text-5xl text-blue-400 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">Python</h3>
-                    </div>
-                    <!-- New Skill Card - Figma -->
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="800">
-                        <i class="fa-brands fa-figma text-5xl text-purple-500 skill-icon mb-4"></i>
-                        <h3 class="text-lg font-semibold text-white">Figma</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- New Services Section -->
-        <section id="services" class="py-24">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Services I Offer</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Service Card 1 -->
-                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="100">
-                        <i class="fa-solid fa-code text-5xl text-neon-cyan mb-6"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Front-End Development</h3>
-                        <p class="text-sm leading-relaxed">Crafting responsive and interactive user interfaces using modern frameworks like React and Vue.js.</p>
-                    </div>
-                    <!-- Service Card 2 -->
-                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="200">
-                        <i class="fa-solid fa-server text-5xl text-neon-cyan mb-6"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Back-End Development</h3>
-                        <p class="text-sm leading-relaxed">Building robust and scalable server-side applications and APIs with Node.js and Python.</p>
-                    </div>
-                    <!-- Service Card 3 -->
-                    <div class="service-card card-bg p-10 rounded-xl shadow-2xl border border-gray-700 text-center" data-aos="zoom-in-up" data-aos-delay="300">
-                        <i class="fa-solid fa-palette text-5xl text-neon-cyan mb-6"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">UI/UX Design</h3>
-                        <p class="text-sm leading-relaxed">Creating intuitive and visually appealing user experiences with tools like Figma and Adobe XD.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="py-24 card-bg">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Featured Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Project Card 1 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="100">
-                        <img src="ecommerce.png" alt="Project 1" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">E-commerce Platform</h3>
-                            <p class="text-sm mb-4">A full-stack e-commerce site with product listings, user authentication, and a secure payment gateway.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Project Card 2 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="200">
-                        <img src="chorale.png" alt="Project 2" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">AOFLA CHORALE SYSTEM</h3>
-                            <p class="text-sm mb-4">AOFLA Chorale System is a web-based platform designed to manage chorale activities, members, and performances. It provides features for organizing events, tracking attendance, storing musical pieces, and streamlining communication among members..</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Project Card 3 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="300">
-                        <img src="school.png" alt="Project 3" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">Class Record System</h3>
-                            <p class="text-sm mb-4">Class Record System is a digital platform that helps teachers efficiently manage student grades, attendance, and performance. It provides an organized way to record, calculate, and track academic progress while minimizing manual errors..</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- New Project Card 4 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="400">
-                        <img src="recipe.png" alt="Project 4" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">Recipe Sharing App</h3>
-                            <p class="text-sm mb-4">A mobile-first web app for users to share and discover new recipes with detailed instructions.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- New Project Card 5 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="500">
-                        <img src="travel.png" alt="Project 5" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">Travel Blog</h3>
-                            <p class="text-sm mb-4">A personal travel blog with a custom CMS, allowing for easy content creation and management.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- New Project Card 6 -->
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="flip-up" data-aos-delay="600">
-                        <img src="chatbot.png" alt="Project 6" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-white mb-2">AI Chatbot Interface</h3>
-                            <p class="text-sm mb-4">A sleek, modern chat interface integrated with a generative AI model for conversational interactions.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!--Github Project--->
-                    <a href="https://renniel120921.github.io/coffeeshop/" target="_blank" class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700 block" data-aos="flip-up" data-aos-delay="600">
-                    <img src="coffe-shop.png" alt="Project: Coffee Shop Website" class="w-full h-auto object-cover">
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-white mb-2">Modern Coffee Shop Website <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></h3>
-                        <p class="text-sm mb-4">A sleek, responsive website with a full menu display, location finder, and online ordering integration for a local coffee house.</p>
-                    </div>
+            <div class="flex space-x-6 pt-4">
+                <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
+                    <i class="fa-brands fa-github text-2xl"></i>
                 </a>
+                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-primary hover:text-accent transition-colors">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                </a>
+                <a href="mailto:rennielsalazar948@gmail.com" class="text-primary hover:text-accent transition-colors">
+                    <i class="fa-solid fa-envelope text-2xl"></i>
+                </a>
+            </div>
+            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-6 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i class="fas fa-moon light-theme-icon-mobile"></i>
+                <i class="fas fa-sun dark-theme-icon-mobile hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section id="profile-card" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+                <div class="card-bg p-8 md:p-10 rounded-xl shadow-2xl border-card" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10">
+
+                        <div class="flex-shrink-0 text-center">
+                            <div id="profile-img-container" class="relative w-40 h-40 mx-auto mb-4 md:mb-0" data-aos="zoom-in" data-aos-delay="200">
+                                <img id="default-photo" src="my photo.png" alt="Salazar Renniel's Professional Headshot"
+                                    class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
+                                <img id="hover-photo" src="2nd image.jpg" alt="Salazar Renniel's Fun Photo"
+                                    class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
+                            </div>
+                            <h1 class="text-3xl font-extrabold text-primary">Salazar Renniel</h1>
+                            <p class="text-xl font-medium text-secondary">Web Developer</p>
+                            <p class="text-md text-secondary mt-1">San Fernando Pampanga, Philippines</p>
+                        </div>
+                        <div class="md:flex-grow mt-6 md:mt-0 text-center md:text-left">
+                            <div class="flex justify-center md:justify-start space-x-3 mb-6">
+                                <a href="mailto:rennielsalazar948@gmail.com" class="inline-flex items-center py-2 px-4 text-white font-semibold rounded-full bg-accent hover:bg-indigo-700 transition-colors">
+                                    <i class="fa-solid fa-envelope mr-2"></i> Send Email
+                                </a>
+                                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="inline-flex items-center py-2 px-4 font-semibold rounded-full border border-gray-300 dark:border-gray-600 text-primary hover:text-accent hover:border-accent transition-colors">
+                                    <i class="fa-brands fa-linkedin mr-2"></i> Connect
+                                </a>
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-primary mb-3 mt-4 border-b pb-2 border-gray-100 dark:border-gray-700">About Me</h3>
+                            <p class="text-base leading-relaxed mb-4 text-secondary">
+                                I'm a Full-Stack Developer specializing in creating responsive, high-performance web applications. My passion lies in clean code architecture and user-centric design, ensuring every project is functional and aesthetically pleasing.
+                            </p>
+                            <p class="text-base leading-relaxed text-secondary">
+                                I leverage modern technologies like React, Node.js, and Tailwind CSS to transform ideas into scalable digital solutions, always seeking new challenges to expand my technical expertise.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- New Testimonials Section -->
-        <section id="testimonials" class="py-24">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">What People Say</h2>
+        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-5xl" />
+
+        <section id="skills" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">My Tech Stack</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fa-brands fa-html5 text-5xl text-orange-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">HTML5</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fa-brands fa-css3-alt text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">CSS3</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fa-brands fa-js text-5xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">JavaScript</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="400">
+                        <i class="fa-brands fa-react text-5xl text-cyan-500 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">React.js</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="500">
+                        <i class="fa-brands fa-bootstrap text-5xl text-purple-700 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Bootstrap</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="600">
+                        <i class="fa-brands fa-tailwind-css text-5xl text-teal-500 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Tailwind</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="700">
+                        <i class="fa-brands fa-node-js text-5xl text-green-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Node.js</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="800">
+                        <i class="fa-brands fa-python text-5xl text-blue-500 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Python</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="900">
+                        <i class="fa-solid fa-database text-5xl text-gray-500 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">SQL/DB</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1000">
+                        <i class="fa-brands fa-git-alt text-5xl text-red-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Git</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1100">
+                        <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">AWS</h3>
+                    </div>
+                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1200">
+                        <i class="fa-brands fa-figma text-5xl text-purple-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-primary">Figma</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
+
+        <section id="projects" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Featured Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
-                        <p class="text-lg italic leading-relaxed">"Working with Renniel was a fantastic experience. He delivered a high-quality product on time and was always professional and responsive."</p>
-                        <div class="flex items-center mt-6">
-                            <img src="ceo.png" alt="Client 1" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h4 class="font-semibold text-white">Juan Dela Cruz</h4>
-                                <p class="text-sm text-gray-400">CEO, Tech Solutions Inc.</p>
-                            </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="100">
+                        <img src="ecommerce.png" alt="E-commerce Platform Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">E-commerce Platform</h3>
+                            <p class="text-sm mb-4 text-secondary">A full-stack e-commerce site with product listings, user authentication, and a secure payment gateway. Built with Node.js and React.</p>
+                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                         </div>
                     </div>
-                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
-                        <p class="text-lg italic leading-relaxed">"The website built by Renniel exceeded our expectations. The design is stunning and the functionality is flawless. Highly recommended!"</p>
-                        <div class="flex items-center mt-6">
-                            <img src="market.png" alt="Client 2" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h4 class="font-semibold text-white">Maria Santos</h4>
-                                <p class="text-sm text-gray-400">Marketing Manager</p>
-                            </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="200">
+                        <img src="chorale.png" alt="AOFLA CHORALE SYSTEM Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">AOFLA CHORALE SYSTEM</h3>
+                            <p class="text-sm mb-4 text-secondary">A web-based platform designed to manage chorale activities, member attendance, and performance scheduling. Focus on data management.</p>
+                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                         </div>
                     </div>
-                    <div class="card-bg p-8 rounded-xl shadow-2xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
-                        <p class="text-lg italic leading-relaxed">"Renniel has a keen eye for detail and is a true expert in web development. He turned our vision into a reality with precision and creativity."</p>
-                        <div class="flex items-center mt-6">
-                            <img src="ecommerce1.png" alt="Client 3" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h4 class="font-semibold text-white">Jose Reyes</h4>
-                                <p class="text-sm text-gray-400">Founder, E-commerce Startup</p>
-                            </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="300">
+                        <img src="school.png" alt="Class Record System Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">Digital Class Record System</h3>
+                            <p class="text-sm mb-4 text-secondary">A digital platform that helps teachers efficiently manage student grades, attendance, and generate performance reports.</p>
+                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- New Blog Section -->
-        <section id="blog" class="py-24 card-bg">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Latest Blog Posts</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
-                        <img src="blog1.png" alt="Blog Post 1" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <p class="text-xs text-gray-400 mb-2">March 25, 2024</p>
-                            <h3 class="text-2xl font-bold text-white mb-2">10 Essential Tips for Clean Code</h3>
-                            <p class="text-sm mb-4">Learn how to write code that is easy to read, maintain, and scale for any project size.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    <a href="https://renniel120921.github.io/coffeeshop/" target="_blank" class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card block" data-aos="flip-up" data-aos-delay="400">
+                        <img src="coffe-shop.png" alt="Project: Coffee Shop Website" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">Modern Coffee Shop Website</h3>
+                            <p class="text-sm mb-4 text-secondary">A sleek, responsive website with a full menu display and modern UI/UX design. (HTML/CSS/JS)</p>
+                            <span class="inline-block text-accent font-semibold hover:underline text-sm">View Live Demo <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></span>
                         </div>
-                    </div>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="200">
-                        <img src="blog2.png" alt="Blog Post 2" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <p class="text-xs text-gray-400 mb-2">February 14, 2024</p>
-                            <h3 class="text-2xl font-bold text-white mb-2">The Future of UI/UX in Web Development</h3>
-                            <p class="text-sm mb-4">Exploring the latest trends and tools that are shaping the future of user interface design.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="300">
-                        <img src="blog3.png" alt="Blog Post 3" class="w-full h-auto object-cover">
-                        <div class="p-8">
-                            <p class="text-xs text-gray-400 mb-2">January 5, 2024</p>
-                            <h3 class="text-2xl font-bold text-white mb-2">A Beginner's Guide to React.js</h3>
-                            <p class="text-sm mb-4">A simple and comprehensive guide to get started with building powerful applications using React.</p>
-                            <a href="#" class="inline-block text-neon-cyan font-semibold hover:underline">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-24">
-            <div class="container mx-auto px-4 md:px-8">
-                <div class="text-center" data-aos="fade-up" data-aos-duration="1200">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Get In Touch</h2>
-                    <p class="text-lg max-w-2xl mx-auto mb-10">
-                        I am available for new opportunities. Feel free to send me a message!
-                    </p>
-                </div>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-8">
-                    <a href="https://mail.google.com/" class="contact-card card-bg p-8 rounded-xl shadow-xl w-full max-w-sm text-center border border-gray-700" data-aos="fade-right" data-aos-delay="100">
-                        <i class="fa-solid fa-envelope text-4xl text-neon-cyan mb-4"></i>
-                        <h3 class="text-xl font-semibold text-white mb-1">Email</h3>
-                        <p id="email-text" class="text-gray-400">rennielsalazar948@gmail.com</p>
                     </a>
-                    <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" class="contact-card card-bg p-8 rounded-xl shadow-xl w-full max-w-sm text-center border border-gray-700" data-aos="fade-left" data-aos-delay="200">
-                        <i class="fa-brands fa-linkedin text-4xl text-neon-cyan mb-4"></i>
-                        <h3 class="text-xl font-semibold text-white mb-1">LinkedIn</h3>
-                        <p class="text-gray-400">Renniel Salazar</p>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="500">
+                        <img src="recipe.png" alt="Recipe Sharing App Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">Recipe Sharing App</h3>
+                            <p class="text-sm mb-4 text-secondary">A mobile-first web app for users to share and discover new recipes with detailed instructions and ratings.</p>
+                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="600">
+                        <img src="chatbot.png" alt="AI Chatbot Interface Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <div class="p-6 md:p-8">
+                            <h3 class="text-xl font-bold text-primary mb-2">AI Chatbot Interface</h3>
+                            <p class="text-sm mb-4 text-secondary">A sleek, modern chat interface for a customer service chatbot, focusing on fast response and usability.</p>
+                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="700">
+                    <a href="https://github.com/renniel120921" target="_blank"
+                        class="inline-flex items-center py-3 px-8 text-primary font-semibold rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        View All Projects on GitHub
+                        <i class="fa-brands fa-github ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
+
+        <section id="testimonials" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">What Clients Say</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
+                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"Working with Renniel was a fantastic experience. He delivered a high-quality product on time and was always professional and responsive."</p>
+                        <div class="flex items-center">
+                            <img src="ceo.png" alt="Client Juan Dela Cruz" class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-primary">Juan Dela Cruz</h4>
+                                <p class="text-sm text-secondary">CEO, Tech Solutions Inc.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
+                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"The website built by Renniel exceeded our expectations. The design is stunning and the functionality is flawless. Highly recommended!"</p>
+                        <div class="flex items-center">
+                            <img src="market.png" alt="Client Maria Santos" class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-primary">Maria Santos</h4>
+                                <p class="text-sm text-secondary">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
+                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"Renniel has a keen eye for detail and is a true expert in web development. He turned our vision into a reality with precision and creativity."</p>
+                        <div class="flex items-center">
+                            <img src="ecommerce1.png" alt="Client Jose Reyes" class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-primary">Jose Reyes</h4>
+                                <p class="text-sm text-secondary">Founder, E-commerce Startup</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
+
+        <section id="contact" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-8 max-w-5xl">
+                <div class="text-center card-bg p-10 md:p-16 rounded-xl shadow-2xl border-card" data-aos="zoom-in" data-aos-duration="1200">
+                    <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">Ready to Start a Project?</h2>
+                    <p class="text-lg max-w-3xl mx-auto mb-10 text-secondary">
+                        I am currently available for new projects, consultations, and full-time opportunities. Let's build something amazing together!
+                    </p>
+                    <a href="https://www.facebook.com/"
+                        class="inline-flex items-center py-4 px-10 text-white font-semibold rounded-full shadow-lg
+                        bg-gradient-to-r from-blue-600 to-indigo-700 transition-transform transform hover:scale-105 hover:shadow-xl">
+                        Send Me a Message
+                        <i class="fa-solid fa-paper-plane ml-2"></i>
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Scroll-to-top button -->
-    <button id="scroll-to-top-btn" class="bg-neon-cyan text-white shadow-lg opacity-0 hover:bg-blue-600 transition-colors duration-300">
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2024 Salazar Renniel. All rights reserved.</p>
+    <footer class="py-10 text-center border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 md:px-8">
+            <p class="text-sm text-secondary mb-4">
+                Designed and Developed by Salazar Renniel.
+            </p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://github.com/renniel120921" target="_blank" class="text-gray-500 hover:text-accent transition-colors">
+                    <i class="fa-brands fa-github text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-gray-500 hover:text-accent transition-colors">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                </a>
+                <a href="mailto:rennielsalazar948@gmail.com" class="text-gray-500 hover:text-accent transition-colors">
+                    <i class="fa-solid fa-envelope text-2xl"></i>
+                </a>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">
+                © <span id="current-year">2025</span> All rights reserved.
+            </p>
+        </div>
     </footer>
 
-    <!-- Typed.js Script -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        new Typed("#typed-text", {
-        strings: ["Fullstack Developer", "Programmer"], // add some titles
-        typeSpeed: 70,
-        backSpeed: 50,
-        backDelay: 1500,
-        loop: true,
-        showCursor: true,
-        cursorChar: "|",
-        });
-    });
-    </script>
+    <button id="scroll-to-top-btn" class="bg-accent text-white shadow-xl hover:bg-indigo-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    <!-- Humburger Script -->
-    <script>
-        const menuToggle = document.getElementById("menu-toggle");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const bars = menuToggle.querySelectorAll("span");
-
-        let isOpen = false;
-
-        menuToggle.addEventListener("click", () => {
-            isOpen = !isOpen;
-
-            // Slide in/out menu
-            if (isOpen) {
-            mobileMenu.classList.remove("translate-x-full");
-            mobileMenu.classList.add("translate-x-0");
-
-            // Animate hamburger to X
-            bars[0].classList.add("rotate-45", "translate-y-2");
-            bars[1].classList.add("opacity-0");
-            bars[2].classList.add("-rotate-45", "-translate-y-2");
-            } else {
-            mobileMenu.classList.remove("translate-x-0");
-            mobileMenu.classList.add("translate-x-full");
-
-            // Back to hamburger
-            bars[0].classList.remove("rotate-45", "translate-y-2");
-            bars[1].classList.remove("opacity-0");
-            bars[2].classList.remove("-rotate-45", "-translate-y-2");
-            }
-        });
-    </script>
-
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script>
-        // AOS (Animate On Scroll) Initialization
-        // This script initializes the AOS library for scroll-based animations.
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Initialization ---
             AOS.init({
-                duration: 1000, // Duration of the animation in milliseconds
-                easing: 'ease-in-out', // Easing function
-                once: true, // Whether animation should only happen once
-                delay: 50, // Delay for the animation
+                once: true,
+                duration: 1000,
             });
 
-            // Theme Toggle Functionality
-            const themeToggleBtn = document.getElementById('theme-toggle-btn');
-            const body = document.body;
-
-            if (themeToggleBtn) {
-                // Function to set and save the user's preferred theme
-                const setTheme = (theme) => {
-                    const isLight = theme === 'light';
-                    body.classList.toggle('light-theme', isLight);
-                    body.classList.toggle('dark-theme', !isLight);
-                    themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-                    themeToggleBtn.dataset.theme = theme; // Store theme state in a data attribute
-                    localStorage.setItem('theme', theme);
-                };
-
-                // Initialize theme based on user's saved preference or default to 'dark'
-                const savedTheme = localStorage.getItem('theme') || 'dark';
-                setTheme(savedTheme);
-
-                // Toggle theme on button click
-                themeToggleBtn.addEventListener('click', () => {
-                    const currentTheme = themeToggleBtn.dataset.theme;
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    setTheme(newTheme);
-                });
+            // Current Year for Footer
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                currentYearElement.textContent = new Date().getFullYear();
             }
 
-            // Scroll-to-Top Button Functionality
-            const scrollToTopBtn = document.getElementById("scroll-to-top-btn");
+            // --- Theme Toggle Functionality ---
+            const body = document.body;
+            const toggleButtons = document.querySelectorAll('.theme-toggle-btn');
+            const sunIcons = document.querySelectorAll('.dark-theme-icon, .dark-theme-icon-mobile');
+            const moonIcons = document.querySelectorAll('.light-theme-icon, .light-theme-icon-mobile');
 
-            if (scrollToTopBtn) {
-                // Add a CSS class to control the visibility and transition
-                scrollToTopBtn.style.transition = 'opacity 0.3s ease-in-out';
-                scrollToTopBtn.style.opacity = '0';
-                scrollToTopBtn.style.display = 'none';
+            function setTheme(isDark) {
+                if (isDark) {
+                    body.classList.remove('light-theme');
+                    body.classList.add('dark-theme');
+                    sunIcons.forEach(icon => icon.classList.remove('hidden'));
+                    moonIcons.forEach(icon => icon.classList.add('hidden'));
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.remove('dark-theme');
+                    body.classList.add('light-theme');
+                    sunIcons.forEach(icon => icon.classList.add('hidden'));
+                    moonIcons.forEach(icon => icon.classList.remove('hidden'));
+                    localStorage.setItem('theme', 'light');
+                }
+            }
 
-                // Listen for scroll events to show/hide the button
-                window.addEventListener("scroll", () => {
-                    const isScrolled = document.body.scrollTop > 200 || document.documentElement.scrollTop > 200;
-                    if (isScrolled) {
-                        scrollToTopBtn.style.display = "block";
-                        setTimeout(() => scrollToTopBtn.style.opacity = '1', 10);
-                    } else {
-                        scrollToTopBtn.style.opacity = "0";
-                        setTimeout(() => scrollToTopBtn.style.display = 'none', 300);
-                    }
-                });
+            // Apply saved theme or system preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme === 'dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
 
-                // Handle click event to smoothly scroll to the top
-                scrollToTopBtn.addEventListener("click", () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
+            // Only attach event listeners if toggle buttons exist
+            if (toggleButtons.length > 0) {
+                toggleButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        setTheme(!body.classList.contains('dark-theme'));
                     });
                 });
             }
 
-            // Particle Background Animation
-            const createParticles = () => {
-                const container = document.querySelector('.particles-container');
-                if (!container) return; // Exit if the container element is not found
 
-                const particleCount = 50;
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
+            // --- Profile Photo Hover Effect ---
+            const profileImgContainer = document.getElementById('profile-img-container');
+            const defaultPhoto = document.getElementById('default-photo');
+            const hoverPhoto = document.getElementById('hover-photo');
 
-                    // Randomize particle size, position, and animation properties
-                    const size = Math.random() * 4 + 2; // Size between 2px and 6px
-                    const left = Math.random() * 100; // Position from 0% to 100%
-                    const duration = Math.random() * 15 + 10; // Duration between 10s and 25s
-                    const delay = Math.random() * 10; // Delay up to 10s
+            // Check if elements exist before adding listeners (Prevents null reading error)
+            if (profileImgContainer && defaultPhoto && hoverPhoto) {
+                profileImgContainer.addEventListener('mouseenter', () => {
+                    defaultPhoto.style.opacity = '0';
+                    hoverPhoto.style.opacity = '1';
+                });
 
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${left}%`;
-                    particle.style.animationDuration = `${duration}s`;
-                    particle.style.animationDelay = `-${delay}s`;
+                profileImgContainer.addEventListener('mouseleave', () => {
+                    defaultPhoto.style.opacity = '1';
+                    hoverPhoto.style.opacity = '0';
+                });
+            }
 
-                    container.appendChild(particle);
+
+            // --- Mobile Menu Toggle ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const bodyElement = document.body;
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    const isOpen = mobileMenu.classList.toggle('translate-x-full');
+
+                    // Toggle menu icon state
+                    menuToggle.querySelector('.menu-bar-top').classList.toggle('rotate-45');
+                    menuToggle.querySelector('.menu-bar-middle').classList.toggle('opacity-0');
+                    menuToggle.querySelector('.menu-bar-bottom').classList.toggle('-rotate-45');
+
+                    // Disable body scroll when menu is open
+                    bodyElement.style.overflow = mobileMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
+                });
+
+                // Close mobile menu when a link is clicked
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        mobileMenu.classList.add('translate-x-full');
+                        menuToggle.querySelector('.menu-bar-top').classList.remove('rotate-45');
+                        menuToggle.querySelector('.menu-bar-middle').classList.remove('opacity-0');
+                        menuToggle.querySelector('.menu-bar-bottom').classList.remove('-rotate-45');
+                        bodyElement.style.overflow = 'auto'; // Re-enable scroll
+                    });
+                });
+            }
+
+
+            // --- Scroll to Top Functionality ---
+            const scrollToTopBtn = document.getElementById("scroll-to-top-btn");
+
+            if (scrollToTopBtn) {
+                window.onscroll = function() { scrollFunction() };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                        scrollToTopBtn.style.display = "flex";
+                    } else {
+                        scrollToTopBtn.style.display = "none";
+                    }
                 }
-            };
 
-            createParticles();
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
         });
     </script>
 </body>
