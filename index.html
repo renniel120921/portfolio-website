@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salazar Renniel's Portfolio | Full-Stack Web Developer</title>
     <meta name="description" content="Salazar Renniel's professional portfolio. A Full-Stack Developer specializing in React, Node.js, and scalable web applications.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
 
+    <style>
         /* Keep existing custom styles for themes, transitions, and scrollbar */
         body {
             font-family: 'Inter', sans-serif;
@@ -120,34 +121,7 @@
             z-index: 1000;
         }
 
-        /* Timeline styles */
-        .timeline {
-            position: relative;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: #e5e7eb; /* Light gray line */
-            z-index: 0;
-        }
-        .dark-theme .timeline::before {
-            background: #374151; /* Dark gray line */
-        }
-        @media (min-width: 768px) { /* Hide vertical line on desktop for a cleaner 2-column look */
-            .timeline::before {
-                display: none;
-            }
-        }
-
-        .timeline-item {
-            position: relative;
-            z-index: 1;
-        }
+        /* REMOVED: Custom timeline::before CSS - using a simpler Tailwind grid structure now */
 
         /* Typed.js cursor blink style */
         .typed-cursor {
@@ -169,14 +143,17 @@
     <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-95 shadow-md border-b border-gray-100 dark:border-gray-800">
         <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
             <a href="#" class="text-2xl md:text-3xl font-extrabold text-accent tracking-wide hover:text-indigo-700 transition-colors duration-300">
-                renz.dev 🚀
+                renz.dev 
             </a>
 
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
                 <a href="#about" class="text-primary hover:text-accent transition-colors duration-300">About</a>
                 <a href="#skills" class="text-primary hover:text-accent transition-colors duration-300">Skills</a>
-                <a href="#services" class="text-primary hover:text-accent transition-colors duration-300">Services</a> <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
-                <a href="#resume" class="text-primary hover:text-accent transition-colors duration-300">Resume</a> <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
+                <a href="#services" class="text-primary hover:text-accent transition-colors duration-300">Services</a>
+                <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
+                <a href="#resume" class="text-primary hover:text-accent transition-colors duration-300">Resume</a>
+                <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
+
                 <button id="theme-toggle-btn" class="theme-toggle-btn ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fas fa-moon light-theme-icon"></i>
                     <i class="fas fa-sun dark-theme-icon hidden"></i>
@@ -196,8 +173,10 @@
 
             <a href="#about" class="hover:text-accent text-xl menu-item">About</a>
             <a href="#skills" class="hover:text-accent text-xl menu-item">Skills</a>
-            <a href="#services" class="hover:text-accent text-xl menu-item">Services</a> <a href="#projects" class="hover:text-accent text-xl menu-item">Projects</a>
-            <a href="#resume" class="hover:text-accent text-xl menu-item">Resume</a> <a href="#contact" class="hover:text-accent text-xl menu-item">Contact</a>
+            <a href="#services" class="hover:text-accent text-xl menu-item">Services</a>
+            <a href="#projects" class="hover:text-accent text-xl menu-item">Projects</a>
+            <a href="#resume" class="hover:text-accent text-xl menu-item">Resume</a>
+            <a href="#contact" class="hover:text-accent text-xl menu-item">Contact</a>
 
             <div class="flex space-x-6 pt-4">
                 <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
@@ -218,6 +197,7 @@
     </header>
 
     <main class="pt-20">
+
         <section id="about" class="py-16 md:py-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
                 <div class="card-bg p-8 md:p-10 rounded-xl shadow-2xl border-card" data-aos="fade-up" data-aos-duration="1200">
@@ -298,14 +278,16 @@
                     </div>
                     <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="800">
                         <i class="fa-solid fa-server text-5xl text-gray-400 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Express.js</h3> </div>
+                        <h3 class="text-lg font-semibold text-primary">Express.js</h3>
+                    </div>
                     <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="900">
                         <i class="fa-solid fa-database text-5xl text-blue-800 mb-4"></i>
                         <h3 class="text-lg font-semibold text-primary">MySQL/SQL</h3>
                     </div>
                     <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1000">
                         <i class="fa-solid fa-leaf text-5xl text-green-700 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">MongoDB</h3> </div>
+                        <h3 class="text-lg font-semibold text-primary">MongoDB</h3>
+                    </div>
 
                     <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1100">
                         <i class="fa-brands fa-git-alt text-5xl text-red-600 mb-4"></i>
@@ -460,19 +442,20 @@
                             <h4 class="text-xl font-bold text-primary mb-1">Full-Stack Developer</h4>
                             <p class="text-md font-medium text-secondary">Innovatech Solutions, Inc.</p>
                             <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Led the development of 3 major web applications using React and Node.js.</li>
-                                <li>Implemented responsive design using Tailwind CSS, improving mobile UX by 40%.</li>
-                                <li>Managed deployment and infrastructure on AWS (EC2, S3).</li>
+                                <li>Led the development of 3 major web applications using **React** and **Node.js**.</li>
+                                <li>Implemented responsive design using **Tailwind CSS**, improving mobile UX by 40%.</li>
+                                <li>Managed deployment and infrastructure on **AWS (EC2, S3)**.</li>
                             </ul>
                         </div>
 
                         <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2020 - 2022</p>
+                            <p class="text-sm font-semibold text-accent mb-1">2022 - 2025</p>
                             <h4 class="text-xl font-bold text-primary mb-1">Junior Web Developer</h4>
-                            <p class="text-md font-medium text-secondary">Digital Minds Agency</p>
+                            <p class="text-md font-medium text-secondary">Creative Digital Agency</p>
                             <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Maintained and updated client websites built with WordPress and custom PHP.</li>
-                                <li>Optimized website performance, achieving a 20% reduction in load times.</li>
+                                <li>Assisted in the maintenance and feature development of client WordPress sites.</li>
+                                <li>Gained foundational experience in **PHP** and **MySQL**.</li>
+                                <li>Developed custom front-end components using **Bootstrap** and JavaScript.</li>
                             </ul>
                         </div>
                     </div>
@@ -483,17 +466,25 @@
                         </h3>
 
                         <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2022 - 2026</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Bachelor of Science in Information Technology</h4>
-                            <p class="text-md font-medium text-secondary">City College of San Fernando</p>
-                            <p class="text-sm text-secondary mt-3">Specialized in Web Development and Database Management.</p>
+                            <p class="text-sm font-semibold text-accent mb-1">2016 - 2020</p>
+                            <h4 class="text-xl font-bold text-primary mb-1">Bachelor of Science in Computer Science</h4>
+                            <p class="text-md font-medium text-secondary">Holy Angel University</p>
+                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
+                                <li>Specialized in Software Engineering and Database Systems.</li>
+                                <li>Completed capstone project on **E-commerce Security**.</li>
+                                <li>Graduated with Honors (Cum Laude).</li>
+                            </ul>
                         </div>
 
                         <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2025</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Certified React Professional</h4>
+                            <p class="text-sm font-semibold text-accent mb-1">2021 (6 Months)</p>
+                            <h4 class="text-xl font-bold text-primary mb-1">MERN Stack Masterclass Certification</h4>
                             <p class="text-md font-medium text-secondary">Online Tech Academy</p>
-                            <p class="text-sm text-secondary mt-3">Completed intensive 6-month bootcamp focusing on advanced React Hooks, Redux, and Context API.</p>
+                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
+                                <li>Intensive training on **MongoDB, Express, React, and Node.js**.</li>
+                                <li>Focus on state management (Redux) and authentication (JWT).</li>
+                                <li>Built a complete project portfolio using the stack.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -502,261 +493,160 @@
 
         <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
 
-        <section id="testimonials" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">What Clients Say </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
-                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"Working with Renniel was a fantastic experience. He delivered a high-quality product on time and was always professional and responsive."</p>
-                        <div class="flex items-center">
-                            <img src="ceo.png" alt="Client Juan Dela Cruz" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-accent">
-                            <div>
-                                <h4 class="font-semibold text-primary">Juan Dela Cruz</h4>
-                                <p class="text-sm text-secondary">CEO, Tech Solutions Inc.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
-                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"The website built by Renniel exceeded our expectations. The design is stunning and the functionality is flawless. Highly recommended!"</p>
-                        <div class="flex items-center">
-                            <img src="market.png" alt="Client Maria Santos" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-accent">
-                            <div>
-                                <h4 class="font-semibold text-primary">Maria Santos</h4>
-                                <p class="text-sm text-secondary">Marketing Manager</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
-                        <p class="text-lg italic leading-relaxed text-secondary mb-6">"Renniel has a keen eye for detail and is a true expert in web development. He turned our vision into a reality with precision and creativity."</p>
-                        <div class="flex items-center">
-                            <img src="ecommerce1.png" alt="Client Jose Reyes" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-accent">
-                            <div>
-                                <h4 class="font-semibold text-primary">Jose Reyes</h4>
-                                <p class="text-sm text-secondary">Founder, E-commerce Startup</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
-
-        <section id="contact" class="py-16 md:py-24">
+        <section id="contact" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50">
             <div class="container mx-auto px-4 md:px-8 max-w-5xl">
-                <div class="text-center card-bg p-10 md:p-16 rounded-xl shadow-2xl border-card" data-aos="zoom-in" data-aos-duration="1200">
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-4">Ready to Start a Project? </h2>
-                    <p class="text-lg max-w-3xl mx-auto mb-10 text-secondary">
-                        I am currently available for new projects, consultations, and full-time opportunities. Let's build something amazing and impactful together!
-                    </p>
-                    <a href="mailto:rennielsalazar948@gmail.com?subject=Project%20Inquiry%20from%20Portfolio&body=Hi%20Renniel%2C%0A%0AI%20saw%20your%20portfolio%20and%20I%20have%20a%20project%20I'd%20like%20to%20discuss.%20%0A%0AHere%20are%20some%20details%3A"
-                        class="inline-flex items-center py-4 px-10 text-white font-semibold rounded-full shadow-xl
-                        bg-indigo-600 transition-transform transform hover:scale-105 hover:shadow-2xl"> Send Me a Message
-                        <i class="fa-solid fa-paper-plane ml-2"></i>
-                    </a>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Get in Touch 🤝</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fa-solid fa-envelope text-5xl text-accent mb-4"></i>
+                        <h4 class="text-xl font-bold text-primary mb-2">Email Me</h4>
+                        <p class="text-md text-secondary mb-3 break-all">rennielsalazar948@gmail.com</p>
+                        <a href="mailto:rennielsalazar948@gmail.com" class="text-accent font-semibold hover:underline text-sm">Send a Message</a>
+                    </div>
+
+                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fa-brands fa-linkedin text-5xl text-accent mb-4"></i>
+                        <h4 class="text-xl font-bold text-primary mb-2">Connect on LinkedIn</h4>
+                        <p class="text-md text-secondary mb-3">Renniel Salazar</p>
+                        <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-accent font-semibold hover:underline text-sm">View Profile</a>
+                    </div>
+
+                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fa-solid fa-location-dot text-5xl text-accent mb-4"></i>
+                        <h4 class="text-xl font-bold text-primary mb-2">My Location</h4>
+                        <p class="text-md text-secondary mb-3">San Fernando, Pampanga, PH</p>
+                        <span class="text-gray-500 dark:text-gray-400 text-sm">Available for Remote Work</span>
+                    </div>
+
                 </div>
             </div>
         </section>
+
     </main>
 
-    <footer class="py-10 text-center border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-        <div class="container mx-auto px-4 md:px-8">
-            <p class="text-sm text-secondary mb-4">
-                Designed and Developed with by Salazar Renniel.
-            </p>
-            <div class="flex justify-center space-x-6">
-                <a href="https://github.com/renniel120921" target="_blank" class="text-gray-500 hover:text-accent transition-colors">
-                    <i class="fa-brands fa-github text-2xl"></i>
+    <footer class="py-8 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 md:px-8 text-center text-gray-600 dark:text-gray-400">
+            <p>&copy; <span id="current-year"></span> Salazar Renniel. All rights reserved. | <a href="#" class="text-accent hover:underline">renz.dev</a></p>
+            <div class="mt-3 flex justify-center space-x-6">
+                <a href="https://github.com/renniel120921" target="_blank" class="hover:text-accent transition-colors">
+                    <i class="fa-brands fa-github text-xl"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-gray-500 hover:text-accent transition-colors">
-                    <i class="fa-brands fa-linkedin text-2xl"></i>
-                </a>
-                <a href="mailto:rennielsalazar948@gmail.com" class="text-gray-500 hover:text-accent transition-colors">
-                    <i class="fa-solid fa-envelope text-2xl"></i>
-                </a>
-                <a href="#" target="_blank" class="text-gray-500 hover:text-accent transition-colors">
-                    <i class="fa-brands fa-facebook text-2xl"></i>
+                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="hover:text-accent transition-colors">
+                    <i class="fa-brands fa-linkedin text-xl"></i>
                 </a>
             </div>
-            <p class="text-xs text-gray-400 mt-4">
-                © <span id="current-year">2025</span> All rights reserved.
-            </p>
         </div>
     </footer>
 
-    <button id="scroll-to-top-btn" class="bg-accent text-white shadow-xl hover:bg-indigo-700 transition-colors">
-        <i class="fas fa-arrow-up"></i>
+    <button id="scroll-to-top-btn" class="bg-accent text-white hover:bg-indigo-700 transition-colors shadow-xl">
+        <i class="fa-solid fa-arrow-up text-xl"></i>
     </button>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS (Animate On Scroll)
+            AOS.init({ once: true, duration: 1000 });
 
-            // --- Initialization ---
-            AOS.init({
-                once: true,
-                duration: 1000,
-            });
-
-            // Current Year for Footer
+            // Set Current Year in Footer
             const currentYearElement = document.getElementById('current-year');
-            if (currentYearElement) {
-                currentYearElement.textContent = new Date().getFullYear();
-            }
+            if (currentYearElement) { currentYearElement.textContent = new Date().getFullYear(); }
 
-            // --- Typed.js for dynamic text in Hero Section (NEW FEATURE) ---
+            // --- Typed.js for Dynamic Text ---
             if (document.getElementById('typed-text')) {
                 new Typed('#typed-text', {
-                    strings: [
-                        "Full-Stack Developer",
-                        "React Enthusiast",
-                        "Node.js Expert",
-                        "UI/UX Designer",
-                        "Freelancer"
-                    ],
-                    typeSpeed: 50,
-                    backSpeed: 30,
-                    loop: true,
-                    showCursor: true,
-                    cursorChar: '|',
+                    strings: ["Full-Stack Developer", "React Specialist", "Node.js Engineer", "Web Developer"],
+                    typeSpeed: 60, backSpeed: 30, loop: true, showCursor: true, cursorChar: '|',
                 });
             }
-
 
             // --- Theme Toggle Functionality ---
             const body = document.body;
             const toggleButtons = document.querySelectorAll('.theme-toggle-btn');
             const sunIcons = document.querySelectorAll('.dark-theme-icon, .dark-theme-icon-mobile');
             const moonIcons = document.querySelectorAll('.light-theme-icon, .light-theme-icon-mobile');
+            const menuToggle = document.getElementById('menu-toggle');
 
             function setTheme(isDark) {
-                if (isDark) {
-                    body.classList.remove('light-theme');
-                    body.classList.add('dark-theme');
-                    sunIcons.forEach(icon => icon.classList.remove('hidden'));
-                    moonIcons.forEach(icon => icon.classList.add('hidden'));
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    body.classList.remove('dark-theme');
-                    body.classList.add('light-theme');
-                    sunIcons.forEach(icon => icon.classList.add('hidden'));
-                    moonIcons.forEach(icon => icon.classList.remove('hidden'));
-                    localStorage.setItem('theme', 'light');
-                }
-            }
+                body.classList.toggle('dark-theme', isDark);
+                body.classList.toggle('light-theme', !isDark);
+                sunIcons.forEach(icon => icon.classList.toggle('hidden', !isDark));
+                moonIcons.forEach(icon => icon.classList.toggle('hidden', isDark));
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
-            // Apply saved theme or system preference
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme === 'dark');
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                setTheme(true);
-            } else {
-                setTheme(false);
-            }
-
-            // Only attach event listeners if toggle buttons exist
-            if (toggleButtons.length > 0) {
-                toggleButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        setTheme(!body.classList.contains('dark-theme'));
-                    });
+                // Update hamburger icon color based on theme
+                const iconColor = isDark ? 'white' : 'rgb(31, 41, 55)'; // #fff or #1f2937 (text-primary)
+                document.querySelectorAll('.menu-bar-top, .menu-bar-middle, .menu-bar-bottom').forEach(bar => {
+                    bar.style.backgroundColor = iconColor;
                 });
             }
 
+            const savedTheme = localStorage.getItem('theme');
+            const isDarkModePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme) { setTheme(savedTheme === 'dark'); }
+            else if (isDarkModePreferred) { setTheme(true); }
+            else { setTheme(false); }
+
+            toggleButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTheme(!body.classList.contains('dark-theme'));
+                });
+            });
 
             // --- Profile Photo Hover Effect ---
             const profileImgContainer = document.getElementById('profile-img-container');
             const defaultPhoto = document.getElementById('default-photo');
             const hoverPhoto = document.getElementById('hover-photo');
-
-            // Check if elements exist before adding listeners
             if (profileImgContainer && defaultPhoto && hoverPhoto) {
-                profileImgContainer.addEventListener('mouseenter', () => {
-                    defaultPhoto.style.opacity = '0';
-                    hoverPhoto.style.opacity = '1';
-                });
-
-                profileImgContainer.addEventListener('mouseleave', () => {
-                    defaultPhoto.style.opacity = '1';
-                    hoverPhoto.style.opacity = '0';
-                });
+                profileImgContainer.addEventListener('mouseenter', () => { defaultPhoto.style.opacity = '0'; hoverPhoto.style.opacity = '1'; });
+                profileImgContainer.addEventListener('mouseleave', () => { defaultPhoto.style.opacity = '1'; hoverPhoto.style.opacity = '0'; });
             }
 
-
             // --- Mobile Menu Toggle ---
-            const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
-            const menuBars = {
-                top: document.querySelector('.menu-bar-top'),
-                middle: document.querySelector('.menu-bar-middle'),
-                bottom: document.querySelector('.menu-bar-bottom')
-            };
             const menuItems = document.querySelectorAll('.menu-item');
+            const menuBars = {
+                 top: document.querySelector('.menu-bar-top'), middle: document.querySelector('.menu-bar-middle'), bottom: document.querySelector('.menu-bar-bottom')
+            };
 
             function toggleMobileMenu() {
-                const isMenuOpen = mobileMenu.classList.contains('translate-x-full');
-
-                if (isMenuOpen) {
-                    // Open menu
-                    mobileMenu.classList.remove('translate-x-full');
-                    mobileMenu.classList.add('translate-x-0');
-                    menuBars.top.classList.add('rotate-45');
-                    menuBars.top.classList.remove('translate-y-0');
-                    menuBars.middle.classList.add('opacity-0');
-                    menuBars.bottom.classList.add('-rotate-45');
-                    menuBars.bottom.classList.remove('translate-y-0');
-                    document.body.style.overflow = 'hidden'; // Disable scroll
+                const isMenuClosed = mobileMenu.classList.contains('translate-x-full');
+                mobileMenu.classList.toggle('translate-x-full', !isMenuClosed);
+                mobileMenu.classList.toggle('translate-x-0', isMenuClosed);
+                if (isMenuClosed) {
+                    menuBars.top.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                    menuBars.middle.style.opacity = '0';
+                    menuBars.bottom.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                    document.body.style.overflow = 'hidden';
                 } else {
-                    // Close menu
-                    mobileMenu.classList.remove('translate-x-0');
-                    mobileMenu.classList.add('translate-x-full');
-                    menuBars.top.classList.remove('rotate-45');
-                    menuBars.top.classList.add('translate-y-0');
-                    menuBars.middle.classList.remove('opacity-0');
-                    menuBars.bottom.classList.remove('-rotate-45');
-                    menuBars.bottom.classList.add('translate-y-0');
-                    document.body.style.overflow = 'auto'; // Enable scroll
+                    menuBars.top.style.transform = 'none'; menuBars.middle.style.opacity = '1'; menuBars.bottom.style.transform = 'none';
+                    document.body.style.overflow = 'auto';
                 }
             }
 
             if (menuToggle) {
                 menuToggle.addEventListener('click', toggleMobileMenu);
-
-                // Close menu when a link is clicked
-                menuItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        if (!mobileMenu.classList.contains('translate-x-full')) {
-                            toggleMobileMenu();
-                        }
-                    });
-                });
+                menuItems.forEach(item => { item.addEventListener('click', () => { if (mobileMenu.classList.contains('translate-x-0')) { toggleMobileMenu(); } }); });
             }
-
 
             // --- Scroll To Top Button ---
             const scrollToTopBtn = document.getElementById("scroll-to-top-btn");
+            const scrollThreshold = 300;
 
-            window.onscroll = function() {
-                scrollFunction();
-            };
-
-            function scrollFunction() {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    scrollToTopBtn.style.display = "flex";
-                } else {
-                    scrollToTopBtn.style.display = "none";
-                }
-            }
-
-            scrollToTopBtn.addEventListener("click", () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            window.addEventListener('scroll', function() {
+                scrollToTopBtn.style.display = window.scrollY > scrollThreshold ? "flex" : "none";
             });
 
+            if (scrollToTopBtn) {
+                scrollToTopBtn.addEventListener("click", () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
         });
     </script>
 </body>
