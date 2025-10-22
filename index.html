@@ -1,178 +1,219 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth light-theme">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salazar Renniel's Portfolio | Full-Stack Web Developer</title>
-    <meta name="description" content="Salazar Renniel's professional portfolio. A Full-Stack Developer specializing in React, Node.js, and scalable web applications.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salazar Renniel's Portfolio | Full-Stack Web Developer</title>
+  <meta name="description" content="Salazar Renniel's professional portfolio. A Full-Stack Developer specializing in React, Node.js, and scalable web applications.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-        /* Keep existing custom styles for themes, transitions, and scrollbar */
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            transition: background-color 0.5s, color 0.5s;
-        }
+ <style>
+    /* === Base Setup === */
+    body {
+        font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
 
-        /* Tiyakin na ang body ay hindi mag-s-scroll kapag bukas ang menu */
-        body.no-scroll {
-            overflow: hidden;
-        }
+    /* Disable scroll when mobile menu is open */
+    body.no-scroll { overflow: hidden; }
 
-        /* LIGHT THEME */
-        .light-theme {
-            background-color: #f7f7f7;
-            color: #1f2937;
-        }
+    /* === LIGHT THEME === */
+    .light-theme {
+        background-color: #f7f7f7;
+        color: #1f2937;
+    }
 
-        .light-theme .card-bg {
-            background-color: #ffffff;
-            color: #1f2937;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
+    .light-theme .card-bg {
+        background-color: #ffffff;
+        color: #1f2937;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s ease;
+    }
 
-        .light-theme .text-primary { color: #1f2937; }
-        .light-theme .text-secondary { color: #6b7280; }
-        .light-theme .border-card { border-color: #e5e7eb; }
+    .light-theme .text-primary { color: #1f2937; }
+    .light-theme .text-secondary { color: #6b7280; }
+    .light-theme .border-card { border-color: #e5e7eb; }
 
-        /* DARK THEME */
-        .dark-theme {
-            background-color: #111827;
-            color: #d1d5db;
-        }
+    /* === DARK THEME === */
+    .dark-theme {
+        background-color: #111827;
+        color: #d1d5db;
+    }
 
-        .dark-theme .card-bg {
-            background-color: #1f2937;
-            color: #d1d5db;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
+    .dark-theme .card-bg {
+        background-color: #1f2937;
+        color: #d1d5db;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s ease;
+    }
 
-        .dark-theme .text-primary { color: #ffffff; }
-        .dark-theme .text-secondary { color: #9ca3af; }
-        .dark-theme .border-card { border-color: #374151; }
+    .dark-theme .text-primary { color: #ffffff; }
+    .dark-theme .text-secondary { color: #9ca3af; }
+    .dark-theme .border-card { border-color: #374151; }
 
-        /* ACCENT COLOR (Indigo/Blue) */
-        .text-accent { color: #4f46e5; }
-        .bg-accent { background-color: #4f46e5; }
+    /* === Accent Colors === */
+    .text-accent { color: #4f46e5; }
+    .bg-accent { background-color: #4f46e5; }
 
-        /* Card Hover Effect */
-        .project-card, .skill-card, .service-card, .contact-card, .timeline-item {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border: 1px solid var(--border-color, #e5e7eb);
-        }
+    /* === Card Hover === */
+    .project-card, .skill-card, .service-card, .contact-card, .timeline-item {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 1rem;
+    }
 
-        .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover, .timeline-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
+    .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover, .timeline-item:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+    }
 
-        .dark-theme .project-card:hover, .dark-theme .skill-card:hover, .dark-theme .service-card:hover, .dark-theme .contact-card:hover, .dark-theme .timeline-item:hover {
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
+    .dark-theme .project-card:hover,
+    .dark-theme .skill-card:hover,
+    .dark-theme .service-card:hover,
+    .dark-theme .contact-card:hover,
+    .dark-theme .timeline-item:hover {
+        box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
+    }
 
-        /* Profile Photo Hover */
-        .profile-photo {
-            border-radius: 50%;
-            object-fit: cover;
-            transition: opacity 0.3s ease-in-out;
-            border: 4px solid;
-        }
+    /* === Menu Bar Animation === */
+    .menu-bar-top,
+    .menu-bar-middle,
+    .menu-bar-bottom {
+        transition: all 0.35s ease;
+        transform-origin: center;
+        border-radius: 2px;
+    }
 
-        #profile-img-container { position: relative; }
-        #default-photo, #hover-photo {
-            position: absolute;
-            top: 0; left: 0;
-            opacity: 1;
-            z-index: 10;
-        }
-        #hover-photo { opacity: 0; z-index: 5; }
+    /* === Profile Photo === */
+    .profile-photo {
+        border-radius: 50%;
+        object-fit: cover;
+        transition: opacity 0.35s ease-in-out, transform 0.35s ease, box-shadow 0.4s ease;
+        border: 4px solid;
+    }
 
-        .light-theme .profile-photo {
-            border-color: #fff;
-            box-shadow: 0 0 0 8px #fff;
-        }
-        .dark-theme .profile-photo {
-            border-color: #1f2937;
-            box-shadow: 0 0 0 8px #1f2937;
-        }
+    #profile-img-container { position: relative; }
+    #default-photo, #hover-photo {
+        position: absolute;
+        top: 0; left: 0;
+        opacity: 1;
+        z-index: 10;
+        transition: opacity 0.4s ease;
+    }
+    #hover-photo { opacity: 0; z-index: 5; }
 
-        /* Scrollbar styles (for desktop) */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f3f4f6; }
-        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-        .dark-theme::-webkit-scrollbar-track { background: #111827; }
-        .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
-        .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+    .light-theme .profile-photo {
+        border-color: #fff;
+        box-shadow: 0 0 0 8px #fff, 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
 
-        /* Scroll to Top Button */
-        #scroll-to-top-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    .dark-theme .profile-photo {
+        border-color: #1f2937;
+        box-shadow: 0 0 0 8px #1f2937, 0 8px 25px rgba(79, 70, 229, 0.3);
+    }
 
-        /* Typed.js cursor blink style */
-        .typed-cursor {
-            opacity: 1;
-            -webkit-animation: blink 0.7s infinite;
-            -moz-animation: blink 0.7s infinite;
-            animation: blink 0.7s infinite;
-        }
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+    #profile-img-container:hover .profile-photo {
+        transform: scale(1.03);
+    }
 
-    </style>
-</head>
-<body class="light-theme">
+    /* === Scrollbar === */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f3f4f6; }
+    ::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 10px;
+        transition: background 0.3s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    .dark-theme::-webkit-scrollbar-track { background: #111827; }
+    .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
+    .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
 
-    <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-95 shadow-md border-b border-gray-100 dark:border-gray-800">
+    /* === Scroll To Top Button === */
+    #scroll-to-top-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        background-color: #4f46e5;
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+        transition: all 0.35s ease;
+    }
+
+    #scroll-to-top-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
+    }
+
+    /* === Typed.js Cursor === */
+    .typed-cursor {
+        opacity: 1;
+        animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+</style>
+
+    </head>
+        <body class="light-theme">
+
+        <body class="light-theme">
+
+            <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-95 shadow-md border-b border-gray-100 dark:border-gray-800">
         <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
             <a href="#" class="text-2xl md:text-3xl font-extrabold text-accent tracking-wide hover:text-indigo-700 transition-colors duration-300">
-                renz.dev
+            renz.dev
             </a>
 
+            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#about" class="text-primary hover:text-accent transition-colors duration-300">About</a>
-                <a href="#skills" class="text-primary hover:text-accent transition-colors duration-300">Skills</a>
-                <a href="#services" class="text-primary hover:text-accent transition-colors duration-300">Services</a>
-                <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
-                <a href="#resume" class="text-primary hover:text-accent transition-colors duration-300">Resume</a>
-                <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
+            <a href="#about" class="text-primary hover:text-accent transition-colors duration-300">About</a>
+            <a href="#skills" class="text-primary hover:text-accent transition-colors duration-300">Skills</a>
+            <a href="#services" class="text-primary hover:text-accent transition-colors duration-300">Services</a>
+            <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
+            <a href="#resume" class="text-primary hover:text-accent transition-colors duration-300">Resume</a>
+            <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
 
-                <button id="theme-toggle-btn" class="theme-toggle-btn ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i class="fas fa-moon light-theme-icon"></i>
-                    <i class="fas fa-sun dark-theme-icon hidden"></i>
-                </button>
+            <!-- Theme toggle -->
+            <button id="theme-toggle-btn" class="theme-toggle-btn ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                <i class="fas fa-moon light-theme-icon"></i>
+                <i class="fas fa-sun dark-theme-icon hidden"></i>
+            </button>
             </div>
 
-            <button id="menu-toggle" class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-[1001] theme-toggle-btn">
-                <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
-                <span class="block w-full h-1 bg-primary rounded transition-opacity duration-300 menu-bar-middle"></span>
-                <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
+            <!-- Hamburger Icon -->
+            <button id="menu-toggle"
+            class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-[1001] transition-transform duration-300">
+            <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
+            <span class="block w-full h-1 bg-primary rounded transition-opacity duration-300 menu-bar-middle"></span>
+            <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
             </button>
         </nav>
 
+        <!-- Mobile Menu -->
         <div id="mobile-menu"
             class="fixed top-0 right-0 h-full w-64 card-bg text-primary font-medium shadow-2xl
             transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center space-y-8 pt-24 pb-8 border-l border-gray-200 dark:border-gray-700 z-[1000]">
+
             <a href="#about" class="hover:text-accent text-xl menu-item">About</a>
             <a href="#skills" class="hover:text-accent text-xl menu-item">Skills</a>
             <a href="#services" class="hover:text-accent text-xl menu-item">Services</a>
@@ -181,19 +222,20 @@
             <a href="#contact" class="hover:text-accent text-xl menu-item">Contact</a>
 
             <div class="flex space-x-6 pt-4">
-                <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-brands fa-github text-2xl"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-brands fa-linkedin text-2xl"></i>
-                </a>
-                <a href="mailto:rennielsalazar948@gmail.com" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-solid fa-envelope text-2xl"></i>
-                </a>
+            <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
+                <i class="fa-brands fa-github text-2xl"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-primary hover:text-accent transition-colors">
+                <i class="fa-brands fa-linkedin text-2xl"></i>
+            </a>
+            <a href="mailto:rennielsalazar948@gmail.com" class="text-primary hover:text-accent transition-colors">
+                <i class="fa-solid fa-envelope text-2xl"></i>
+            </a>
             </div>
-            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-6 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                <i class="fas fa-moon light-theme-icon-mobile"></i>
-                <i class="fas fa-sun dark-theme-icon-mobile hidden"></i>
+
+            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-6 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+            <i class="fas fa-moon light-theme-icon-mobile"></i>
+            <i class="fas fa-sun dark-theme-icon-mobile hidden"></i>
             </button>
         </div>
     </header>
@@ -207,9 +249,9 @@
 
                         <div class="flex-shrink-0 text-center">
                             <div id="profile-img-container" class="relative w-40 h-40 mx-auto mb-4 md:mb-0" data-aos="zoom-in" data-aos-delay="200">
-                                <img id="default-photo" src="profile.jpg" alt="Salazar Renniel's Professional Headshot"
+                                <img id="default-photo" src="/images/profile.jpg" alt="Salazar Renniel's Professional Headshot"
                                     class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
-                                <img id="hover-photo" src="2nd image.jpg" alt="Salazar Renniel's Fun Photo"
+                                <img id="hover-photo" src="images/2nd image.jpg" alt="Salazar Renniel's Fun Photo"
                                     class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
                             </div>
                             <h1 class="text-3xl font-extrabold text-primary mt-4">Salazar Renniel</h1>
@@ -338,7 +380,7 @@
                 <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Featured Projects </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="100">
-                        <img src="ecommerce.png" alt="E-commerce Platform Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/ecommerce.png" alt="E-commerce Platform Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Full-Stack E-commerce Platform</h3>
                             <p class="text-sm mb-3 text-secondary">A full-stack e-commerce site with product listings, user authentication, inventory management, and a secure payment gateway.</p>
@@ -351,7 +393,7 @@
                         </div>
                     </div>
                     <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="200">
-                        <img src="chorale.png" alt="AOFLA CHORALE SYSTEM Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/chorale.png" alt="AOFLA CHORALE SYSTEM Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Chorale Management System</h3>
                             <p class="text-sm mb-3 text-secondary">A web-based platform to manage chorale activities, member attendance, performance scheduling, and track repertoire.</p>
@@ -364,7 +406,7 @@
                         </div>
                     </div>
                     <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="300">
-                        <img src="school.png" alt="Class Record System Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/school.png" alt="Class Record System Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Digital Class Record System</h3>
                             <p class="text-sm mb-3 text-secondary">A digital platform that helps teachers efficiently manage student grades, attendance, and generate performance reports securely.</p>
@@ -377,7 +419,7 @@
                         </div>
                     </div>
                     <a href="https://renniel120921.github.io/coffeeshop/" target="_blank" class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card block" data-aos="flip-up" data-aos-delay="400">
-                        <img src="coffe-shop.png" alt="Project: Coffee Shop Website" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/coffe-shop.png" alt="Project: Coffee Shop Website" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Modern Coffee Shop Landing Page</h3>
                             <p class="text-sm mb-3 text-secondary">A sleek, responsive, single-page website with a full menu display and a modern UI/UX design showcase.</p>
@@ -390,7 +432,7 @@
                         </div>
                     </a>
                     <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="500">
-                        <img src="recipe.png" alt="Recipe Sharing App Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/recipe.png" alt="Recipe Sharing App Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Mobile Recipe Sharing App</h3>
                             <p class="text-sm mb-3 text-secondary">A mobile-first web app for users to share, save, and discover new recipes with detailed instructions and a rating system.</p>
@@ -403,7 +445,7 @@
                         </div>
                     </div>
                     <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="600">
-                        <img src="chatbot.png" alt="AI Chatbot Interface Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
+                        <img src="/images/chatbot.png" alt="AI Chatbot Interface Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
                         <div class="p-6 md:p-8">
                             <h3 class="text-xl font-bold text-primary mb-2">Custom AI Chatbot Interface</h3>
                             <p class="text-sm mb-3 text-secondary">A sleek, modern chat interface for a customer service chatbot, integrated with a basic AI backend service (simulated).</p>
@@ -561,133 +603,28 @@
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS (Animate On Scroll)
-            AOS.init({ once: true, duration: 1000 });
+    <!-- AI Chatbot Button -->
+    <div id="chatbot-container" class="fixed bottom-6 right-6 z-[1001]">
+        <button id="chatbot-toggle" class="bg-accent text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-colors">
+            <i class="fas fa-robot text-xl"></i>
+        </button>
 
-            // Set Current Year in Footer
-            const currentYearElement = document.getElementById('current-year');
-            if (currentYearElement) { currentYearElement.textContent = new Date().getFullYear(); }
+        <div id="chatbot-box" class="hidden w-80 h-96 bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden flex flex-col">
+            <div class="bg-accent text-white p-4 flex justify-between items-center">
+                <span>AI Chatbot</span>
+                <button id="chatbot-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chatbot-messages" class="flex-1 p-3 overflow-y-auto text-sm text-gray-800 dark:text-gray-200"></div>
+            <div class="p-3 border-t border-gray-200 dark:border-gray-700">
+                <input id="chatbot-input" type="text" placeholder="Type a message..." class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 text-sm focus:outline-none">
+            </div>
+        </div>
+    </div>
 
-            // --- ELEMENT REFERENCES (Centralized at accessible) ---
-            const body = document.body;
-            const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuItems = document.querySelectorAll('.menu-item');
-            const toggleButtons = document.querySelectorAll('.theme-toggle-btn');
-            const sunIcons = document.querySelectorAll('.dark-theme-icon, .dark-theme-icon-mobile');
-            const moonIcons = document.querySelectorAll('.light-theme-icon, .light-theme-icon-mobile');
-            const menuBars = {
-                top: document.querySelector('.menu-bar-top'),
-                middle: document.querySelector('.menu-bar-middle'),
-                bottom: document.querySelector('.menu-bar-bottom')
-            };
-            // --------------------------------------------------------
-
-            // --- Typed.js for Dynamic Text ---
-            if (document.getElementById('typed-text') && typeof Typed !== 'undefined') {
-                new Typed('#typed-text', {
-                    strings: ["Full-Stack Developer", "React Specialist", "Node.js Engineer", "Web Developer"],
-                    typeSpeed: 60, backSpeed: 30, loop: true, showCursor: true, cursorChar: '|',
-                });
-            }
-
-            // --- Theme Toggle Functionality ---
-            function setTheme(isDark) {
-                body.classList.toggle('dark-theme', isDark);
-                body.classList.toggle('light-theme', !isDark);
-                sunIcons.forEach(icon => icon.classList.toggle('hidden', !isDark));
-                moonIcons.forEach(icon => icon.classList.toggle('hidden', isDark));
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-                // Update hamburger icon color based on theme
-                const iconColor = isDark ? 'white' : 'rgb(31, 41, 55)';
-                document.querySelectorAll('.menu-bar-top, .menu-bar-middle, .menu-bar-bottom').forEach(bar => {
-                    bar.style.backgroundColor = iconColor;
-                });
-            }
-
-            const savedTheme = localStorage.getItem('theme');
-            const isDarkModePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (savedTheme) { setTheme(savedTheme === 'dark'); }
-            else if (isDarkModePreferred) { setTheme(true); }
-            else { setTheme(false); }
-
-            toggleButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    setTheme(!body.classList.contains('dark-theme'));
-                });
-            });
-
-            // --- Profile Photo Hover Effect ---
-            const profileImgContainer = document.getElementById('profile-img-container');
-            const defaultPhoto = document.getElementById('default-photo');
-            const hoverPhoto = document.getElementById('hover-photo');
-            if (profileImgContainer && defaultPhoto && hoverPhoto) {
-                profileImgContainer.addEventListener('mouseenter', () => { defaultPhoto.style.opacity = '0'; hoverPhoto.style.opacity = '1'; });
-                profileImgContainer.addEventListener('mouseleave', () => { defaultPhoto.style.opacity = '1'; hoverPhoto.style.opacity = '0'; });
-            }
-
-            // --- Mobile Menu Toggle (The Final Fix) ---
-            function toggleMobileMenu() {
-                if (!mobileMenu || !menuToggle) return;
-
-                const isMenuClosed = mobileMenu.classList.contains('translate-x-full');
-
-                // 1. Toggle menu visibility
-                mobileMenu.classList.toggle('translate-x-full', !isMenuClosed);
-                mobileMenu.classList.toggle('translate-x-0', isMenuClosed);
-
-                // 2. Toggle hamburger icon animation and body scroll
-                if (isMenuClosed) {
-                    // Open Menu State
-                    menuBars.top.style.transform = 'rotate(45deg) translate(5px, 6px)';
-                    menuBars.middle.style.opacity = '0';
-                    menuBars.bottom.style.transform = 'rotate(-45deg) translate(5px, -6px)';
-                    body.classList.add('no-scroll'); // Add class to body to prevent scrolling
-                } else {
-                    // Close Menu State
-                    menuBars.top.style.transform = 'none';
-                    menuBars.middle.style.opacity = '1';
-                    menuBars.bottom.style.transform = 'none';
-                    body.classList.remove('no-scroll'); // Remove class to allow scrolling
-                }
-            }
-
-            if (menuToggle) {
-                menuToggle.addEventListener('click', toggleMobileMenu);
-
-                // Close menu when a link is clicked
-                menuItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        if (mobileMenu.classList.contains('translate-x-0')) {
-                            toggleMobileMenu();
-                        }
-                    });
-                });
-            }
-            // ---------------------------------------------------
-
-            // --- Scroll To Top Button ---
-            const scrollToTopBtn = document.getElementById("scroll-to-top-btn");
-            const scrollThreshold = 300;
-
-            window.addEventListener('scroll', function() {
-                if (scrollToTopBtn) {
-                    scrollToTopBtn.style.display = window.scrollY > scrollThreshold ? "flex" : "none";
-                }
-            });
-
-            if (scrollToTopBtn) {
-                scrollToTopBtn.addEventListener("click", () => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-        });
-    </script>
+  <!-- Script links -->
+  <script src="https://www.chatbase.co/embed.js" data-chatbase-id="iw2ja0xpfdkirthq6amr0e9pc4t7pgcz"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="index.js"></script>
 </body>
 </html>
