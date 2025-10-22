@@ -1,13 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // =======================
     // Initialize AOS
+    // =======================
     if (typeof AOS !== 'undefined') AOS.init({ once: true, duration: 1000 });
 
+    // =======================
     // Set current year
+    // =======================
     const year = document.getElementById('current-year');
     if (year) year.textContent = new Date().getFullYear();
 
-    // Elements
+    // =======================
+    // Element selectors
+    // =======================
     const body = document.body;
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -21,15 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
         bot: document.querySelector('.menu-bar-bottom')
     };
 
+    // =======================
     // Typed.js animation
+    // =======================
     if (document.getElementById('typed-text') && typeof Typed !== 'undefined') {
         new Typed('#typed-text', {
             strings: ["Full-Stack Developer", "React Specialist", "Node.js Engineer", "Web Developer"],
-            typeSpeed: 60, backSpeed: 30, loop: true, cursorChar: '|'
+            typeSpeed: 60,
+            backSpeed: 30,
+            loop: true,
+            cursorChar: '|'
         });
     }
 
+    // =======================
     // Theme toggle
+    // =======================
     function setTheme(isDark) {
         body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
         body.classList.toggle('dark-theme', isDark);
@@ -37,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sunIcons.forEach(i => i.classList.toggle('hidden', !isDark));
         moonIcons.forEach(i => i.classList.toggle('hidden', isDark));
+
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
         const barColor = isDark ? '#fff' : 'rgb(31,41,55)';
@@ -51,7 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(!body.classList.contains('dark-theme'));
     }));
 
-    // Profile hover
+    // =======================
+    // Profile hover effect
+    // =======================
     const imgBox = document.getElementById('profile-img-container');
     const defPhoto = document.getElementById('default-photo');
     const hovPhoto = document.getElementById('hover-photo');
@@ -66,9 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile menu
+    // =======================
+    // Mobile menu toggle
+    // =======================
     function toggleMenu() {
         if (!mobileMenu || !menuToggle) return;
+
         const isClosed = mobileMenu.classList.contains('translate-x-full');
         mobileMenu.classList.toggle('translate-x-full', !isClosed);
         mobileMenu.classList.toggle('translate-x-0', isClosed);
@@ -93,7 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     }
 
-    // Scroll to top button
+    // =======================
+    // Scroll-to-top button
+    // =======================
     const scrollBtn = document.getElementById('scroll-to-top-btn');
     window.addEventListener('scroll', () => {
         if (scrollBtn) scrollBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
@@ -102,92 +123,34 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
-// ChatBot ni boss
-document.addEventListener('DOMContentLoaded', () => {
-    const chatbotToggle = document.getElementById('chatbot-toggle');
-    const chatbotBox = document.getElementById('chatbot-box');
-    const chatbotClose = document.getElementById('chatbot-close');
-    const chatbotInput = document.getElementById('chatbot-input');
-    const chatbotMessages = document.getElementById('chatbot-messages');
 
-    // Toggle chatbot visibility
-    chatbotToggle.addEventListener('click', () => {
-        chatbotBox.classList.toggle('hidden');
-    });
-
-    // Close chatbot
-    chatbotClose.addEventListener('click', () => {
-        chatbotBox.classList.add('hidden');
-    });
-
-    // Function to append messages
-    function appendMessage(sender, text, id = null) {
-        const msg = document.createElement('div');
-        msg.className = sender === 'user' ? 'text-right mb-2' : 'text-left mb-2';
-        if (id) msg.id = id;
-
-        msg.innerHTML = `
-            <span class="inline-block px-3 py-1 rounded-lg ${sender === 'user'
-            ? 'bg-indigo-500 text-white'
-            : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}">
-                ${text}
-            </span>
-        `;
-
-        chatbotMessages.appendChild(msg);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-        return msg;
-    }
-
-    // Function to send message to Chatbase
-    async function sendMessageToBot(message) {
-        // Add "typing" indicator
-        const typingId = 'bot-typing';
-        const typingMsg = appendMessage('bot', 'Bot is typing...', typingId);
-
-        try {
-            const response = await fetch('https://www.chatbase.co/api/v1/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ed16b2c9-3eac-493f-9b12-8fa8ffe6a53f'
-                },
-                body: JSON.stringify({
-                    messages: [{ role: 'user', content: message }],
-                    chatbotId: '17ab15ef-6736-4749-9330-5c236d212dfb',
-                    stream: false
-                })
-            });
-
-            const data = await response.json();
-            const typingElement = document.getElementById(typingId);
-            if (typingElement) typingElement.remove();
-
-            // Handle different possible responses
-            let botReply = 'Sorry, I didn’t understand that.';
-            if (data && data.output && Array.isArray(data.output) && data.output.length > 0) {
-                botReply = data.output[0].content || data.output[0].text || botReply;
+// =======================
+// Chatbase Chatbot
+// =======================
+(function() {
+    if (!window.chatbase || typeof window.chatbase !== "function" || window.chatbase("getState") !== "initialized") {
+        window.chatbase = (...args) => {
+            if (!window.chatbase.q) window.chatbase.q = [];
+            window.chatbase.q.push(args);
+        };
+        window.chatbase = new Proxy(window.chatbase, {
+            get(target, prop) {
+                if (prop === "q") return target.q;
+                return (...args) => target(prop, ...args);
             }
-
-            appendMessage('bot', botReply);
-
-        } catch (err) {
-            const typingElement = document.getElementById(typingId);
-            if (typingElement) typingElement.remove();
-            console.error('Chatbot Error:', err);
-            appendMessage('bot', 'Error connecting to AI server.');
-        }
+        });
     }
 
-    // Send message on Enter key
-    chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const message = chatbotInput.value.trim();
-            if (!message) return;
+    const onLoad = () => {
+        const script = document.createElement("script");
+        script.src = "https://www.chatbase.co/embed.min.js";
+        script.id = "pre02Htlz95QLkJgC1yD7"; // ensure this is your bot ID
+        document.body.appendChild(script);
+    };
 
-            appendMessage('user', message);
-            chatbotInput.value = '';
-            sendMessageToBot(message);
-        }
-    });
-});
+    if (document.readyState === "complete") {
+        onLoad();
+    } else {
+        window.addEventListener("load", onLoad);
+    }
+})();
