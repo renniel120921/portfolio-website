@@ -1,19 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =======================
+
     // Initialize AOS
-    // =======================
     if (typeof AOS !== 'undefined') AOS.init({ once: true, duration: 1000 });
 
-    // =======================
+
     // Set current year
-    // =======================
     const year = document.getElementById('current-year');
     if (year) year.textContent = new Date().getFullYear();
 
-    // =======================
+
     // Element selectors
-    // =======================
     const body = document.body;
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -27,12 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
         bot: document.querySelector('.menu-bar-bottom')
     };
 
-    // =======================
+
     // Typed.js animation
-    // =======================
     if (document.getElementById('typed-text') && typeof Typed !== 'undefined') {
         new Typed('#typed-text', {
-            strings: ["Full-Stack Developer", "React Specialist", "Node.js Engineer", "Web Developer"],
+            strings: ["Full-Stack Developer", "Laravel Specialist", "Web Developer"],
             typeSpeed: 60,
             backSpeed: 30,
             loop: true,
@@ -40,9 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =======================
+
     // Theme toggle
-    // =======================
     function setTheme(isDark) {
         body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
         body.classList.toggle('dark-theme', isDark);
@@ -65,9 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(!body.classList.contains('dark-theme'));
     }));
 
-    // =======================
+
     // Profile hover effect
-    // =======================
     const imgBox = document.getElementById('profile-img-container');
     const defPhoto = document.getElementById('default-photo');
     const hovPhoto = document.getElementById('hover-photo');
@@ -82,9 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =======================
+
     // Mobile menu toggle
-    // =======================
     function toggleMenu() {
         if (!mobileMenu || !menuToggle) return;
 
@@ -112,9 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     }
 
-    // =======================
+
     // Scroll-to-top button
-    // =======================
     const scrollBtn = document.getElementById('scroll-to-top-btn');
     window.addEventListener('scroll', () => {
         if (scrollBtn) scrollBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
@@ -124,9 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// =======================
+
 // Chatbase Chatbot
-// =======================
 (function() {
     if (!window.chatbase || typeof window.chatbase !== "function" || window.chatbase("getState") !== "initialized") {
         window.chatbase = (...args) => {
@@ -144,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const onLoad = () => {
         const script = document.createElement("script");
         script.src = "https://www.chatbase.co/embed.min.js";
-        script.id = "pre02Htlz95QLkJgC1yD7"; // ensure this is your bot ID
+        script.id = "pre02Htlz95QLkJgC1yD7"; // bot ID
         document.body.appendChild(script);
     };
 
