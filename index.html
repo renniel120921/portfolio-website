@@ -13,229 +13,236 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
- <style>
-    /* === Base Setup === */
-    body {
-        font-family: 'Inter', sans-serif;
-        scroll-behavior: smooth;
-        transition: background-color 0.4s ease, color 0.4s ease;
-    }
+    <style>
+        /* === Base Setup === */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
 
-    /* Disable scroll when mobile menu is open */
-    body.no-scroll { overflow: hidden; }
+        /* Disable scroll when mobile menu is open */
+        body.no-scroll { overflow: hidden; }
 
-    /* === LIGHT THEME === */
-    .light-theme {
-        background-color: #f7f7f7;
-        color: #1f2937;
-    }
+        /* === LIGHT THEME === */
+        .light-theme {
+            background-color: #f7f7f7;
+            color: #1f2937;
+        }
 
-    .light-theme .card-bg {
-        background-color: #ffffff;
-        color: #1f2937;
-        border-radius: 1rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        transition: all 0.4s ease;
-    }
+        .light-theme .card-bg {
+            background-color: #ffffff;
+            color: #1f2937;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
 
-    .light-theme .text-primary { color: #1f2937; }
-    .light-theme .text-secondary { color: #6b7280; }
-    .light-theme .border-card { border-color: #e5e7eb; }
+        .light-theme .text-primary { color: #1f2937; }
+        .light-theme .text-secondary { color: #6b7280; }
+        .light-theme .border-card { border-color: #e5e7eb; }
 
-    /* === DARK THEME === */
-    .dark-theme {
-        background-color: #111827;
-        color: #d1d5db;
-    }
+        /* === DARK THEME === */
+        .dark-theme {
+            background-color: #111827;
+            color: #d1d5db;
+        }
 
-    .dark-theme .card-bg {
-        background-color: #1f2937;
-        color: #d1d5db;
-        border-radius: 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        transition: all 0.4s ease;
-    }
+        .dark-theme .card-bg {
+            background-color: #1f2937;
+            color: #d1d5db;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: all 0.4s ease;
+        }
 
-    .dark-theme .text-primary { color: #ffffff; }
-    .dark-theme .text-secondary { color: #9ca3af; }
-    .dark-theme .border-card { border-color: #374151; }
+        .dark-theme .text-primary { color: #ffffff; }
+        .dark-theme .text-secondary { color: #9ca3af; }
+        .dark-theme .border-card { border-color: #374151; }
 
-    /* === Accent Colors === */
-    .text-accent { color: #4f46e5; }
-    .bg-accent { background-color: #4f46e5; }
+        /* === Accent Colors === */
+        .text-accent { color: #4f46e5; }
+        .bg-accent { background-color: #4f46e5; }
 
-    /* === Card Hover === */
-    .project-card, .skill-card, .service-card, .contact-card, .timeline-item {
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        border: 1px solid var(--border-color, #e5e7eb);
-        border-radius: 1rem;
-    }
+        /* === Card Hover === */
+        .project-card, .skill-card, .service-card, .contact-card, .timeline-item {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid var(--border-color, #e5e7eb);
+            border-radius: 1rem;
+        }
 
-    .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover, .timeline-item:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
-    }
+        .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover, .timeline-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+        }
 
-    .dark-theme .project-card:hover,
-    .dark-theme .skill-card:hover,
-    .dark-theme .service-card:hover,
-    .dark-theme .contact-card:hover,
-    .dark-theme .timeline-item:hover {
-        box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
-    }
+        .dark-theme .project-card:hover,
+        .dark-theme .skill-card:hover,
+        .dark-theme .service-card:hover,
+        .dark-theme .contact-card:hover,
+        .dark-theme .timeline-item:hover {
+            box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
+        }
 
-    /* === Menu Bar Animation === */
-    .menu-bar-top,
-    .menu-bar-middle,
-    .menu-bar-bottom {
-        transition: all 0.35s ease;
-        transform-origin: center;
-        border-radius: 2px;
-    }
+        /* === Menu Bar Animation === */
+        .menu-bar-top,
+        .menu-bar-middle,
+        .menu-bar-bottom {
+            transition: all 0.35s ease;
+            transform-origin: center;
+            border-radius: 2px;
+        }
 
-    /* === Profile Photo === */
-    .profile-photo {
-        border-radius: 50%;
-        object-fit: cover;
-        transition: opacity 0.35s ease-in-out, transform 0.35s ease, box-shadow 0.4s ease;
-        border: 4px solid;
-    }
+        /* === Profile Photo === */
+        .profile-photo {
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.35s ease-in-out, transform 0.35s ease, box-shadow 0.4s ease;
+            border: 4px solid;
+        }
 
-    #profile-img-container { position: relative; }
-    #default-photo, #hover-photo {
-        position: absolute;
-        top: 0; left: 0;
-        opacity: 1;
-        z-index: 10;
-        transition: opacity 0.4s ease;
-    }
-    #hover-photo { opacity: 0; z-index: 5; }
+        #profile-img-container { position: relative; }
+        #default-photo, #hover-photo {
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 1;
+            z-index: 10;
+            transition: opacity 0.4s ease;
+        }
+        #hover-photo { opacity: 0; z-index: 5; }
 
-    .light-theme .profile-photo {
-        border-color: #fff;
-        box-shadow: 0 0 0 8px #fff, 0 8px 20px rgba(0, 0, 0, 0.05);
-    }
+        .light-theme .profile-photo {
+            border-color: #fff;
+            box-shadow: 0 0 0 8px #fff, 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
 
-    .dark-theme .profile-photo {
-        border-color: #1f2937;
-        box-shadow: 0 0 0 8px #1f2937, 0 8px 25px rgba(79, 70, 229, 0.3);
-    }
+        .dark-theme .profile-photo {
+            border-color: #1f2937;
+            box-shadow: 0 0 0 8px #1f2937, 0 8px 25px rgba(79, 70, 229, 0.3);
+        }
 
-    #profile-img-container:hover .profile-photo {
-        transform: scale(1.03);
-    }
+        #profile-img-container:hover .profile-photo {
+            transform: scale(1.03);
+        }
 
-    /* === Scrollbar === */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f3f4f6; }
-    ::-webkit-scrollbar-thumb {
-        background: #d1d5db;
-        border-radius: 10px;
-        transition: background 0.3s ease;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-    .dark-theme::-webkit-scrollbar-track { background: #111827; }
-    .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
-    .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        /* === Scrollbar === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f3f4f6; }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .dark-theme::-webkit-scrollbar-track { background: #111827; }
+        .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
+        .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
 
-    /* === Scroll To Top Button === */
-    #scroll-to-top-btn {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        background-color: #4f46e5;
-        color: #fff;
-        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
-        transition: all 0.35s ease;
-    }
+        /* === Scroll To Top Button === */
+        #scroll-to-top-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background-color: #4f46e5;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+            transition: all 0.35s ease;
+        }
 
-    #scroll-to-top-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
-    }
+        #scroll-to-top-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
+        }
 
-    /* === Typed.js Cursor === */
-    .typed-cursor {
-        opacity: 1;
-        animation: blink 0.7s infinite;
-    }
+        /* === Typed.js Cursor === */
+        .typed-cursor {
+            opacity: 1;
+            animation: blink 0.7s infinite;
+        }
 
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-</style>
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
 
-    </head>
-        <body class="light-theme">
+</head>
+<body class="light-theme">
 
-        <body class="light-theme">
+    <header class="fixed top-0 left-0 right-0 z-50 py-5
+            bg-white dark:bg-gray-950
+            backdrop-filter backdrop-blur-lg bg-opacity-80
+            shadow-xl border-b border-gray-100 dark:border-gray-800
+            transition-all duration-300">
 
-            <header class="fixed top-0 left-0 right-0 z-50 py-4 card-bg backdrop-filter backdrop-blur-md bg-opacity-95 shadow-md border-b border-gray-100 dark:border-gray-800">
         <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
-            <a href="#" class="text-2xl md:text-3xl font-extrabold text-accent tracking-wide hover:text-indigo-700 transition-colors duration-300">
-            renz.dev
+            <a href="#" class="text-3xl font-extrabold text-gray-800 dark:text-gray-100 tracking-wider
+                hover:text-accent-500 transform hover:scale-[1.01] transition-all duration-300">
+                renz.dev
             </a>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <a href="#about" class="text-primary hover:text-accent transition-colors duration-300">About</a>
-            <a href="#skills" class="text-primary hover:text-accent transition-colors duration-300">Skills</a>
-            <a href="#services" class="text-primary hover:text-accent transition-colors duration-300">Services</a>
-            <a href="#projects" class="text-primary hover:text-accent transition-colors duration-300">Projects</a>
-            <a href="#resume" class="text-primary hover:text-accent transition-colors duration-300">Resume</a>
-            <a href="#contact" class="text-primary hover:text-accent transition-colors duration-300">Contact</a>
+            <div class="hidden md:flex items-center space-x-10 text-base font-semibold">
+                <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">About</a>
+                <a href="#skills" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Skills</a>
+                <a href="#services" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Services</a>
+                <a href="#projects" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Projects</a>
+                <a href="#resume" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Resume</a>
+                <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Contact</a>
 
-            <!-- Theme toggle -->
-            <button id="theme-toggle-btn" class="theme-toggle-btn ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
-                <i class="fas fa-moon light-theme-icon"></i>
-                <i class="fas fa-sun dark-theme-icon hidden"></i>
-            </button>
+                <button id="theme-toggle-btn" class="theme-toggle-btn ml-6 p-2 rounded-full
+                    bg-gray-50 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
+                    shadow-inner transition-all duration-300">
+                    <i class="fas fa-moon light-theme-icon text-gray-800 dark:text-gray-300"></i>
+                    <i class="fas fa-sun dark-theme-icon hidden text-yellow-500"></i>
+                </button>
             </div>
 
-            <!-- Hamburger Icon -->
             <button id="menu-toggle"
-            class="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none z-[1001] transition-transform duration-300">
-            <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
-            <span class="block w-full h-1 bg-primary rounded transition-opacity duration-300 menu-bar-middle"></span>
-            <span class="block w-full h-1 bg-primary rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
+            class="md:hidden flex flex-col justify-between w-7 h-5 focus:outline-none z-[1001] transition-transform duration-300">
+            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
+            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-opacity duration-300 menu-bar-middle"></span>
+            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
             </button>
         </nav>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu"
-            class="fixed top-0 right-0 h-full w-64 card-bg text-primary font-medium shadow-2xl
-            transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center space-y-8 pt-24 pb-8 border-l border-gray-200 dark:border-gray-700 z-[1000]">
+            class="fixed top-0 right-0 h-full w-72
+            bg-white dark:bg-gray-900
+            text-gray-800 dark:text-gray-200 font-semibold shadow-2xl
+            transform translate-x-full transition-transform duration-300 md:hidden
+            flex flex-col items-center space-y-10 pt-32 pb-8 border-l border-gray-200 dark:border-gray-800 z-[1000]">
 
-            <a href="#about" class="hover:text-accent text-xl menu-item">About</a>
-            <a href="#skills" class="hover:text-accent text-xl menu-item">Skills</a>
-            <a href="#services" class="hover:text-accent text-xl menu-item">Services</a>
-            <a href="#projects" class="hover:text-accent text-xl menu-item">Projects</a>
-            <a href="#resume" class="hover:text-accent text-xl menu-item">Resume</a>
-            <a href="#contact" class="hover:text-accent text-xl menu-item">Contact</a>
+            <a href="#about" class="hover:text-accent-500 text-xl menu-item tracking-wide">About</a>
+            <a href="#skills" class="hover:text-accent-500 text-xl menu-item tracking-wide">Skills</a>
+            <a href="#services" class="hover:text-accent-500 text-xl menu-item tracking-wide">Services</a>
+            <a href="#projects" class="hover:text-accent-500 text-xl menu-item tracking-wide">Projects</a>
+            <a href="#resume" class="hover:text-accent-500 text-xl menu-item tracking-wide">Resume</a>
+            <a href="#contact" class="hover:text-accent-500 text-xl menu-item tracking-wide">Contact</a>
 
-            <div class="flex space-x-6 pt-4">
-            <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
-                <i class="fa-brands fa-github text-2xl"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-primary hover:text-accent transition-colors">
-                <i class="fa-brands fa-linkedin text-2xl"></i>
-            </a>
-            <a href="mailto:rennielsalazar948@gmail.com" class="text-primary hover:text-accent transition-colors">
-                <i class="fa-solid fa-envelope text-2xl"></i>
-            </a>
+            <div class="flex space-x-8 pt-6">
+                <a href="https://github.com/renniel120921" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
+                    <i class="fa-brands fa-github text-3xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
+                    <i class="fa-brands fa-linkedin text-3xl"></i>
+                </a>
+                <a href="mailto:rennielsalazar948@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
+                    <i class="fa-solid fa-envelope text-3xl"></i>
+                </a>
             </div>
 
-            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-6 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
-            <i class="fas fa-moon light-theme-icon-mobile"></i>
-            <i class="fas fa-sun dark-theme-icon-mobile hidden"></i>
+            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-8 p-3 rounded-full
+                bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
+                transition-all shadow-md">
+                <i class="fas fa-moon light-theme-icon-mobile text-gray-800 dark:text-gray-300 text-lg"></i>
+                <i class="fas fa-sun dark-theme-icon-mobile hidden text-yellow-500 text-lg"></i>
             </button>
         </div>
     </header>
@@ -317,7 +324,7 @@
                         <i class="fa-brands fa-node-js text-5xl text-green-600 mb-4"></i>
                         <h3 class="text-lg font-semibold text-primary">Node.js</h3>
                     </div>
-                    
+
                     <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="900">
                         <i class="fa-solid fa-database text-5xl text-blue-800 mb-4"></i>
                         <h3 class="text-lg font-semibold text-primary">MySQL/SQL</h3>
