@@ -1,613 +1,441 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth light-theme">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salazar Renniel's Portfolio | Full-Stack Web Developer</title>
-  <meta name="description" content="Salazar Renniel's professional portfolio. A Full-Stack Developer specializing in React, Node.js, and scalable web applications.">
+  <title>Salazar Renniel | Full-Stack Developer</title>
+  <meta name="description" content="Premium Portfolio of Salazar Renniel - Full Stack Web Developer.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-    <style>
-        /* === Base Setup === */
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            transition: background-color 0.4s ease, color 0.4s ease;
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              900: '#0a0a0a',
+              800: '#121212',
+              700: '#1c1c1c',
+            },
+            primary: '#6366f1', // Indigo
+            accent: '#8b5cf6',  // Violet
+          },
+          animation: {
+            'blob': 'blob 7s infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            }
+          }
         }
+      }
+    }
+  </script>
 
-        /* Disable scroll when mobile menu is open */
-        body.no-scroll { overflow: hidden; }
+  <style>
+    /* === Premium Utilities === */
+    body {
+      background-color: #050505;
+      color: #e5e5e5;
+      overflow-x: hidden;
+    }
 
-        /* === LIGHT THEME === */
-        .light-theme {
-            background-color: #f7f7f7;
-            color: #1f2937;
-        }
+    /* Grid Background Pattern */
+    .bg-grid {
+      background-size: 50px 50px;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    }
 
-        .light-theme .card-bg {
-            background-color: #ffffff;
-            color: #1f2937;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s ease;
-        }
+    /* Glassmorphism Card */
+    .glass-card {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-        .light-theme .text-primary { color: #1f2937; }
-        .light-theme .text-secondary { color: #6b7280; }
-        .light-theme .border-card { border-color: #e5e7eb; }
+    .glass-card:hover {
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px solid rgba(99, 102, 241, 0.3); /* Primary color border on hover */
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
 
-        /* === DARK THEME === */
-        .dark-theme {
-            background-color: #111827;
-            color: #d1d5db;
-        }
+    /* Text Gradient */
+    .text-gradient {
+      background: linear-gradient(to right, #8b5cf6, #6366f1, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        .dark-theme .card-bg {
-            background-color: #1f2937;
-            color: #d1d5db;
-            border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            transition: all 0.4s ease;
-        }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        .dark-theme .text-primary { color: #ffffff; }
-        .dark-theme .text-secondary { color: #9ca3af; }
-        .dark-theme .border-card { border-color: #374151; }
+    /* Floating Nav Animation */
+    .nav-float {
+      animation: navEntry 0.8s ease-out forwards;
+    }
+    @keyframes navEntry {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-        /* === Accent Colors === */
-        .text-accent { color: #4f46e5; }
-        .bg-accent { background-color: #4f46e5; }
-
-        /* === Card Hover === */
-        .project-card, .skill-card, .service-card, .contact-card, .timeline-item {
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border: 1px solid var(--border-color, #e5e7eb);
-            border-radius: 1rem;
-        }
-
-        .project-card:hover, .skill-card:hover, .service-card:hover, .contact-card:hover, .timeline-item:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .dark-theme .project-card:hover,
-        .dark-theme .skill-card:hover,
-        .dark-theme .service-card:hover,
-        .dark-theme .contact-card:hover,
-        .dark-theme .timeline-item:hover {
-            box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
-        }
-
-        /* === Menu Bar Animation === */
-        .menu-bar-top,
-        .menu-bar-middle,
-        .menu-bar-bottom {
-            transition: all 0.35s ease;
-            transform-origin: center;
-            border-radius: 2px;
-        }
-
-        /* === Profile Photo === */
-        .profile-photo {
-            border-radius: 50%;
-            object-fit: cover;
-            transition: opacity 0.35s ease-in-out, transform 0.35s ease, box-shadow 0.4s ease;
-            border: 4px solid;
-        }
-
-        #profile-img-container { position: relative; }
-        #default-photo, #hover-photo {
-            position: absolute;
-            top: 0; left: 0;
-            opacity: 1;
-            z-index: 10;
-            transition: opacity 0.4s ease;
-        }
-        #hover-photo { opacity: 0; z-index: 5; }
-
-        .light-theme .profile-photo {
-            border-color: #fff;
-            box-shadow: 0 0 0 8px #fff, 0 8px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-theme .profile-photo {
-            border-color: #1f2937;
-            box-shadow: 0 0 0 8px #1f2937, 0 8px 25px rgba(79, 70, 229, 0.3);
-        }
-
-        #profile-img-container:hover .profile-photo {
-            transform: scale(1.03);
-        }
-
-        /* === Scrollbar === */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f3f4f6; }
-        ::-webkit-scrollbar-thumb {
-            background: #d1d5db;
-            border-radius: 10px;
-            transition: background 0.3s ease;
-        }
-        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-        .dark-theme::-webkit-scrollbar-track { background: #111827; }
-        .dark-theme::-webkit-scrollbar-thumb { background: #374151; }
-        .dark-theme::-webkit-scrollbar-thumb:hover { background: #4b5563; }
-
-        /* === Scroll To Top Button === */
-        #scroll-to-top-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            background-color: #4f46e5;
-            color: #fff;
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
-            transition: all 0.35s ease;
-        }
-
-        #scroll-to-top-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
-        }
-
-        /* === Typed.js Cursor === */
-        .typed-cursor {
-            opacity: 1;
-            animation: blink 0.7s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-    </style>
-
+    /* Image Glow */
+    .img-glow {
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+    }
+  </style>
 </head>
-<body class="light-theme">
+<body class="antialiased selection:bg-primary selection:text-white">
 
-    <header class="fixed top-0 left-0 right-0 z-50 py-5
-            bg-white dark:bg-gray-950
-            backdrop-filter backdrop-blur-lg bg-opacity-80
-            shadow-xl border-b border-gray-100 dark:border-gray-800
-            transition-all duration-300">
+  <div class="fixed inset-0 z-[-1] bg-dark-900">
+    <div class="absolute inset-0 bg-grid"></div>
+    <div class="absolute top-0 -left-4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob"></div>
+    <div class="absolute top-0 -right-4 w-96 h-96 bg-accent/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-32 left-20 w-96 h-96 bg-blue-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob animation-delay-4000"></div>
+  </div>
 
-        <nav class="container mx-auto flex justify-between items-center px-4 md:px-8">
-            <a href="#" class="text-3xl font-extrabold text-gray-800 dark:text-gray-100 tracking-wider
-                hover:text-accent-500 transform hover:scale-[1.01] transition-all duration-300">
-                renz.dev
-            </a>
+  <header class="fixed top-6 left-0 right-0 z-50 flex justify-center nav-float px-4">
+    <nav class="glass-card rounded-full px-6 py-3 flex items-center justify-between w-full max-w-4xl shadow-2xl bg-dark-800/80">
 
-            <div class="hidden md:flex items-center space-x-10 text-base font-semibold">
-                <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">About</a>
-                <a href="#skills" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Skills</a>
-                <a href="#services" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Services</a>
-                <a href="#projects" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Projects</a>
-                <a href="#resume" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Resume</a>
-                <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-accent-500 transition-colors duration-300">Contact</a>
+      <a href="#" class="text-2xl font-heading font-bold tracking-tight hover:text-primary transition-colors">
+        renz<span class="text-primary">.dev</span>
+      </a>
 
-                <button id="theme-toggle-btn" class="theme-toggle-btn ml-6 p-2 rounded-full
-                    bg-gray-50 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
-                    shadow-inner transition-all duration-300">
-                    <i class="fas fa-moon light-theme-icon text-gray-800 dark:text-gray-300"></i>
-                    <i class="fas fa-sun dark-theme-icon hidden text-yellow-500"></i>
-                </button>
-            </div>
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#skills" class="hover:text-white transition-colors">Stack</a>
+        <a href="#projects" class="hover:text-white transition-colors">Work</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
 
-            <button id="menu-toggle"
-            class="md:hidden flex flex-col justify-between w-7 h-5 focus:outline-none z-[1001] transition-transform duration-300">
-            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-transform duration-300 transform origin-top-left menu-bar-top"></span>
-            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-opacity duration-300 menu-bar-middle"></span>
-            <span class="block w-full h-[3px] bg-gray-800 dark:bg-white rounded transition-transform duration-300 transform origin-bottom-left menu-bar-bottom"></span>
-            </button>
-        </nav>
+      <div class="flex items-center space-x-4">
+        <button id="menu-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+        <a href="https://github.com/renniel120921" target="_blank" class="hidden md:block text-gray-400 hover:text-white transition-colors">
+          <i class="fa-brands fa-github text-xl"></i>
+        </a>
+        <a href="#contact" class="hidden md:block bg-white text-black px-5 py-2 rounded-full text-xs font-bold hover:bg-gray-200 transition-transform hover:scale-105">
+          Let's Talk
+        </a>
+      </div>
+    </nav>
+  </header>
 
-        <div id="mobile-menu"
-            class="fixed top-0 right-0 h-full w-72
-            bg-white dark:bg-gray-900
-            text-gray-800 dark:text-gray-200 font-semibold shadow-2xl
-            transform translate-x-full transition-transform duration-300 md:hidden
-            flex flex-col items-center space-y-10 pt-32 pb-8 border-l border-gray-200 dark:border-gray-800 z-[1000]">
-
-            <a href="#about" class="hover:text-accent-500 text-xl menu-item tracking-wide">About</a>
-            <a href="#skills" class="hover:text-accent-500 text-xl menu-item tracking-wide">Skills</a>
-            <a href="#services" class="hover:text-accent-500 text-xl menu-item tracking-wide">Services</a>
-            <a href="#projects" class="hover:text-accent-500 text-xl menu-item tracking-wide">Projects</a>
-            <a href="#resume" class="hover:text-accent-500 text-xl menu-item tracking-wide">Resume</a>
-            <a href="#contact" class="hover:text-accent-500 text-xl menu-item tracking-wide">Contact</a>
-
-            <div class="flex space-x-8 pt-6">
-                <a href="https://github.com/renniel120921" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
-                    <i class="fa-brands fa-github text-3xl"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
-                    <i class="fa-brands fa-linkedin text-3xl"></i>
-                </a>
-                <a href="mailto:rennielsalazar948@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 transition-colors">
-                    <i class="fa-solid fa-envelope text-3xl"></i>
-                </a>
-            </div>
-
-            <button id="mobile-theme-toggle-btn" class="theme-toggle-btn mt-8 p-3 rounded-full
-                bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
-                transition-all shadow-md">
-                <i class="fas fa-moon light-theme-icon-mobile text-gray-800 dark:text-gray-300 text-lg"></i>
-                <i class="fas fa-sun dark-theme-icon-mobile hidden text-yellow-500 text-lg"></i>
-            </button>
-        </div>
-    </header>
-
-    <main class="pt-20">
-
-        <section id="about" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-                <div class="card-bg p-8 md:p-10 rounded-xl shadow-2xl border-card" data-aos="fade-up" data-aos-duration="1200">
-                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-12">
-
-                        <div class="flex-shrink-0 text-center">
-                            <div id="profile-img-container" class="relative w-40 h-40 mx-auto mb-4 md:mb-0" data-aos="zoom-in" data-aos-delay="200">
-                                <img id="default-photo" src="/images/profile.jpg" alt="Salazar Renniel's Professional Headshot"
-                                    class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
-                                <img id="hover-photo" src="images/2nd image.jpg" alt="Salazar Renniel's Fun Photo"
-                                    class="profile-photo w-full h-full object-cover rounded-full shadow-xl">
-                            </div>
-                            <h1 class="text-3xl font-extrabold text-primary mt-4">Salazar Renniel</h1>
-                            <p class="text-xl font-bold text-accent mt-2">
-                                I'm a <span id="typed-text" class="font-extrabold"></span>
-                            </p>
-                            <p class="text-md text-secondary mt-1">📍 San Fernando, Pampanga, Philippines</p>
-                        </div>
-
-                        <div class="md:flex-grow mt-6 md:mt-0 text-center md:text-left">
-                            <div class="flex justify-center md:justify-start space-x-3 mb-6">
-                                <a href="mailto:rennielsalazar948@gmail.com" class="inline-flex items-center py-2 px-5 text-white font-semibold rounded-full bg-accent hover:bg-indigo-700 transition-colors shadow-md">
-                                    <i class="fa-solid fa-envelope mr-2"></i> Send Email
-                                </a>
-                                <a href="#" download class="inline-flex items-center py-2 px-5 font-semibold rounded-full border border-gray-300 dark:border-gray-600 text-primary hover:text-accent hover:border-accent transition-colors shadow-md">
-                                    <i class="fa-solid fa-download mr-2"></i> Download CV
-                                </a>
-                            </div>
-
-                            <h3 class="text-2xl font-bold text-primary mb-3 mt-4 border-b pb-2 border-gray-100 dark:border-gray-700">A Little Bit About Me</h3>
-                            <p class="text-base leading-relaxed mb-4 text-secondary">
-                                I'm a passionate Full-Stack Developer focused on building high-performance, user-centric web applications. My expertise spans from crafting responsive front-end interfaces to designing robust back-end systems.
-                            </p>
-                            <p class="text-base leading-relaxed text-secondary">
-                                I thrive on solving complex problems and am dedicated to writing clean, scalable code. I leverage modern tools like React, Node.js, Tailwind CSS, and various database technologies to bring innovative digital solutions to life.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-5xl" />
-
-        <section id="skills" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">My Tech Stack & Expertise </h2>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
-                        <i class="fa-brands fa-html5 text-5xl text-orange-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">HTML5</h3>
-                    </div>
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
-                        <i class="fa-brands fa-css3-alt text-5xl text-blue-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">CSS3</h3>
-                    </div>
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
-                        <i class="fa-brands fa-js text-5xl text-yellow-500 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">JavaScript</h3>
-                    </div>
-
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="500">
-                        <i class="fa-brands fa-bootstrap text-5xl text-purple-700 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Bootstrap</h3>
-                    </div>
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="600">
-                        <i class="fa-brands fa-tailwind-css text-5xl text-teal-500 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Tailwind</h3>
-                    </div>
-
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="700">
-                        <i class="fa-brands fa-node-js text-5xl text-green-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Node.js</h3>
-                    </div>
-
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="900">
-                        <i class="fa-solid fa-database text-5xl text-blue-800 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">MySQL/SQL</h3>
-                    </div>
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1000">
-                        <i class="fa-solid fa-leaf text-5xl text-green-700 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">MongoDB</h3>
-                    </div>
-
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1100">
-                        <i class="fa-brands fa-git-alt text-5xl text-red-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Git/GitHub</h3>
-                    </div>
-                    <div class="skill-card card-bg p-6 rounded-xl text-center shadow-lg border-card" data-aos="zoom-in" data-aos-delay="1200">
-                        <i class="fa-brands fa-figma text-5xl text-purple-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-primary">Figma/UI/UX</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
-
-        <section id="services" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Services I Offer </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-
-                    <div class="service-card card-bg p-8 rounded-xl shadow-lg border-card text-center" data-aos="fade-right" data-aos-delay="100">
-                        <i class="fa-solid fa-code text-6xl text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold text-primary mb-3">Front-End Development</h3>
-                        <p class="text-secondary">Building highly responsive, modern, and performance-optimized user interfaces using React, Tailwind CSS, and pure JavaScript.</p>
-                    </div>
-
-                    <div class="service-card card-bg p-8 rounded-xl shadow-lg border-card text-center" data-aos="fade-up" data-aos-delay="200">
-                        <i class="fa-solid fa-database text-6xl text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold text-primary mb-3">Back-End & API Development</h3>
-                        <p class="text-secondary">Creating robust, secure, and scalable server-side applications and RESTful APIs using Node.js/Express, with expertise in SQL and NoSQL databases.</p>
-                    </div>
-
-                    <div class="service-card card-bg p-8 rounded-xl shadow-lg border-card text-center" data-aos="fade-left" data-aos-delay="300">
-                        <i class="fa-solid fa-gears text-6xl text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold text-primary mb-3">Full-Stack Solutions</h3>
-                        <p class="text-secondary">End-to-end development of complete web applications, from initial concept and design to deployment and ongoing maintenance.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
-
-        <section id="projects" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-7xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Featured Projects </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="100">
-                        <img src="/images/ecommerce.png" alt="E-commerce Platform Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Full-Stack E-commerce Platform</h3>
-                            <p class="text-sm mb-3 text-secondary">A full-stack e-commerce site with product listings, user authentication, inventory management, and a secure payment gateway.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">React</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Node.js</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">MongoDB</span>
-                            </div>
-                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="200">
-                        <img src="/images/chorale.png" alt="AOFLA CHORALE SYSTEM Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Chorale Management System</h3>
-                            <p class="text-sm mb-3 text-secondary">A web-based platform to manage chorale activities, member attendance, performance scheduling, and track repertoire.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">PHP</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">MySQL</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Bootstrap</span>
-                            </div>
-                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="300">
-                        <img src="/images/school.png" alt="Class Record System Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Digital Class Record System</h3>
-                            <p class="text-sm mb-3 text-secondary">A digital platform that helps teachers efficiently manage student grades, attendance, and generate performance reports securely.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Laravel</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Tailwind CSS</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">PostgreSQL</span>
-                            </div>
-                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <a href="https://renniel120921.github.io/coffeeshop/" target="_blank" class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card block" data-aos="flip-up" data-aos-delay="400">
-                        <img src="/images/coffe-shop.png" alt="Project: Coffee Shop Website" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Modern Coffee Shop Landing Page</h3>
-                            <p class="text-sm mb-3 text-secondary">A sleek, responsive, single-page website with a full menu display and a modern UI/UX design showcase.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">HTML5</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">CSS3</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">JavaScript</span>
-                            </div>
-                            <span class="inline-block text-accent font-semibold hover:underline text-sm">View Live Demo <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></span>
-                        </div>
-                    </a>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="500">
-                        <img src="/images/recipe.png" alt="Recipe Sharing App Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Mobile Recipe Sharing App</h3>
-                            <p class="text-sm mb-3 text-secondary">A mobile-first web app for users to share, save, and discover new recipes with detailed instructions and a rating system.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Vue.js</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Firebase</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">Tailwind</span>
-                            </div>
-                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card card-bg rounded-xl overflow-hidden shadow-lg border-card" data-aos="flip-up" data-aos-delay="600">
-                        <img src="/images/chatbot.png" alt="AI Chatbot Interface Project" class="w-full h-48 object-cover border-b border-gray-100 dark:border-gray-700">
-                        <div class="p-6 md:p-8">
-                            <h3 class="text-xl font-bold text-primary mb-2">Custom AI Chatbot Interface</h3>
-                            <p class="text-sm mb-3 text-secondary">A sleek, modern chat interface for a customer service chatbot, integrated with a basic AI backend service (simulated).</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">React</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">API Integration</span>
-                                <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-primary">CSS Grid</span>
-                            </div>
-                            <a href="#" class="inline-block text-accent font-semibold hover:underline text-sm">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="700">
-                    <a href="https://github.com/renniel120921" target="_blank"
-                        class="inline-flex items-center py-3 px-8 text-primary font-semibold rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-lg">
-                        View All Projects on GitHub
-                        <i class="fa-brands fa-github ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
-
-        <section id="resume" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-6xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Experience & Education </h2>
-
-                <div class="timeline grid grid-cols-1 md:grid-cols-2 gap-10">
-
-                    <div data-aos="fade-right" data-aos-duration="1200">
-                        <h3 class="text-3xl font-bold text-accent mb-8 border-b pb-3 border-gray-200 dark:border-gray-700 flex items-center">
-                            <i class="fa-solid fa-briefcase mr-3"></i> Work Experience
-                        </h3>
-
-                        <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2025 - Present</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Full-Stack Developer</h4>
-                            <p class="text-md font-medium text-secondary">Innovatech Solutions, Inc.</p>
-                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Led the development of 3 major web applications using React and Node.js.</li>
-                                <li>Implemented responsive design using Tailwind CSS, improving mobile UX by 40%.</li>
-                                <li>Managed deployment and infrastructure on AWS (EC2, S3).</li>
-                            </ul>
-                        </div>
-
-                        <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2022 - 2025</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Junior Web Developer</h4>
-                            <p class="text-md font-medium text-secondary">Creative Digital Agency</p>
-                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Assisted in the maintenance and feature development of client WordPress sites.</li>
-                                <li>Gained foundational experience in PHP and MySQL.</li>
-                                </ul>
-                        </div>
-                    </div>
-
-                    <div data-aos="fade-left" data-aos-duration="1200">
-                        <h3 class="text-3xl font-bold text-accent mb-8 border-b pb-3 border-gray-200 dark:border-gray-700 flex items-center">
-                            <i class="fa-solid fa-graduation-cap mr-3"></i> Education
-                        </h3>
-
-                        <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2018 - 2022</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Bachelor of Science in Information Technology</h4>
-                            <p class="text-md font-medium text-secondary">Tech University of the Philippines</p>
-                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Graduated with honors.</li>
-                                <li>Specialized in Systems Development and Web Engineering.</li>
-                                <li>Thesis: Development of a Full-Stack E-commerce Platform.</li>
-                            </ul>
-                        </div>
-
-                        <div class="timeline-item card-bg p-6 rounded-xl shadow-lg border-card mb-8">
-                            <p class="text-sm font-semibold text-accent mb-1">2017 - 2018</p>
-                            <h4 class="text-xl font-bold text-primary mb-1">Online Full-Stack Bootcamp</h4>
-                            <p class="text-md font-medium text-secondary">CodeMaster Academy</p>
-                            <ul class="list-disc list-inside text-sm text-secondary mt-3 space-y-1 ml-4">
-                                <li>Completed over 500 hours of intensive training in MERN stack.</li>
-                                <li>Mastered deployment, version control, and database design.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-200 dark:border-gray-700 container mx-auto max-w-7xl" />
-
-        <section id="contact" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 md:px-8 max-w-5xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-primary text-center mb-16" data-aos="fade-up" data-aos-duration="1200">Get In Touch </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-
-                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="100">
-                        <i class="fa-solid fa-envelope text-5xl text-accent mb-4"></i>
-                        <h3 class="text-xl font-bold text-primary mb-2">Email</h3>
-                        <a href="mailto:rennielsalazar948@gmail.com" class="text-accent hover:underline text-sm break-all">rennielsalazar948@gmail.com</a>
-                    </div>
-
-                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="200">
-                        <i class="fa-brands fa-linkedin text-5xl text-accent mb-4"></i>
-                        <h3 class="text-xl font-bold text-primary mb-2">LinkedIn</h3>
-                        <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-accent hover:underline text-sm">View Profile</a>
-                    </div>
-
-                    <div class="contact-card card-bg p-8 rounded-xl shadow-lg border-card" data-aos="zoom-in" data-aos-delay="300">
-                        <i class="fa-solid fa-location-dot text-5xl text-accent mb-4"></i>
-                        <h3 class="text-xl font-bold text-primary mb-2">My Location</h3>
-                        <p class="text-secondary text-sm">San Fernando, Pampanga, PH</p>
-                        <p class="text-green-500 text-xs font-semibold mt-1">Available for Remote Work</p>
-                    </div>
-
-                </div>
-
-                <div class="card-bg p-10 rounded-xl shadow-2xl border-card mt-16 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="text-2xl font-bold text-primary mb-6 text-center">Send Me a Message</h3>
-                    <form action="#" method="POST" class="space-y-4">
-                        <div>
-                            <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg card-bg focus:ring-accent focus:border-accent" required>
-                        </div>
-                        <div>
-                            <input type="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg card-bg focus:ring-accent focus:border-accent" required>
-                        </div>
-                        <div>
-                            <textarea placeholder="Your Message" rows="5" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg card-bg focus:ring-accent focus:border-accent" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-3 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="py-8 border-t border-gray-200 dark:border-gray-700">
-        <div class="container mx-auto px-4 md:px-8 max-w-7xl text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://github.com/renniel120921" target="_blank" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-brands fa-github text-2xl"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-brands fa-linkedin text-2xl"></i>
-                </a>
-                <a href="mailto:rennielsalazar948@gmail.com" class="text-primary hover:text-accent transition-colors">
-                    <i class="fa-solid fa-envelope text-2xl"></i>
-                </a>
-            </div>
-            <p class="text-sm text-secondary">&copy; <span id="current-year"></span> Salazar Renniel. All rights reserved.</p>
-            <p class="text-xs text-secondary mt-1">Designed & Developed by Salazar Renniel.</p>
-        </div>
-    </footer>
-
-    <button id="scroll-to-top-btn" class="bg-accent text-white shadow-lg hover:bg-indigo-700 transition-colors">
-        <i class="fa-solid fa-arrow-up"></i>
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-black/95 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden backdrop-blur-xl">
+    <button id="close-menu" class="absolute top-8 right-8 text-white text-3xl hover:rotate-90 transition-transform">
+      <i class="fa-solid fa-xmark"></i>
     </button>
+    <a href="#about" class="mobile-link text-3xl font-heading font-bold text-gray-300 hover:text-primary">About</a>
+    <a href="#skills" class="mobile-link text-3xl font-heading font-bold text-gray-300 hover:text-primary">Tech Stack</a>
+    <a href="#projects" class="mobile-link text-3xl font-heading font-bold text-gray-300 hover:text-primary">Projects</a>
+    <a href="#contact" class="mobile-link text-3xl font-heading font-bold text-gray-300 hover:text-primary">Contact</a>
+  </div>
 
-  <!-- Script links -->
-  <script src="https://www.chatbase.co/embed.js" data-chatbase-id="iw2ja0xpfdkirthq6amr0e9pc4t7pgcz"></script>
+  <main class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+
+    <section id="about" class="min-h-[85vh] flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
+
+      <div class="flex-1 text-center md:text-left order-2 md:order-1" data-aos="fade-up" data-aos-duration="1000">
+        <div class="inline-block px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold tracking-wider mb-6">
+          OPEN TO WORK & FREELANCE
+        </div>
+        <h1 class="text-5xl md:text-7xl font-heading font-extrabold leading-tight mb-6">
+          Building <span class="text-gradient">Digital Experiences</span> that matter.
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-8 mx-auto md:mx-0">
+          Hi, I'm <strong class="text-white">Salazar Renniel</strong>. A Full-Stack Developer creating scalable, high-performance web applications with modern technologies.
+        </p>
+
+        <div class="flex flex-wrap justify-center md:justify-start gap-4">
+          <a href="#projects" class="px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm hover:bg-gray-200 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            View My Work
+          </a>
+          <a href="#" download class="px-8 py-3.5 rounded-full border border-gray-700 hover:border-gray-500 bg-transparent text-white font-bold text-sm transition-all hover:bg-white/5">
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <div class="flex-1 order-1 md:order-2 flex justify-center relative" data-aos="zoom-in" data-aos-duration="1200">
+        <div class="relative w-64 h-64 md:w-80 md:h-80 animate-float">
+            <div class="absolute inset-0 rounded-full border border-white/10 scale-110"></div>
+            <div class="absolute inset-0 rounded-full border border-dashed border-white/20 scale-125 animate-spin-slow" style="animation-duration: 20s;"></div>
+
+            <div class="w-full h-full rounded-full overflow-hidden border-4 border-gray-800 img-glow relative z-10">
+                <img src="/images/profile.jpg" alt="Renniel Salazar" class="w-full h-full object-cover">
+            </div>
+
+            <div class="absolute -right-4 top-10 glass-card p-3 rounded-xl z-20 animate-bounce" style="animation-duration: 3s;">
+                <i class="fa-brands fa-react text-2xl text-cyan-400"></i>
+            </div>
+            <div class="absolute -left-4 bottom-10 glass-card p-3 rounded-xl z-20 animate-bounce" style="animation-delay: 1.5s; animation-duration: 3.5s;">
+                <i class="fa-brands fa-laravel text-2xl text-red-500"></i>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="py-24">
+      <div class="flex flex-col items-center mb-16" data-aos="fade-up">
+        <h2 class="text-3xl md:text-5xl font-heading font-bold text-center mb-4">Current <span class="text-gradient">Tech Stack</span></h2>
+        <p class="text-gray-400 text-center max-w-xl">The tools and technologies I use to bring ideas to life.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="100">
+          <i class="fa-brands fa-html5 text-4xl text-gray-500 group-hover:text-orange-500 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">HTML5</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="150">
+          <i class="fa-brands fa-css3-alt text-4xl text-gray-500 group-hover:text-blue-500 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">CSS3</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="200">
+          <i class="fa-brands fa-js text-4xl text-gray-500 group-hover:text-yellow-400 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">JavaScript</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="250">
+          <i class="fa-brands fa-react text-4xl text-gray-500 group-hover:text-cyan-400 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">React</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="300">
+          <i class="fa-brands fa-node-js text-4xl text-gray-500 group-hover:text-green-500 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">Node.js</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-white/5 group" data-aos="fade-up" data-aos-delay="350">
+          <i class="fa-brands fa-laravel text-4xl text-gray-500 group-hover:text-red-500 transition-colors"></i>
+          <span class="font-bold text-sm text-gray-400 group-hover:text-white">Laravel</span>
+        </div>
+
+        <div class="col-span-2 md:col-span-2 glass-card p-6 rounded-2xl flex items-center justify-between px-8 group hover:bg-white/5" data-aos="fade-up" data-aos-delay="400">
+            <div class="flex flex-col">
+                <span class="text-xs text-primary font-bold uppercase tracking-wider mb-1">Database</span>
+                <span class="text-lg font-bold text-white">MySQL & Mongo</span>
+            </div>
+            <div class="flex space-x-3">
+                <i class="fa-solid fa-database text-2xl text-gray-500 group-hover:text-blue-400"></i>
+                <i class="fa-solid fa-leaf text-2xl text-gray-500 group-hover:text-green-400"></i>
+            </div>
+        </div>
+
+        <div class="col-span-2 md:col-span-2 glass-card p-6 rounded-2xl flex items-center justify-between px-8 group hover:bg-white/5" data-aos="fade-up" data-aos-delay="450">
+            <div class="flex flex-col">
+                <span class="text-xs text-accent font-bold uppercase tracking-wider mb-1">Design</span>
+                <span class="text-lg font-bold text-white">Tailwind & Figma</span>
+            </div>
+            <div class="flex space-x-3">
+                <i class="fa-brands fa-tailwind-css text-2xl text-gray-500 group-hover:text-cyan-400"></i>
+                <i class="fa-brands fa-figma text-2xl text-gray-500 group-hover:text-pink-400"></i>
+            </div>
+        </div>
+
+        <div class="col-span-2 md:col-span-2 glass-card p-6 rounded-2xl flex items-center justify-between px-8 group hover:bg-white/5" data-aos="fade-up" data-aos-delay="500">
+            <div class="flex flex-col">
+                <span class="text-xs text-white font-bold uppercase tracking-wider mb-1">Version Control</span>
+                <span class="text-lg font-bold text-white">Git & GitHub</span>
+            </div>
+            <div class="flex space-x-3">
+                <i class="fa-brands fa-git-alt text-2xl text-gray-500 group-hover:text-orange-600"></i>
+                <i class="fa-brands fa-github text-2xl text-gray-500 group-hover:text-white"></i>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group" data-aos="fade-right">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-primary/20"></div>
+                <i class="fa-solid fa-code text-4xl text-primary mb-6"></i>
+                <h3 class="text-2xl font-bold text-white mb-2">Frontend</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Crafting pixel-perfect, responsive user interfaces that engage users. I use React and Tailwind to ensure performance and beauty.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-accent/20"></div>
+                <i class="fa-solid fa-server text-4xl text-accent mb-6"></i>
+                <h3 class="text-2xl font-bold text-white mb-2">Backend</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Building robust APIs and server-side logic. Expertise in Node.js, Express, and optimizing database structures for speed.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group" data-aos="fade-left">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-white/10"></div>
+                <i class="fa-solid fa-layer-group text-4xl text-white mb-6"></i>
+                <h3 class="text-2xl font-bold text-white mb-2">Full Stack</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    End-to-end development. From conceptualization to deployment, I handle the entire lifecycle of the application.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12" data-aos="fade-up">
+        <div>
+          <h2 class="text-3xl md:text-5xl font-heading font-bold mb-4">Selected <span class="text-gradient">Work</span></h2>
+          <p class="text-gray-400">A look at some of the projects I've built.</p>
+        </div>
+        <a href="https://github.com/renniel120921" class="hidden md:inline-flex items-center text-sm font-bold text-white hover:text-primary transition-colors mt-4 md:mt-0">
+          View GitHub <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="glass-card rounded-2xl overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+          <div class="h-48 overflow-hidden relative">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center space-x-4">
+               <a href="#" class="p-3 bg-white rounded-full text-black hover:scale-110 transition-transform"><i class="fa-solid fa-link"></i></a>
+               <a href="#" class="p-3 bg-dark-900 rounded-full text-white hover:scale-110 transition-transform"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <img src="/images/ecommerce.png" alt="E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">E-commerce Platform</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">A full-stack solution with inventory management, Stripe payments, and admin dashboard.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">React</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">Node.js</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">MongoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+          <div class="h-48 overflow-hidden relative">
+             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center space-x-4">
+                <a href="#" class="p-3 bg-white rounded-full text-black hover:scale-110 transition-transform"><i class="fa-solid fa-link"></i></a>
+             </div>
+            <img src="/images/chorale.png" alt="Chorale System" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Chorale Mgmt System</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Organization tool for choir members, attendance tracking, and event scheduling.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">PHP</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">MySQL</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">Bootstrap</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+          <div class="h-48 overflow-hidden relative">
+             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center space-x-4">
+                <a href="#" class="p-3 bg-white rounded-full text-black hover:scale-110 transition-transform"><i class="fa-solid fa-link"></i></a>
+             </div>
+            <img src="/images/school.png" alt="Class Record" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Digital Class Record</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Automated grading system for teachers with PDF reporting and statistical analysis.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">Laravel</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">Tailwind</span>
+              <span class="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/5">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="resume" class="py-24 relative">
+        <div class="absolute left-1/2 w-0.5 h-full bg-white/10 hidden md:block transform -translate-x-1/2"></div>
+
+        <h2 class="text-3xl md:text-5xl font-heading font-bold text-center mb-16 text-white" data-aos="fade-up">My Journey</h2>
+
+        <div class="flex flex-col md:flex-row justify-between items-center w-full mb-12 group">
+            <div class="md:w-5/12 text-center md:text-right px-4" data-aos="fade-right">
+                <h3 class="text-xl font-bold text-white">Full-Stack Developer</h3>
+                <p class="text-primary font-medium">Innovatech Solutions, Inc.</p>
+                <p class="text-gray-400 text-sm mt-2">Leading development of core web apps, optimizing database queries, and mentoring junior devs.</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-primary border-4 border-dark-900 z-10 my-4 md:my-0 shadow-[0_0_20px_rgba(99,102,241,0.5)]"></div>
+            <div class="md:w-5/12 px-4" data-aos="fade-left">
+                <span class="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-gray-300">2025 - Present</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row-reverse justify-between items-center w-full mb-12 group">
+            <div class="md:w-5/12 text-center md:text-left px-4" data-aos="fade-left">
+                <h3 class="text-xl font-bold text-white">BS Information Technology</h3>
+                <p class="text-accent font-medium">Tech University of the Philippines</p>
+                <p class="text-gray-400 text-sm mt-2">Graduated with Honors. Specialized in Web Engineering and Systems Design.</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-accent border-4 border-dark-900 z-10 my-4 md:my-0 shadow-[0_0_20px_rgba(139,92,246,0.5)]"></div>
+            <div class="md:w-5/12 text-center md:text-right px-4" data-aos="fade-right">
+                <span class="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-gray-300">2018 - 2022</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24">
+      <div class="glass-card rounded-3xl p-8 md:p-16 max-w-5xl mx-auto text-center relative overflow-hidden" data-aos="zoom-in">
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-accent to-blue-500"></div>
+
+        <h2 class="text-3xl md:text-5xl font-heading font-bold mb-6">Let's work together.</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+          I'm currently available for freelance projects and open to new opportunities. If you have an idea, let's discuss how we can make it scalable and user-friendly.
+        </p>
+
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+          <a href="mailto:rennielsalazar948@gmail.com" class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors shadow-lg flex items-center gap-2">
+            <i class="fa-solid fa-envelope"></i> rennielsalazar948@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/renniel-salazar-452a22336/" target="_blank" class="px-8 py-4 rounded-full border border-gray-600 hover:border-white text-white font-bold transition-all flex items-center gap-2 bg-dark-800">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="py-8 text-center text-gray-500 text-sm border-t border-white/5">
+    <p>&copy; <span id="current-year"></span> Salazar Renniel<i class="fa-solid fa-heart text-red-500"></i></p>
+  </footer>
+
+  <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 translate-y-10 transition-all duration-300 z-50 hover:bg-indigo-600">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="index.js"></script>
 </body>
 </html>
