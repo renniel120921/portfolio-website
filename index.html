@@ -19,18 +19,11 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['"Inter"', 'sans-serif'],
-          },
+          fontFamily: { sans: ['"Inter"', 'sans-serif'] },
           colors: {
-            bgMain: '#F3F4F6',
-            darkText: '#111827',
-            mutedText: '#6B7280',
-            dmBg: '#0f172a',
-            dmCard: '#1e293b',
-            dmText: '#f8fafc',
-            dmMuted: '#94a3b8',
-            dmBorder: '#334155',
+            bgMain: '#F3F4F6', darkText: '#111827', mutedText: '#6B7280',
+            dmBg: '#0f172a', dmCard: '#1e293b', dmText: '#f8fafc',
+            dmMuted: '#94a3b8', dmBorder: '#334155',
           }
         }
       }
@@ -39,57 +32,34 @@
 
   <style>
     /* Smooth Transitions */
-    body, .card, .tag, h1, h2, h3, p, span, i, div, a, img, button {
-      transition: all 0.3s ease;
-    }
-
+    body, .card, .tag, h1, h2, h3, p, span, i, div, a, img, button { transition: all 0.3s ease; }
     body { background-color: #F3F4F6; color: #111827; }
     html.dark body { background-color: #0f172a; color: #f8fafc; }
 
     /* Compact Card Style */
-    .card {
-      background-color: #FFFFFF;
-      border: 1px solid #E5E7EB;
-      border-radius: 1rem;
-      padding: 1.25rem; /* Adjusted from 1.5rem for compact look */
-    }
-    html.dark .card {
-      background-color: #1e293b;
-      border-color: #334155;
-    }
+    .card { background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 1rem; padding: 1.25rem; }
+    html.dark .card { background-color: #1e293b; border-color: #334155; }
 
     /* Compact Tag Style */
-    .tag {
-      display: inline-block;
-      padding: 0.2rem 0.6rem; /* Smaller padding */
-      font-size: 0.75rem;     /* Smaller text */
-      font-weight: 600;
-      color: #374151;
-      background-color: #FFFFFF;
-      border: 1px solid #E5E7EB;
-      border-radius: 0.375rem;
-      margin-bottom: 0.375rem;
-      margin-right: 0.25rem;
-    }
-    html.dark .tag {
-      background-color: #0f172a;
-      border-color: #334155;
-      color: #cbd5e1;
-    }
+    .tag { display: inline-block; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #374151; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 0.375rem; margin-bottom: 0.375rem; margin-right: 0.25rem; }
+    html.dark .tag { background-color: #0f172a; border-color: #334155; color: #cbd5e1; }
 
     /* Buttons */
-    html.dark .btn-white {
-        background-color: #1e293b;
-        color: #fff;
-        border-color: #475569;
-    }
+    html.dark .btn-white { background-color: #1e293b; color: #fff; border-color: #475569; }
     html.dark .btn-white:hover { background-color: #334155; }
-
     html.dark .btn-black { background-color: #000000; color: #fff; }
     html.dark .btn-black:hover { background-color: #1a1a1a; }
+
+    /* Lightbox Styles */
+    #lightbox { backdrop-filter: blur(5px); }
   </style>
 </head>
 <body class="antialiased py-8 px-4 md:px-8 max-w-5xl mx-auto relative">
+
+  <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/90 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 focus:outline-none">&times;</button>
+    <img id="lightbox-img" src="" alt="Full View" class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-2xl transform scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+  </div>
 
   <div class="absolute top-6 right-4 md:right-0 z-50">
     <button id="theme-toggle" class="bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-full p-1 w-12 h-7 flex items-center relative transition-colors shadow-sm cursor-pointer hover:scale-105">
@@ -100,8 +70,7 @@
   </div>
 
   <div class="flex flex-col md:flex-row items-start gap-6 mb-8 mt-2 relative">
-
-    <div class="group relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gray-200 dark:bg-slate-800 flex-shrink-0 border border-gray-200 dark:border-slate-700 shadow-sm cursor-pointer">
+    <div class="group relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gray-200 dark:bg-slate-800 flex-shrink-0 border border-gray-200 dark:border-slate-700 shadow-sm cursor-pointer" onclick="openLightbox('images/picko.jpg')">
       <img src="images/newme.jpg" alt="Formal Profile" class="absolute inset-0 w-full h-full object-cover bg-gray-200 dark:bg-slate-800 transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10">
       <img src="images/icon.jpg" alt="Casual Profile" class="absolute inset-0 w-full h-full object-cover bg-gray-200 dark:bg-slate-800 transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-10">
     </div>
@@ -111,24 +80,19 @@
         <h1 class="text-2xl md:text-3xl font-bold text-darkText dark:text-white">Salazar Renniel</h1>
         <i class="fa-solid fa-circle-check text-blue-500 text-lg" title="Verified"></i>
       </div>
-
       <div class="flex items-center gap-2 text-mutedText dark:text-dmMuted text-sm mb-1">
         <i class="fa-solid fa-location-dot"></i> City of San Fernando, Pampanga
       </div>
-
       <p class="text-base md:text-lg font-medium text-darkText dark:text-gray-200 mb-5">
         Future Software Engineer <span class="text-gray-300 dark:text-slate-600 mx-2">\</span> IT Student
       </p>
-
       <div class="flex flex-wrap gap-2.5 items-center">
         <a href="#contact" class="btn-black bg-gray-900 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-black transition-colors flex items-center gap-2">
           <i class="fa-regular fa-calendar"></i> Contact Me
         </a>
-
         <a href="mailto:rennielsalazar948@gmail.com" class="btn-white bg-white border border-gray-300 text-darkText px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-50 transition-colors flex items-center gap-2">
           <i class="fa-regular fa-envelope"></i> Send Email
         </a>
-
         <div class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold flex items-center justify-between gap-3 cursor-pointer hover:bg-blue-700 transition-colors w-full md:w-auto shadow-md shadow-blue-500/10">
           <div class="flex items-center gap-2">
             <i class="fa-solid fa-trophy"></i>
@@ -141,9 +105,7 @@
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
     <div class="lg:col-span-1 space-y-5">
-
       <div class="card">
         <h2 class="font-bold text-base mb-3 flex items-center gap-2 text-darkText dark:text-white">
           <i class="fa-solid fa-user text-gray-400"></i> About
@@ -163,49 +125,27 @@
           </h2>
           <a href="#" class="text-xs font-semibold hover:underline text-darkText dark:text-gray-300">View All ></a>
         </div>
-
         <div class="mb-3">
           <p class="text-[11px] font-bold text-gray-900 dark:text-gray-200 mb-2 uppercase tracking-wide">Frontend</p>
-          <div>
-            <span class="tag">HTML5</span>
-            <span class="tag">CSS3</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">Tailwind</span>
-          </div>
+          <div><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Tailwind</span></div>
         </div>
-
         <div class="mb-3">
           <p class="text-[11px] font-bold text-gray-900 dark:text-gray-200 mb-2 uppercase tracking-wide">Backend</p>
-          <div>
-            <span class="tag">PHP</span>
-            <span class="tag">Laravel</span>
-            <span class="tag">Java</span>
-            <span class="tag">Python</span>
-            <span class="tag">MySQL</span>
-          </div>
+          <div><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">Java</span><span class="tag">Python</span><span class="tag">MySQL</span></div>
         </div>
-
         <div>
           <p class="text-[11px] font-bold text-gray-900 dark:text-gray-200 mb-2 uppercase tracking-wide">Tools</p>
-          <div>
-            <span class="tag">Git</span>
-            <span class="tag">VS Code</span>
-            <span class="tag">XAMPP</span>
-          </div>
+          <div><span class="tag">Git</span><span class="tag">VS Code</span><span class="tag">XAMPP</span></div>
         </div>
       </div>
-
     </div>
 
     <div class="lg:col-span-2 space-y-5">
-
       <div class="card">
         <h2 class="font-bold text-base mb-5 flex items-center gap-2 text-darkText dark:text-white">
           <i class="fa-solid fa-briefcase text-gray-400"></i> Experience
         </h2>
-
         <div class="relative border-l border-gray-200 dark:border-slate-700 ml-2 space-y-8">
-
           <div class="relative pl-6">
             <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-gray-900 dark:bg-white rounded-full ring-4 ring-white dark:ring-slate-800"></div>
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
@@ -214,28 +154,23 @@
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">City College of San Fernando, Pampanga</p>
           </div>
-
           <div class="relative pl-6">
             <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-gray-200 dark:bg-slate-600 rounded-full"></div>
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
               <h3 class="font-bold text-sm md:text-base text-gray-900 dark:text-white">Freelance Developer</h3>
-              <span class="text-[10px] font-bold bg-gray-100 dark:bg-slate-700 border dark:border-slate-600 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">2026 - Present</span>
+              <span class="text-[10px] font-bold bg-gray-100 dark:bg-slate-700 border dark:border-slate-600 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">2024 - Present</span>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Self-Employed</p>
-            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              Developing capstone projects and custom web applications.
-            </p>
+            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Developing capstone projects and custom web applications.</p>
           </div>
-
-           <div class="relative pl-6">
-            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-gray-200 dark:bg-slate-600 rounded-full"></div>
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-              <h3 class="font-bold text-sm md:text-base text-gray-900 dark:text-white">Hello World!</h3>
-              <span class="text-[10px] font-bold bg-gray-100 dark:bg-slate-700 border dark:border-slate-600 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">2022</span>
-            </div>
-            <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-2">Wrote my first line of code.</p>
-          </div>
-
+          <div class="relative pl-6">
+             <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-gray-200 dark:bg-slate-600 rounded-full"></div>
+             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+               <h3 class="font-bold text-sm md:text-base text-gray-900 dark:text-white">Hello World!</h3>
+               <span class="text-[10px] font-bold bg-gray-100 dark:bg-slate-700 border dark:border-slate-600 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">2018</span>
+             </div>
+             <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-2">Wrote my first line of code.</p>
+           </div>
         </div>
       </div>
 
@@ -247,18 +182,13 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
         <div class="card hover:border-gray-400 dark:hover:border-slate-500 transition-colors cursor-pointer group">
           <div class="flex justify-between items-start mb-2">
             <h3 class="font-bold text-gray-900 dark:text-white text-base">SmartBasura</h3>
             <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">IoT</span>
           </div>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-            An IoT-integrated waste management system monitoring real-time garbage levels using sensors.
-          </p>
-          <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">
-            smart-basura.system
-          </div>
+          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">An IoT-integrated waste management system monitoring real-time garbage levels using sensors.</p>
+          <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">smart-basura.system</div>
         </div>
 
         <div class="card hover:border-gray-400 dark:hover:border-slate-500 transition-colors cursor-pointer group">
@@ -266,42 +196,54 @@
             <h3 class="font-bold text-gray-900 dark:text-white text-base">E-Commerce</h3>
             <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">Web</span>
           </div>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-            Full-stack online store with inventory tracking, admin dashboard, and secure checkout.
-          </p>
-          <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">
-            shop.renniel.dev
-          </div>
+          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">Full-stack online store with inventory tracking, admin dashboard, and secure checkout.</p>
+          <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">shop.renniel.dev</div>
         </div>
 
         <div class="card hover:border-gray-400 dark:hover:border-slate-500 transition-colors cursor-pointer group">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-gray-900 dark:text-white text-base">Class Record</h3>
-              <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">System</span>
-            </div>
-            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-              Automated grading system for teachers with PDF reporting and statistical analysis.
-            </p>
-            <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">
-              class-record.app
-            </div>
-        </div>
+           <div class="flex justify-between items-start mb-2">
+             <h3 class="font-bold text-gray-900 dark:text-white text-base">Class Record</h3>
+             <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">System</span>
+           </div>
+           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">Automated grading system for teachers with PDF reporting and statistical analysis.</p>
+           <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">class-record.app</div>
+       </div>
 
-        <div class="card hover:border-gray-400 dark:hover:border-slate-500 transition-colors cursor-pointer group">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-gray-900 dark:text-white text-base">Chorale Sys</h3>
-              <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">Mgmt</span>
-            </div>
-            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-              Organization tool for choir groups to track member attendance and schedule events.
-            </p>
-            <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">
-              chorale-app.php
-            </div>
-        </div>
-
+       <div class="card hover:border-gray-400 dark:hover:border-slate-500 transition-colors cursor-pointer group">
+           <div class="flex justify-between items-start mb-2">
+             <h3 class="font-bold text-gray-900 dark:text-white text-base">Chorale Sys</h3>
+             <span class="text-[10px] bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-slate-600">Mgmt</span>
+           </div>
+           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">Organization tool for choir groups to track member attendance and schedule events.</p>
+           <div class="text-[10px] font-mono text-gray-400 dark:text-gray-500">chorale-app.php</div>
+       </div>
       </div>
 
+      <div class="card">
+        <h2 class="font-bold text-base mb-4 flex items-center gap-2 text-darkText dark:text-white">
+            <i class="fa-solid fa-award text-gray-400"></i> Certifications
+        </h2>
+        <div class="space-y-4">
+            <div class="flex items-center gap-4 group cursor-pointer" onclick="openLightbox('images/data-privacy.jpg')">
+                <div class="w-16 h-12 rounded-md overflow-hidden bg-gray-100 border border-gray-200 dark:border-slate-700 flex-shrink-0 relative">
+                    <img src="images/data-privacy.jpg" alt="Data Privacy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">Data Privacy Awareness</h3>
+                    <p class="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide">Seminar • 2024</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 group cursor-pointer" onclick="openLightbox('images/bpm.jpg')">
+                <div class="w-16 h-12 rounded-md overflow-hidden bg-gray-100 border border-gray-200 dark:border-slate-700 flex-shrink-0 relative">
+                    <img src="images/bpm.jpg" alt="IT BPM" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">IT-BPM Career Fair</h3>
+                    <p class="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide">Participant • 2025</p>
+                </div>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -311,19 +253,19 @@
     </h2>
     <div class="card overflow-hidden">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-             <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group">
+             <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group cursor-pointer" onclick="openLightbox('images/picko.jpg')">
                 <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold z-10">View</div>
                 <img src="images/picko.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group">
+            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group cursor-pointer" onclick="openLightbox('images/pickoto.jpg')">
                  <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold z-10">View</div>
-                <img src="images/newone.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <img src="images/pickoto.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group">
+            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group cursor-pointer" onclick="openLightbox('images/newpic.jpg')">
                  <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold z-10">View</div>
                 <img src="images/newpic.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group">
+            <div class="aspect-square bg-gray-100 dark:bg-slate-700 rounded-lg overflow-hidden relative group cursor-pointer" onclick="openLightbox('images/newpic1.jpg')">
                  <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold z-10">View</div>
                 <img src="images/newpic1.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
@@ -334,6 +276,180 @@
   <footer class="text-center text-xs text-gray-500 dark:text-gray-400 mt-10 mb-6">
     &copy; 2026 Salazar Renniel. All rights reserved.
   </footer>
+
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div id="chat-window" class="hidden w-80 md:w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden mb-4 transition-all transform origin-bottom-right">
+      <div class="bg-gray-900 dark:bg-slate-900 p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <img src="images/picko.jpg" class="w-10 h-10 rounded-full object-cover border-2 border-green-400">
+            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-sm">Chat with Renniel</h3>
+            <p class="text-gray-400 text-xs">AI Assistant</p>
+          </div>
+        </div>
+        <button onclick="toggleChat()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+
+      <div id="chat-messages" class="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-slate-800/50">
+        <div class="flex items-start gap-2.5">
+          <img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover">
+          <div class="flex flex-col gap-1 w-full max-w-[320px]">
+             <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                <span class="text-sm font-semibold text-gray-900 dark:text-white">Renniel (AI)</span>
+             </div>
+             <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-200 dark:bg-slate-700 rounded-e-xl rounded-es-xl">
+                <p class="text-sm font-normal text-gray-900 dark:text-white">Hi! I'm Renniel's AI assistant. Ask me anything about his projects, skills, or studies!</p>
+             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
+        <form id="chat-form" class="flex gap-2">
+          <input type="text" id="user-input" placeholder="Type a message..." class="w-full bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white text-sm rounded-lg p-2.5 focus:ring-blue-500 focus:outline-none" required>
+          <button type="submit" class="bg-blue-600 text-white p-2.5 rounded-lg hover:bg-blue-700 transition-colors">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <button onclick="toggleChat()" class="group flex items-center justify-center w-14 h-14 bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition-all hover:scale-110">
+      <i class="fa-solid fa-message text-white text-2xl group-hover:rotate-12 transition-transform"></i>
+    </button>
+  </div>
+
+  <script type="module">
+    const chatForm = document.getElementById('chat-form');
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+
+    // System instruction (Full Persona Restored)
+    const systemPrompt = `
+      You are Renniel Salazar, a 4th-year IT student at City College of San Fernando, Pampanga.
+      You are a portfolio AI assistant.
+      TONE: Professional, Friendly, Humble. Use clear English.
+
+      KEY FACTS:
+      - Education: BS Information Technology, 4th Year.
+      - Tech Stack: Java, Python, PHP, Laravel, MySQL, HTML/CSS/JS.
+      - Projects: SmartBasura (IoT), E-Commerce Platform, Digital Class Record.
+      - Goal: Looking for a 600-hour Internship for 2026.
+      - Contact: rennielsalazar948@gmail.com.
+
+      RULES:
+      - Keep answers short (max 2-3 sentences).
+      - Act as Renniel. Do not mention you are an AI model.
+    `;
+
+    // Keep track of history locally
+    let chatHistory = [
+        { role: "user", parts: [{ text: systemPrompt }] },
+        { role: "model", parts: [{ text: "Understood. I am Renniel." }] }
+    ];
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        appendMessage('user', message);
+        userInput.value = '';
+        const loadingId = appendLoading();
+
+        try {
+            // CALL YOUR BACKEND INSTEAD OF GOOGLE
+            // Ensure your server.js is running on port 3000
+            const response = await fetch('http://localhost:3000/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: message,
+                    history: chatHistory
+                })
+            });
+
+            const data = await response.json();
+            removeLoading(loadingId);
+
+            if (data.text) {
+                appendMessage('ai', data.text);
+                // Update history for continuous conversation
+                chatHistory.push({ role: "user", parts: [{ text: message }] });
+                chatHistory.push({ role: "model", parts: [{ text: data.text }] });
+            } else {
+                throw new Error("Invalid response");
+            }
+
+        } catch (error) {
+            removeLoading(loadingId);
+            appendMessage('ai', "Error: Could not connect to the backend server. Make sure 'node server.js' is running.");
+            console.error("Backend Error:", error);
+        }
+    });
+
+    // Helper Functions for UI
+    function appendMessage(sender, text) {
+      const isUser = sender === 'user';
+      const div = document.createElement('div');
+      div.className = `flex items-start gap-2.5 ${isUser ? 'justify-end' : ''}`;
+
+      const imgHtml = isUser
+        ? `<div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center"><i class="fa-solid fa-user text-gray-600"></i></div>`
+        : `<img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover">`;
+
+      const bubbleColor = isUser
+        ? 'bg-blue-600 text-white rounded-s-xl rounded-ee-xl'
+        : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white rounded-e-xl rounded-es-xl';
+
+      div.innerHTML = `
+        ${!isUser ? imgHtml : ''}
+        <div class="flex flex-col gap-1 w-full max-w-[320px]">
+            <div class="flex flex-col leading-1.5 p-3 border-gray-200 ${bubbleColor}">
+              <p class="text-sm font-normal">${text}</p>
+            </div>
+        </div>
+        ${isUser ? imgHtml : ''}
+      `;
+
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function appendLoading() {
+      const id = 'loading-' + Date.now();
+      const div = document.createElement('div');
+      div.id = id;
+      div.className = "flex items-start gap-2.5";
+      div.innerHTML = `
+        <img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover">
+        <div class="flex flex-col gap-1 w-full max-w-[320px]">
+           <div class="flex items-center space-x-2 p-4 bg-gray-200 dark:bg-slate-700 rounded-e-xl rounded-es-xl">
+              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
+              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
+           </div>
+        </div>
+      `;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return id;
+    }
+
+    function removeLoading(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    // Make toggle function global
+    window.toggleChat = function() {
+      const chatWindow = document.getElementById('chat-window');
+      chatWindow.classList.toggle('hidden');
+    }
+  </script>
 
   <script>
     const toggleBtn = document.getElementById('theme-toggle');
@@ -372,6 +488,30 @@
             setLightAppearance();
         }
     });
+
+    function openLightbox(imageSrc) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = imageSrc;
+        lightbox.classList.remove('hidden');
+        setTimeout(() => {
+            lightbox.classList.remove('opacity-0');
+            lightboxImg.classList.remove('scale-95');
+            lightboxImg.classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightbox.classList.add('opacity-0');
+        lightboxImg.classList.remove('scale-100');
+        lightboxImg.classList.add('scale-95');
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightboxImg.src = '';
+        }, 300);
+    }
   </script>
 
 </body>
