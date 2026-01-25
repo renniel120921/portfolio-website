@@ -70,7 +70,7 @@
   </div>
 
   <div class="flex flex-col md:flex-row items-start gap-6 mb-8 mt-2 relative">
-    <div class="group relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gray-200 dark:bg-slate-800 flex-shrink-0 border border-gray-200 dark:border-slate-700 shadow-sm cursor-pointer" onclick="openLightbox('images/picko.jpg')">
+    <div class="group relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gray-200 dark:bg-slate-800 flex-shrink-0 border border-gray-200 dark:border-slate-700 shadow-sm cursor-pointer">
       <img src="images/newme.jpg" alt="Formal Profile" class="absolute inset-0 w-full h-full object-cover bg-gray-200 dark:bg-slate-800 transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10">
       <img src="images/icon.jpg" alt="Casual Profile" class="absolute inset-0 w-full h-full object-cover bg-gray-200 dark:bg-slate-800 transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-10">
     </div>
@@ -93,13 +93,13 @@
         <a href="mailto:rennielsalazar948@gmail.com" class="btn-white bg-white border border-gray-300 text-darkText px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-50 transition-colors flex items-center gap-2">
           <i class="fa-regular fa-envelope"></i> Send Email
         </a>
-        <div class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold flex items-center justify-between gap-3 cursor-pointer hover:bg-blue-700 transition-colors w-full md:w-auto shadow-md shadow-blue-500/10">
+        <a href="internship.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold flex items-center justify-between gap-3 cursor-pointer hover:bg-blue-700 transition-colors w-full md:w-auto shadow-md shadow-blue-500/10 decoration-transparent">
           <div class="flex items-center gap-2">
             <i class="fa-solid fa-trophy"></i>
             <span>Open for Internship 2026</span>
           </div>
-          <i class="fa-solid fa-chevron-down text-[10px]"></i>
-        </div>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
       </div>
     </div>
   </div>
@@ -386,7 +386,7 @@
 
         } catch (error) {
             removeLoading(loadingId);
-            appendMessage('ai', "Error: Could not connect to the backend server. Make sure 'node server.js' is running.");
+            appendMessage('ai', "Error: Ooops Sorry Ai features is comming soon.");
             console.error("Backend Error:", error);
         }
     });

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Candidate | Salazar Renniel</title>
+  <link rel="icon" href="images/bago.jpg" type="image/jpeg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Inter"', 'sans-serif'] },
+          colors: {
+            bgMain: '#F3F4F6', darkText: '#111827', mutedText: '#6B7280',
+            dmBg: '#0f172a', dmCard: '#1e293b', dmText: '#f8fafc',
+            dmMuted: '#94a3b8', dmBorder: '#334155',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body, .card, h1, h2, h3, p, div, a, button { transition: all 0.3s ease; }
+    body { background-color: #F3F4F6; color: #111827; }
+    html.dark body { background-color: #0f172a; color: #f8fafc; }
+    .card { background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 1rem; padding: 1.5rem; }
+    html.dark .card { background-color: #1e293b; border-color: #334155; }
+  </style>
+</head>
+<body class="antialiased py-8 px-4 md:px-8 max-w-4xl mx-auto relative">
+
+  <div class="absolute top-6 right-4 md:right-0 z-50">
+    <button id="theme-toggle" class="bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-full p-1 w-12 h-7 flex items-center relative transition-colors shadow-sm cursor-pointer hover:scale-105">
+        <div id="toggle-circle" class="w-5 h-5 bg-yellow-400 rounded-full shadow-md transform transition-transform duration-300 translate-x-0.5 flex items-center justify-center">
+            <i id="toggle-icon" class="fa-solid fa-sun text-white text-[9px]"></i>
+        </div>
+    </button>
+  </div>
+
+  <div class="mb-8">
+    <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+      <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+    </a>
+  </div>
+
+  <div class="text-center mb-10">
+    <div class="inline-block p-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4">
+      <i class="fa-solid fa-briefcase text-2xl"></i>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-darkText dark:text-white mb-3">Ready to Contribute</h1>
+    <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+      I am a 4th-year BSIT student seeking a <span class="font-bold text-gray-900 dark:text-white">600-hour Internship</span> for 2026.
+      Passionate about Backend Development, IoT, and solving real-world problems.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="card relative overflow-hidden group">
+      <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+      <h2 class="font-bold text-xl mb-4 flex items-center gap-2 text-darkText dark:text-white">
+        <i class="fa-solid fa-check-circle text-blue-500"></i> Why Hire Me?
+      </h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500"></div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Proficient in <b>Full-Stack Development</b> (Laravel, PHP, Java, Python).</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500"></div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Experience with <b>IoT Systems</b> (SmartBasura Project).</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500"></div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Strong foundation in <b>Database Management</b> (MySQL).</p>
+        </li>
+        <li class="flex items-start gap-3">
+            <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500"></div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Fast learner and adaptable to new technologies.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-green-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+        <h2 class="font-bold text-xl mb-4 flex items-center gap-2 text-darkText dark:text-white">
+          <i class="fa-solid fa-calendar-check text-green-500"></i> Availability
+        </h2>
+        <div class="space-y-4">
+            <div>
+                <p class="text-xs uppercase font-bold text-gray-400 mb-1">Duration</p>
+                <p class="font-semibold text-darkText dark:text-white">600 Hours (Required)</p>
+            </div>
+            <div>
+                <p class="text-xs uppercase font-bold text-gray-400 mb-1">Start Date</p>
+                <p class="font-semibold text-darkText dark:text-white">January 2026 (Flexible)</p>
+            </div>
+            <div>
+                <p class="text-xs uppercase font-bold text-gray-400 mb-1">Preferred Roles</p>
+                <div class="flex flex-wrap gap-2 mt-1">
+                    <span class="text-xs bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded border dark:border-slate-600 dark:text-gray-300">Software Engineer</span>
+                    <span class="text-xs bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded border dark:border-slate-600 dark:text-gray-300">Backend Dev</span>
+                    <span class="text-xs bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded border dark:border-slate-600 dark:text-gray-300">Web Dev</span>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="mt-8 bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-10 text-center border border-gray-200 dark:border-slate-700 shadow-sm">
+    <h3 class="text-xl font-bold text-darkText dark:text-white mb-2">Let's work together!</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">I am currently preparing my documents and portfolio for review.</p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:rennielsalazar948@gmail.com" class="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
+            <i class="fa-solid fa-paper-plane"></i> Hire Me as Intern
+        </a>
+        <button class="w-full sm:w-auto bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download"></i> Download CV / Resume
+        </button>
+    </div>
+  </div>
+
+  <footer class="text-center text-xs text-gray-500 dark:text-gray-400 mt-10 mb-6">
+    &copy; 2026 Salazar Renniel. All rights reserved.
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleCircle = document.getElementById('toggle-circle');
+    const toggleIcon = document.getElementById('toggle-icon');
+    const html = document.documentElement;
+
+    // Check Local Storage
+    if (localStorage.getItem('theme') === 'dark') {
+        html.classList.add('dark');
+        setDarkAppearance();
+    } else {
+        setLightAppearance();
+    }
+
+    function setDarkAppearance() {
+        toggleCircle.classList.remove('bg-yellow-400', 'translate-x-0.5');
+        toggleCircle.classList.add('bg-slate-900', 'translate-x-5');
+        toggleIcon.classList.remove('fa-sun', 'text-white');
+        toggleIcon.classList.add('fa-moon', 'text-yellow-400');
+    }
+
+    function setLightAppearance() {
+        toggleCircle.classList.add('bg-yellow-400', 'translate-x-0.5');
+        toggleCircle.classList.remove('bg-slate-900', 'translate-x-5');
+        toggleIcon.classList.add('fa-sun', 'text-white');
+        toggleIcon.classList.remove('fa-moon', 'text-yellow-400');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        if (html.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+            setDarkAppearance();
+        } else {
+            localStorage.setItem('theme', 'light');
+            setLightAppearance();
+        }
+    });
+  </script>
+</body>
+</html>
