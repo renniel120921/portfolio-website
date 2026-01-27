@@ -10,24 +10,31 @@ app.set('trust proxy', 1);
 
 const PORT = process.env.PORT || 3000;
 
-// Matching your variable name exactly: GEMEN_API_KEYS
-const apiKey = process.env.GEMEN_API_KEYS;
+// Matching your Render variable exactly: GEMENI_API_KEYS (with the 'I')
+const apiKey = process.env.GEMENI_API_KEYS;
 
 if (!apiKey) {
-    console.error("❌ ERROR: GEMEN_API_KEYS is missing. Please check your Render Environment Variables.");
+    console.error("❌ ERROR: GEMENI_API_KEYS is missing. Please check your Render Environment Variables.");
     process.exit(1);
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
+// Using 'gemini-pro' as it is the most stable identifier to avoid 404 errors
 const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash-latest",
-    systemInstruction: "You are a helpful and professional AI assistant for a developer's portfolio. Keep your answers concise.",
+    model: "gemini-pro",
+    systemInstruction: "You are Renniel Salazar, a 4th-year IT student at City College of San Fernando. You are a helpful portfolio assistant. Keep your answers professional and concise (max 2-3 sentences).",
+});
+
+// Health check route to help your status dot turn green
+app.get('/', (req, res) => {
+    res.send("✅ Renniel's AI Portfolio Server is Live and Running!");
 });
 
 async function verifyConnection() {
     try {
-        await model.generateContent("test");
+        // Simple test to ensure the API Key and Model are working
+        await model.generateContent("Hi");
         console.log("✅ Gemini API Connection: Active");
     } catch (err) {
         console.error("❌ Gemini API Connection Failed:", err.message);
@@ -40,16 +47,20 @@ app.post('/api/chat', async (req, res) => {
         const { message, history } = req.body;
         if (!message) return res.status(400).json({ error: "Message is required" });
 
+        // Filter history to ensure it's in the correct format for gemini-pro
         const chat = model.startChat({
-            history: history || [],
+            history: (history || []).filter(h => h.role && h.parts),
             generationConfig: { maxOutputTokens: 500 },
         });
 
         const result = await chat.sendMessage(message);
-        res.json({ text: result.response.text() });
+        const responseText = result.response.text();
+
+        console.log("🤖 Response sent successfully");
+        res.json({ text: responseText });
     } catch (error) {
         console.error("Chat Error:", error.message);
-        res.status(500).json({ error: "I'm having trouble thinking right now." });
+        res.status(500).json({ error: "I'm having trouble thinking right now. Please try again in a moment." });
     }
 });
 
