@@ -87,7 +87,7 @@
         Future Software Engineer <span class="text-gray-300 dark:text-slate-600 mx-2">\</span> IT Student
       </p>
       <div class="flex flex-wrap gap-2.5 items-center">
-        <a href="https://www.facebook.com/renzFi.2024/" class="btn-black bg-gray-900 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-black transition-colors flex items-center gap-2">
+        <a href="https://www.facebook.com/renzFi.2024/" target="_blank" class="btn-black bg-gray-900 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-black transition-colors flex items-center gap-2">
           <i class="fa-regular fa-calendar"></i> Contact Me
         </a>
         <a href="mailto:rennielsalazar948@gmail.com" class="btn-white bg-white border border-gray-300 text-darkText px-4 py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-50 transition-colors flex items-center gap-2">
@@ -105,16 +105,20 @@
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
     <div class="lg:col-span-1 space-y-5">
       <div class="card">
         <h2 class="font-bold text-base mb-3 flex items-center gap-2 text-darkText dark:text-white">
           <i class="fa-solid fa-user text-gray-400"></i> About
         </h2>
         <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
-          I'm a full-stack software engineer specializing in developing solutions with <b>Java, Python, and PHP</b>. I work on projects including web apps, IoT systems, and database management.
+          I am a <b>22-year-old 4th-year IT student</b> at the <b>City College of San Fernando, Pampanga</b>, specializing in full-stack development.
+        </p>
+        <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+          With a strong foundation in <b>Java, Python, and PHP</b>, I am passionate about building efficient software solutions and IoT systems like <b>SmartBasura</b>.
         </p>
         <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-          Creator of <b>SmartBasura</b> and various E-commerce platforms. Currently a 4th-year student at CCSF seeking internship opportunities.
+          Currently, I am seeking a <b>600-hour internship for 2026</b> where I can apply my technical skills to real-world challenges.
         </p>
       </div>
 
@@ -161,7 +165,7 @@
               <span class="text-[10px] font-bold bg-gray-100 dark:bg-slate-700 border dark:border-slate-600 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">2026 - Present</span>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Self-Employed</p>
-            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Developing capstone projects and custom web applications.</p>
+            <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Developing capstone projects and custom web applications including full-stack IoT and E-commerce platforms.</p>
           </div>
           <div class="relative pl-6">
              <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-gray-200 dark:bg-slate-600 rounded-full"></div>
@@ -329,14 +333,12 @@
     const statusDot = document.getElementById('status-dot');
     const statusText = document.getElementById('status-text');
 
-    // YOUR LIVE RENDER URL
     const API_URL = 'https://portfolio-website-iyv7.onrender.com/api/chat';
 
-    // HEALTH CHECK: Verifies if the Render server is awake
+    // HEALTH CHECK
     async function checkServerStatus() {
         try {
             const response = await fetch('https://portfolio-website-iyv7.onrender.com/');
-            // If the server responds with 200 (OK) or even 404, it means it's "Awake"
             if (response.ok || response.status === 404) {
                 statusDot.classList.remove('bg-yellow-500', 'animate-pulse');
                 statusDot.classList.add('bg-green-500');
@@ -349,11 +351,15 @@
     }
     checkServerStatus();
 
+    // UPDATED SYSTEM PROMPT
     const systemPrompt = `
-      You are Renniel Salazar, a 4th-year IT student at City College of San Fernando, Pampanga.
+      You are Renniel Salazar, a 22-year-old 4th-year IT student at City College of San Fernando, Pampanga.
       TONE: Professional, Friendly, Humble. Use clear English.
-      KEY FACTS: BS IT 4th Year, Tech Stack: Java, Python, PHP, Laravel, MySQL.
-      Goal: 600-hour Internship 2026.
+      KEY FACTS:
+      - Education: BS Information Technology (4th Year).
+      - Skills: Java, Python, PHP, Laravel, MySQL, Full-stack Development.
+      - Projects: SmartBasura (IoT), E-Commerce, Class Record System.
+      - Goal: Seeking a 600-hour Internship for 2026.
       RULES: Act as Renniel. Keep answers max 2-3 sentences.
     `;
 
@@ -411,30 +417,15 @@
         }
     });
 
-    // UI Helper Functions
     function appendMessage(sender, text) {
       const isUser = sender === 'user';
       const div = document.createElement('div');
       div.className = `flex items-start gap-2.5 ${isUser ? 'justify-end' : ''}`;
-
       const imgHtml = isUser
         ? `<div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center"><i class="fa-solid fa-user text-gray-600"></i></div>`
         : `<img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover">`;
-
-      const bubbleColor = isUser
-        ? 'bg-blue-600 text-white rounded-s-xl rounded-ee-xl'
-        : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white rounded-e-xl rounded-es-xl';
-
-      div.innerHTML = `
-        ${!isUser ? imgHtml : ''}
-        <div class="flex flex-col gap-1 w-full max-w-[320px]">
-            <div class="flex flex-col leading-1.5 p-3 border-gray-200 ${bubbleColor}">
-              <p class="text-sm font-normal">${text}</p>
-            </div>
-        </div>
-        ${isUser ? imgHtml : ''}
-      `;
-
+      const bubbleColor = isUser ? 'bg-blue-600 text-white rounded-s-xl rounded-ee-xl' : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white rounded-e-xl rounded-es-xl';
+      div.innerHTML = `${!isUser ? imgHtml : ''}<div class="flex flex-col gap-1 w-full max-w-[320px]"><div class="flex flex-col leading-1.5 p-3 border-gray-200 ${bubbleColor}"><p class="text-sm font-normal">${text}</p></div></div>${isUser ? imgHtml : ''}`;
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -444,16 +435,7 @@
       const div = document.createElement('div');
       div.id = id;
       div.className = "flex items-start gap-2.5";
-      div.innerHTML = `
-        <img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover">
-        <div class="flex flex-col gap-1 w-full max-w-[320px]">
-           <div class="flex items-center space-x-2 p-4 bg-gray-200 dark:bg-slate-700 rounded-e-xl rounded-es-xl">
-              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
-              <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
-           </div>
-        </div>
-      `;
+      div.innerHTML = `<img src="images/picko.jpg" class="w-8 h-8 rounded-full object-cover"><div class="flex flex-col gap-1 w-full max-w-[320px]"><div class="flex items-center space-x-2 p-4 bg-gray-200 dark:bg-slate-700 rounded-e-xl rounded-es-xl"><div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div><div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div><div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div></div></div>`;
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       return id;
