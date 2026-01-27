@@ -327,25 +327,17 @@
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
 
-    // System instruction (Full Persona Restored)
+    // YOUR LIVE RENDER URL
+    const API_URL = 'https://portfolio-website-iyv7.onrender.com/api/chat';
+
     const systemPrompt = `
       You are Renniel Salazar, a 4th-year IT student at City College of San Fernando, Pampanga.
-      You are a portfolio AI assistant.
       TONE: Professional, Friendly, Humble. Use clear English.
-
-      KEY FACTS:
-      - Education: BS Information Technology, 4th Year.
-      - Tech Stack: Java, Python, PHP, Laravel, MySQL, HTML/CSS/JS.
-      - Projects: SmartBasura (IoT), E-Commerce Platform, Digital Class Record.
-      - Goal: Looking for a 600-hour Internship for 2026.
-      - Contact: rennielsalazar948@gmail.com.
-
-      RULES:
-      - Keep answers short (max 2-3 sentences).
-      - Act as Renniel. Do not mention you are an AI model.
+      KEY FACTS: BS IT 4th Year, Tech Stack: Java, Python, PHP, Laravel, MySQL.
+      Goal: 600-hour Internship 2026.
+      RULES: Act as Renniel. Keep answers max 2-3 sentences.
     `;
 
-    // Keep track of history locally
     let chatHistory = [
         { role: "user", parts: [{ text: systemPrompt }] },
         { role: "model", parts: [{ text: "Understood. I am Renniel." }] }
@@ -361,37 +353,47 @@
         const loadingId = appendLoading();
 
         try {
-            // CALL YOUR BACKEND INSTEAD OF GOOGLE
-            // Ensure your server.js is running on port 3000
-            const response = await fetch('http://localhost:3000/api/chat', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     message: message,
-                    history: chatHistory
+                    history: chatHistory.slice(-6) // Keeps conversation memory efficient
                 })
             });
+
+            if (!response.ok) {
+                // If Render is "asleep", the first request often times out or returns 5xx
+                if(response.status >= 500) {
+                    throw new Error("Server is waking up...");
+                }
+                throw new Error("Network response was not ok");
+            }
 
             const data = await response.json();
             removeLoading(loadingId);
 
             if (data.text) {
                 appendMessage('ai', data.text);
-                // Update history for continuous conversation
                 chatHistory.push({ role: "user", parts: [{ text: message }] });
                 chatHistory.push({ role: "model", parts: [{ text: data.text }] });
-            } else {
-                throw new Error("Invalid response");
             }
 
         } catch (error) {
             removeLoading(loadingId);
-            appendMessage('ai', "Error: Ooops Sorry Ai features is comming soon.");
             console.error("Backend Error:", error);
+
+            let errorText = "Ooops! I'm having trouble connecting to my brain right now.";
+
+            if (error.message === "Server is waking up...") {
+                errorText = "I'm just waking up my server (Render Free Tier). Please wait about 30 seconds and try messaging me again! 🙏";
+            }
+
+            appendMessage('ai', errorText);
         }
     });
 
-    // Helper Functions for UI
+    // --- UI Helper Functions ---
     function appendMessage(sender, text) {
       const isUser = sender === 'user';
       const div = document.createElement('div');
@@ -444,75 +446,11 @@
       if (el) el.remove();
     }
 
-    // Make toggle function global
     window.toggleChat = function() {
       const chatWindow = document.getElementById('chat-window');
       chatWindow.classList.toggle('hidden');
     }
-  </script>
-
-  <script>
-    const toggleBtn = document.getElementById('theme-toggle');
-    const toggleCircle = document.getElementById('toggle-circle');
-    const toggleIcon = document.getElementById('toggle-icon');
-    const html = document.documentElement;
-
-    if (localStorage.getItem('theme') === 'dark') {
-        html.classList.add('dark');
-        setDarkAppearance();
-    } else {
-        setLightAppearance();
-    }
-
-    function setDarkAppearance() {
-        toggleCircle.classList.remove('bg-yellow-400', 'translate-x-0.5');
-        toggleCircle.classList.add('bg-slate-900', 'translate-x-5');
-        toggleIcon.classList.remove('fa-sun', 'text-white');
-        toggleIcon.classList.add('fa-moon', 'text-yellow-400');
-    }
-
-    function setLightAppearance() {
-        toggleCircle.classList.add('bg-yellow-400', 'translate-x-0.5');
-        toggleCircle.classList.remove('bg-slate-900', 'translate-x-5');
-        toggleIcon.classList.add('fa-sun', 'text-white');
-        toggleIcon.classList.remove('fa-moon', 'text-yellow-400');
-    }
-
-    toggleBtn.addEventListener('click', () => {
-        html.classList.toggle('dark');
-        if (html.classList.contains('dark')) {
-            localStorage.setItem('theme', 'dark');
-            setDarkAppearance();
-        } else {
-            localStorage.setItem('theme', 'light');
-            setLightAppearance();
-        }
-    });
-
-    function openLightbox(imageSrc) {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = imageSrc;
-        lightbox.classList.remove('hidden');
-        setTimeout(() => {
-            lightbox.classList.remove('opacity-0');
-            lightboxImg.classList.remove('scale-95');
-            lightboxImg.classList.add('scale-100');
-        }, 10);
-    }
-
-    function closeLightbox() {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightbox.classList.add('opacity-0');
-        lightboxImg.classList.remove('scale-100');
-        lightboxImg.classList.add('scale-95');
-        setTimeout(() => {
-            lightbox.classList.add('hidden');
-            lightboxImg.src = '';
-        }, 300);
-    }
-  </script>
+</script>
 
 </body>
 </html>

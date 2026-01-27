@@ -6,51 +6,51 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.set('trust proxy', 1);
 
-const apiKey = process.env.GEMINI_API_KEY;
+const PORT = process.env.PORT || 3000;
+
+// Matching your variable name exactly: GEMEN_API_KEYS
+const apiKey = process.env.GEMEN_API_KEYS;
+
+if (!apiKey) {
+    console.error("❌ ERROR: GEMEN_API_KEYS is missing. Please check your Render Environment Variables.");
+    process.exit(1);
+}
+
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// --- MODEL CHECKER (Dito natin malalaman kung ano ang available sayo) ---
-async function checkAvailableModels() {
-    try {
-        console.log("🔍 Checking available models for your API Key...");
-        // Note: Gumagamit tayo ng fetch para direct access
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-        const data = await response.json();
+const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    systemInstruction: "You are a helpful and professional AI assistant for a developer's portfolio. Keep your answers concise.",
+});
 
-        if (data.models) {
-            console.log("✅ AVAILABLE MODELS:");
-            data.models.forEach(m => console.log(`   - ${m.name.replace('models/', '')}`));
-        } else {
-            console.error("❌ Walang models na nakita. Baka may problema sa API Key Project.");
-            console.error("Response:", data);
-        }
+async function verifyConnection() {
+    try {
+        await model.generateContent("test");
+        console.log("✅ Gemini API Connection: Active");
     } catch (err) {
-        console.error("Error checking models:", err);
+        console.error("❌ Gemini API Connection Failed:", err.message);
     }
 }
-checkAvailableModels(); // Patakbuhin agad pag-start ng server
-// ---------------------------------------------------------------------
-
-// Gamitin ang 'gemini-1.5-flash' bilang default, pero check mo logs kung ano ang available
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+verifyConnection();
 
 app.post('/api/chat', async (req, res) => {
     try {
         const { message, history } = req.body;
-        console.log(`📩 Message: "${message}"`);
+        if (!message) return res.status(400).json({ error: "Message is required" });
 
-        const chat = model.startChat({ history: history || [] });
+        const chat = model.startChat({
+            history: history || [],
+            generationConfig: { maxOutputTokens: 500 },
+        });
+
         const result = await chat.sendMessage(message);
-        const response = result.response.text();
-
-        console.log("🤖 Sent Response");
-        res.json({ text: response });
+        res.json({ text: result.response.text() });
     } catch (error) {
-        console.error("❌ Error:", error.message);
-        res.status(500).json({ error: error.message });
+        console.error("Chat Error:", error.message);
+        res.status(500).json({ error: "I'm having trouble thinking right now." });
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
