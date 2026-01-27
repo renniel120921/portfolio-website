@@ -11,7 +11,7 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // Matching your variable name exactly: GEMEN_API_KEYS
-const apiKey = process.env.GEMENI_API_KEYS;
+const apiKey = process.env.GEMEN_API_KEYS;
 
 if (!apiKey) {
     console.error("❌ ERROR: GEMEN_API_KEYS is missing. Please check your Render Environment Variables.");
