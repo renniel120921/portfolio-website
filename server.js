@@ -21,7 +21,7 @@ if (!apiKey) {
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-1.5-flash-latest",
     systemInstruction: "You are a helpful and professional AI assistant for a developer's portfolio. Keep your answers concise.",
 });
 
