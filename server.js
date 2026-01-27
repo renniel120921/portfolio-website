@@ -44,8 +44,19 @@ app.post('/api/chat', async (req, res) => {
 
         const result = await chat.sendMessage(message);
         res.json({ text: result.response.text() });
+
     } catch (error) {
         console.error("Chat Error:", error.message);
+
+        // --- NEW: Rate Limit (429) Handling ---
+        // Ito ang sasalo kapag na-reach mo na ang Free Tier limit
+        if (error.message.includes('429') || error.message.includes('Quota')) {
+            return res.status(429).json({
+                error: "Masyadong mabilis ang request. Magpahinga muna ng 1 minute bago mag-chat ulit. 🤖💤"
+            });
+        }
+
+        // --- General Error Handling ---
         res.status(500).json({ error: "I'm processing... please try again in a moment." });
     }
 });
