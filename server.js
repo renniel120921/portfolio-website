@@ -26,7 +26,7 @@ const model = genAI.getGenerativeModel({
 });
 
 app.get('/', (req, res) => {
-    res.send("✅ Server is Online!");
+    res.send("Server is Online!");
 });
 
 app.post('/api/chat', async (req, res) => {
@@ -49,10 +49,9 @@ app.post('/api/chat', async (req, res) => {
         console.error("Chat Error:", error.message);
 
         // --- NEW: Rate Limit (429) Handling ---
-        // Ito ang sasalo kapag na-reach mo na ang Free Tier limit
         if (error.message.includes('429') || error.message.includes('Quota')) {
             return res.status(429).json({
-                error: "Masyadong mabilis ang request. Magpahinga muna ng 1 minute bago mag-chat ulit. 🤖💤"
+                error: "Masyadong mabilis ang request grabe ka! Please wait 1 minute before you continue chatting."
             });
         }
 
@@ -61,4 +60,4 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`🚀 Port: ${PORT}`));
+app.listen(PORT, () => console.log(`Port: ${PORT}`));
