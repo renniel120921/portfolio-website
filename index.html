@@ -31,6 +31,7 @@
                     },
                     animation: {
                         'blob': 'blob 10s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 4s ease-in-out infinite',
                     },
                     keyframes: {
@@ -213,9 +214,9 @@
         <img id="lightbox-img" src="" alt="Full View" class="max-h-[85vh] max-w-[85vw] object-contain rounded-3xl shadow-2xl transform scale-95 transition-transform duration-500" onclick="event.stopPropagation()">
     </div>
 
-    <div class="fixed top-6 right-6 md:top-8 md:right-8 z-50">
-        <button id="theme-toggle" class="bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-full p-2 w-16 h-9 flex items-center relative cursor-pointer shadow-lg hover:shadow-xl transition-all">
-            <div id="toggle-circle" class="w-6 h-6 bg-white dark:bg-gray-800 shadow-md rounded-full transform transition-transform duration-500 flex items-center justify-center">
+    <div class="fixed top-4 right-4 md:top-8 md:right-8 z-[100]">
+        <button id="theme-toggle" class="bg-white/50 dark:bg-black/50 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-full p-1 w-16 h-8 flex items-center relative cursor-pointer shadow-lg hover:shadow-xl transition-all touch-none">
+            <div id="toggle-circle" class="w-6 h-6 bg-white dark:bg-gray-800 shadow-md rounded-full transform translate-x-0 transition-transform duration-300 flex items-center justify-center pointer-events-none">
                 <i id="toggle-icon" class="fa-solid fa-sun text-gray-800 dark:text-white text-[10px]"></i>
             </div>
         </button>
@@ -442,19 +443,19 @@
         &copy; 2026 Renniel Salazar. <span class="text-brand ml-2">System Operational.</span>
     </footer>
 
-    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex flex-col items-end">
+    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[100] flex flex-col items-end">
         
-        <div id="chat-window" class="w-[calc(100vw-2rem)] md:w-[420px] chat-glass rounded-[2.5rem] mb-6 flex flex-col z-50">
+        <div id="chat-window" class="w-[calc(100vw-2rem)] md:w-[420px] chat-glass rounded-[2.5rem] mb-6 flex flex-col pointer-events-none opacity-0 scale-95 translate-y-2 transition-all duration-400 ease-out origin-bottom-right">
             
-            <div class="p-5 flex items-center justify-between border-b border-gray-200/30 dark:border-white/10 relative">
+            <div class="p-5 flex items-center justify-between border-b border-gray-200/30 dark:border-white/10 relative bg-white/40 dark:bg-black/30 rounded-t-[2.5rem]">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand to-brandAccent flex items-center justify-center text-white shrink-0 shadow-lg relative">
                         <i class="fa-solid fa-robot text-xl"></i>
-                        <div id="status-dot" class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-yellow-400 rounded-full border-[3px] border-white dark:border-[#0f0f14] shadow-[0_0_10px_rgba(250,204,21,0.8)]"></div>
+                        <div id="status-dot" class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-yellow-400 rounded-full border-[3px] border-white dark:border-[#0c0c11] shadow-[0_0_10px_rgba(250,204,21,0.8)]"></div>
                     </div>
                     <div>
                         <h3 class="text-gray-900 dark:text-white font-bold text-base tracking-tight">Renniel_OS AI</h3>
-                        <p id="status-text" class="text-brand dark:text-brandAccent text-[10px] uppercase font-bold mt-0.5 tracking-widest opacity-80">Initializing...</p>
+                        <p id="status-text" class="text-brand dark:text-brandAccent text-[10px] uppercase font-bold mt-0.5 tracking-widest opacity-90">Initializing...</p>
                     </div>
                 </div>
                 <button onclick="toggleChat()" class="w-10 h-10 rounded-full bg-gray-900/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-900/10 dark:hover:bg-white/20 hover:scale-105 transition-all">
@@ -475,8 +476,8 @@
                 </div>
             </div>
 
-            <div class="p-4 bg-transparent border-t border-gray-200/30 dark:border-white/10 pb-6">
-                <form id="chat-form" class="relative flex items-center bg-white/60 dark:bg-black/40 rounded-full p-1.5 border border-white/80 dark:border-white/10 shadow-inner backdrop-blur-xl">
+            <div class="p-4 bg-white/40 dark:bg-black/30 border-t border-gray-200/30 dark:border-white/10 rounded-b-[2.5rem] pb-5">
+                <form id="chat-form" class="relative flex items-center bg-white/70 dark:bg-black/50 rounded-full p-1.5 border border-white/80 dark:border-white/10 shadow-inner backdrop-blur-xl">
                     <input type="text" id="user-input" placeholder="Type a command..." class="w-full bg-transparent text-gray-900 dark:text-white text-sm pl-4 pr-14 py-3 focus:outline-none placeholder-gray-500 dark:placeholder-gray-400" required>
                     <button type="submit" class="absolute right-2 w-10 h-10 rounded-full premium-btn text-white flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
                         <i class="fa-solid fa-arrow-up text-sm"></i>
@@ -485,15 +486,13 @@
             </div>
         </div>
 
-        <button onclick="toggleChat()" class="relative premium-btn flex items-center justify-center w-16 h-16 rounded-full text-white cursor-pointer group shadow-[0_10px_30px_rgba(37,99,235,0.5)] animate-float">
-            <span class="absolute top-0 right-0 flex h-4 w-4">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white dark:border-[#0f0f14]"></span>
-            </span>
-            
-            <i class="fa-solid fa-robot text-2xl group-hover:scale-110 transition-transform duration-300"></i>
-            
-            <div class="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm font-bold rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300 pointer-events-none whitespace-nowrap border border-gray-200 dark:border-white/10">
+        <button onclick="toggleChat()" class="relative flex items-center justify-center w-16 h-16 rounded-full cursor-pointer group animate-float">
+            <div class="absolute inset-0 bg-brand rounded-full blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative flex items-center justify-center w-full h-full rounded-full bg-gradient-to-tr from-brand to-brandAccent border border-white/20 shadow-[0_8px_32px_rgba(37,99,235,0.6)] transform group-hover:scale-105 transition-all duration-300 z-10">
+                <i class="fa-solid fa-robot text-white text-2xl group-hover:rotate-12 transition-transform duration-300"></i>
+                <div class="absolute top-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-[#0c0c11] shadow-[0_0_8px_rgba(74,222,128,0.8)]"></div>
+            </div>
+            <div class="absolute right-full mr-5 top-1/2 -translate-y-1/2 px-4 py-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-900 dark:text-white text-sm font-bold rounded-2xl shadow-xl opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300 pointer-events-none whitespace-nowrap border border-gray-200 dark:border-white/10">
                 Chat with AI
             </div>
         </button>
@@ -519,7 +518,6 @@
                     statusDot.classList.replace('shadow-[0_0_10px_rgba(250,204,21,0.8)]', 'shadow-[0_0_10px_rgba(74,222,128,0.8)]');
                 }
             } catch (err) {
-                console.log("WAIT");
             }
         }
         checkServerStatus();
@@ -636,7 +634,20 @@
         }
         
         window.toggleChat = function() {
-            document.getElementById('chat-window').classList.toggle('show-chat');
+            const chatWindow = document.getElementById('chat-window');
+            if(chatWindow.classList.contains('show-chat')) {
+                chatWindow.classList.remove('show-chat');
+                chatWindow.classList.replace('opacity-100', 'opacity-0');
+                chatWindow.classList.replace('scale-100', 'scale-95');
+                chatWindow.classList.replace('translate-y-0', 'translate-y-2');
+                chatWindow.classList.replace('pointer-events-all', 'pointer-events-none');
+            } else {
+                chatWindow.classList.add('show-chat');
+                chatWindow.classList.replace('opacity-0', 'opacity-100');
+                chatWindow.classList.replace('scale-95', 'scale-100');
+                chatWindow.classList.replace('translate-y-2', 'translate-y-0');
+                chatWindow.classList.replace('pointer-events-none', 'pointer-events-all');
+            }
         }
     </script>
 
@@ -656,22 +667,59 @@
             function applyTheme(isDark) {
                 if (isDark) {
                     html.classList.add('dark');
-                    toggleCircle.classList.replace('translate-x-0', 'translate-x-[24px]');
+                    toggleCircle.classList.replace('translate-x-0', 'translate-x-8');
                     toggleCircle.classList.replace('bg-white', 'bg-gray-800');
                     toggleIcon.classList.replace('fa-sun', 'fa-moon');
                     toggleIcon.classList.replace('text-gray-800', 'text-white');
                     localStorage.setItem('theme', 'dark');
                 } else {
                     html.classList.remove('dark');
-                    toggleCircle.classList.replace('translate-x-[24px]', 'translate-x-0');
+                    toggleCircle.classList.replace('translate-x-8', 'translate-x-0');
                     toggleCircle.classList.replace('bg-gray-800', 'bg-white');
                     toggleIcon.classList.replace('fa-moon', 'fa-sun');
                     toggleIcon.classList.replace('text-white', 'text-gray-800');
                     localStorage.setItem('theme', 'light');
                 }
             }
-            applyTheme(localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
-            toggleBtn.addEventListener('click', () => applyTheme(!html.classList.contains('dark')));
+            
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme === 'dark' || (!savedTheme && prefersDark));
+
+            toggleBtn.addEventListener('click', (e) => {
+                if (window.isSwiping) return;
+                applyTheme(!html.classList.contains('dark'));
+            });
+
+            let touchStartX = 0;
+            window.isSwiping = false;
+
+            toggleBtn.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                window.isSwiping = false;
+            }, {passive: true});
+
+            toggleBtn.addEventListener('touchmove', (e) => {
+                const touchCurrentX = e.changedTouches[0].screenX;
+                if (Math.abs(touchCurrentX - touchStartX) > 10) {
+                    window.isSwiping = true;
+                    e.preventDefault();
+                }
+            }, {passive: false});
+
+            toggleBtn.addEventListener('touchend', (e) => {
+                if (!window.isSwiping) return;
+                const touchEndX = e.changedTouches[0].screenX;
+                const deltaX = touchEndX - touchStartX;
+                
+                if (deltaX > 15) {
+                    applyTheme(true);
+                } else if (deltaX < -15) {
+                    applyTheme(false);
+                }
+                
+                setTimeout(() => { window.isSwiping = false; }, 50);
+            });
         });
 
         window.openLightbox = function(imageSrc) {
