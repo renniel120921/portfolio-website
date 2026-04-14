@@ -54,7 +54,6 @@ img{display:block}
 #c-dot{position:fixed;z-index:99999;pointer-events:none;width:6px;height:6px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);transition:transform .08s}
 #c-ring{position:fixed;z-index:99998;pointer-events:none;width:32px;height:32px;border:1px solid rgba(201,168,76,.5);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,opacity .3s}
 #c-ring.big{width:52px;height:52px;border-color:var(--gold);opacity:.6}
-#c-ring.play{width:68px;height:68px;border-color:var(--gold);opacity:1;background:rgba(201,168,76,.08)}
 
 /* ═══════════════════════════════════
    CANVAS + GRAIN
@@ -63,43 +62,97 @@ img{display:block}
 body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.04'/%3E%3C/svg%3E");opacity:.35;mix-blend-mode:overlay;transition:opacity .4s}
 
 /* ═══════════════════════════════════
-   CINEMATIC LINES
+   CINEMATIC BARS (global)
 ═══════════════════════════════════ */
 #cine-lines{position:fixed;inset:0;z-index:2;pointer-events:none;transition:opacity 1.2s ease}
 .cine-bar{position:absolute;left:0;right:0;height:80px;background:#000;transition:height 1.6s cubic-bezier(.76,0,.24,1)}
-.cine-bar.top{top:0}
-.cine-bar.bot{bottom:0}
+.cine-bar.top{top:0}.cine-bar.bot{bottom:0}
 #cine-lines.open .cine-bar{height:0}
 
 /* ═══════════════════════════════════
-   PRELOADER
+   VIDEO INTRO (CINEMATIC PRELOADER)
 ═══════════════════════════════════ */
-#preloader{position:fixed;inset:0;z-index:100000;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 1s ease,visibility 1s ease}
+#video-intro{
+  position:fixed;inset:0;z-index:200000;
+  background:#000;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  overflow:hidden;
+  transition:opacity 1.2s ease, visibility 1.2s ease;
+}
+#video-intro.out{opacity:0;visibility:hidden}
+#intro-video{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+#intro-video.visible{opacity:1}
+
+/* Cinematic bars on video intro */
+.vi-bar{position:absolute;left:0;right:0;height:90px;background:#000;z-index:10;transition:height 1.8s cubic-bezier(.76,0,.24,1)}
+.vi-bar.top{top:0}.vi-bar.bot{bottom:0}
+#video-intro.bars-open .vi-bar{height:0}
+
+/* Skip button */
+#skip-btn{
+  position:absolute;bottom:40px;right:40px;z-index:20;
+  font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.15);
+  padding:.5rem 1.2rem;border-radius:999px;
+  transition:all .3s;opacity:0;animation:fadeIn .6s ease forwards 2s;
+  backdrop-filter:blur(8px);
+}
+#skip-btn:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+
+/* Intro overlay elements */
+.vi-corner{position:absolute;width:32px;height:32px;border-color:rgba(201,168,76,.6);border-style:solid;border-width:0;z-index:15;opacity:0;transition:opacity .5s ease}
+.vi-corner.tl{top:20px;left:20px;border-top-width:2px;border-left-width:2px}
+.vi-corner.tr{top:20px;right:20px;border-top-width:2px;border-right-width:2px}
+.vi-corner.bl{bottom:20px;left:20px;border-bottom-width:2px;border-left-width:2px}
+.vi-corner.br{bottom:20px;right:20px;border-bottom-width:2px;border-right-width:2px}
+#video-intro.bars-open .vi-corner{opacity:1}
+
+.vi-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.6),transparent);z-index:15;opacity:0;pointer-events:none;animation:viScan 6s ease-in-out infinite 3s}
+@keyframes viScan{0%{top:0;opacity:0}3%{opacity:.8}90%{opacity:.3}100%{top:100%;opacity:0}}
+
+.vi-title{
+  position:absolute;bottom:90px;left:0;right:0;
+  text-align:center;z-index:20;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+#video-intro.bars-open .vi-title{opacity:1;transform:translateY(0)}
+.vi-title-name{font-family:var(--ff-display);font-size:clamp(1.5rem,4vw,3rem);font-weight:900;letter-spacing:.12em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+.vi-title-sub{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.8);margin-top:.4rem}
+
+/* Loading bar under video */
+.vi-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.06);z-index:20}
+.vi-progress-fill{height:100%;width:0;background:var(--gold);transition:width linear}
+
+/* PRELOADER (after video, before portfolio) */
+#preloader{position:fixed;inset:0;z-index:100000;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .8s ease,visibility .8s ease}
 #preloader.out{opacity:0;visibility:hidden}
-.pre-film{display:flex;flex-direction:column;align-items:center;gap:2.5rem;width:100%}
-.pre-top-bar{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.04)}
-.pre-top-bar-fill{height:100%;width:0;background:var(--gold);animation:preBarFill 2.4s ease forwards .2s}
-.pre-count{font-family:var(--ff-mono);font-size:clamp(6rem,15vw,14rem);font-weight:300;color:rgba(255,255,255,.06);letter-spacing:-.05em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:countFade 2.4s ease forwards .2s}
-@keyframes countFade{0%{opacity:0;transform:translate(-50%,-50%) scale(.8)}30%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
-.pre-center{display:flex;flex-direction:column;align-items:center;gap:1.5rem;z-index:1}
-.pre-name{font-family:var(--ff-display);font-size:clamp(2.2rem,7vw,5.5rem);font-weight:900;letter-spacing:.06em;color:#fff;display:flex;overflow:hidden}
-.pre-name span{display:inline-block;animation:preCharUp .7s cubic-bezier(.16,1,.3,1) both}
-.pre-divider{width:0;height:1px;background:var(--gold);animation:divGrow .8s ease forwards 1.4s}
-@keyframes divGrow{to{width:200px}}
-.pre-sub{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.7);opacity:0;animation:fadeIn .6s ease forwards 1.6s}
-.pre-scan{position:absolute;width:100%;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:preScan 2.4s ease-in-out forwards .4s;opacity:0}
+.pre-scan{position:absolute;width:100%;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:preScan 1.8s ease-in-out forwards;opacity:0}
 @keyframes preScan{0%{top:0;opacity:0}5%{opacity:.6}90%{opacity:.4}100%{top:100%;opacity:0}}
 .pre-corners .pc{position:absolute;width:28px;height:28px;border-color:var(--gold);border-style:solid;border-width:0;opacity:0;animation:pcPop .5s ease forwards}
-.pc.tl{top:24px;left:24px;border-top-width:2px;border-left-width:2px;animation-delay:.1s}
-.pc.tr{top:24px;right:24px;border-top-width:2px;border-right-width:2px;animation-delay:.2s}
-.pc.bl{bottom:24px;left:24px;border-bottom-width:2px;border-left-width:2px;animation-delay:.3s}
-.pc.br{bottom:24px;right:24px;border-bottom-width:2px;border-right-width:2px;animation-delay:.4s}
+.pc.tl{top:24px;left:24px;border-top-width:2px;border-left-width:2px;animation-delay:.05s}
+.pc.tr{top:24px;right:24px;border-top-width:2px;border-right-width:2px;animation-delay:.1s}
+.pc.bl{bottom:24px;left:24px;border-bottom-width:2px;border-left-width:2px;animation-delay:.15s}
+.pc.br{bottom:24px;right:24px;border-bottom-width:2px;border-right-width:2px;animation-delay:.2s}
 @keyframes pcPop{to{opacity:1}}
+.pre-center{display:flex;flex-direction:column;align-items:center;gap:1.5rem;z-index:1}
+.pre-name{font-family:var(--ff-display);font-size:clamp(2.2rem,7vw,5.5rem);font-weight:900;letter-spacing:.06em;color:#fff;display:flex;overflow:hidden}
+.pre-name span{display:inline-block;animation:preCharUp .5s cubic-bezier(.16,1,.3,1) both}
+.pre-divider{width:0;height:1px;background:var(--gold);animation:divGrow .6s ease forwards .8s}
+@keyframes divGrow{to{width:200px}}
+.pre-sub{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.7);opacity:0;animation:fadeIn .5s ease forwards 1s}
+@keyframes preCharUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .pre-pct{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.15em;color:rgba(255,255,255,.3);margin-top:.5rem}
 .pre-pct-val{color:var(--gold);font-weight:500}
-@keyframes preCharUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
-@keyframes preBarFill{to{width:100%}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* ═══════════════════════════════════
    LAYOUT
@@ -177,206 +230,117 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .stat-l{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
 
 /* ═══════════════════════════════════
-   HERO VISUAL — VIDEO CARD
+   HERO VISUAL — CINEMATIC PHOTO CARD
 ═══════════════════════════════════ */
 .hero-visual{position:relative;display:flex;align-items:center;justify-content:flex-end;animation:heroFadeScale .9s cubic-bezier(.16,1,.3,1) 2.2s both}
 @keyframes heroFadeScale{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}
 .hv-wrap{display:flex;flex-direction:column;gap:16px;width:100%;max-width:460px}
 
-/* ── VIDEO PORTRAIT CARD ── */
-.hv-video-card{
+/* ── CINEMATIC PHOTO PORTRAIT CARD ── */
+.hv-photo-card{
   position:relative;
   border-radius:20px;
   overflow:hidden;
   border:1.5px solid var(--gold-border);
   aspect-ratio:3/4;
   background:var(--bg2);
-  cursor:none;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-  transition:border-color .4s,box-shadow .4s;
+  box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(201,168,76,.08), inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .4s,box-shadow .5s,transform .5s cubic-bezier(.16,1,.3,1);
 }
-.hv-video-card:hover{
+.hv-photo-card:hover{
   border-color:var(--gold);
-  box-shadow:0 28px 80px rgba(201,168,76,.18);
+  box-shadow:0 40px 100px rgba(201,168,76,.18), 0 0 60px rgba(201,168,76,.08);
+  transform:translateY(-6px) scale(1.01);
 }
-
-/* Poster image (shown by default) */
-.hv-poster{
+.hv-photo-card img.hv-portrait{
   width:100%;height:100%;
   object-fit:cover;
   display:block;
-  position:absolute;
-  inset:0;
-  transition:opacity .5s ease;
-  z-index:2;
+  position:absolute;inset:0;
+  transition:transform .8s cubic-bezier(.16,1,.3,1), filter .5s;
+  filter:saturate(.9) brightness(.92);
+}
+.hv-photo-card:hover img.hv-portrait{
+  transform:scale(1.04);
+  filter:saturate(1.05) brightness(.98);
 }
 
-/* Video element (hidden until clicked) */
-.hv-video{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;
-  position:absolute;
-  inset:0;
-  z-index:1;
+/* Gradient overlay on portrait */
+.hv-portrait-overlay{
+  position:absolute;inset:0;z-index:2;
+  background:linear-gradient(180deg,
+    rgba(0,0,0,.0) 0%,
+    rgba(0,0,0,.0) 40%,
+    rgba(5,5,8,.5) 75%,
+    rgba(5,5,8,.88) 100%
+  );
+  pointer-events:none;
 }
 
-/* Play overlay */
-.hv-play-overlay{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  background:rgba(0,0,0,.18);
-  transition:background .4s;
-}
-.hv-video-card:hover .hv-play-overlay{background:rgba(0,0,0,.32)}
-.hv-play-btn{
-  width:72px;height:72px;
-  border-radius:50%;
-  background:rgba(201,168,76,.15);
-  border:2px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--gold);
-  font-size:1.5rem;
-  backdrop-filter:blur(10px);
-  transition:all .35s cubic-bezier(.16,1,.3,1);
-  animation:playPulse 2.5s ease-in-out infinite;
-}
-@keyframes playPulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4),0 0 0 0 rgba(201,168,76,.15)}
-  50%{box-shadow:0 0 0 14px rgba(201,168,76,0),0 0 0 28px rgba(201,168,76,0)}
-}
-.hv-video-card:hover .hv-play-btn{
-  background:var(--gold);
-  color:#000;
-  transform:scale(1.12);
-  animation:none;
-  box-shadow:0 0 40px var(--gold-glow);
-}
-.hv-play-label{
-  font-family:var(--ff-mono);
-  font-size:.55rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.8);
-  text-shadow:0 1px 6px rgba(0,0,0,.5);
-}
-
-/* Scanning line on video card */
+/* Animated scan line */
 .hv-scan-line{
   position:absolute;
   left:0;right:0;height:1px;
   background:linear-gradient(to right,transparent,var(--gold),transparent);
-  opacity:0;
-  pointer-events:none;
-  z-index:4;
-  animation:hvScan 5s ease-in-out infinite 3s;
+  opacity:0;pointer-events:none;z-index:4;
+  animation:hvScan 5s ease-in-out infinite 2s;
 }
 @keyframes hvScan{
-  0%{top:0;opacity:0}5%{opacity:.7}85%{opacity:.3}100%{top:100%;opacity:0}
+  0%{top:0;opacity:0}5%{opacity:.6}85%{opacity:.3}100%{top:100%;opacity:0}
 }
 
-/* Corner brackets on video card */
-.hv-corners .hc{position:absolute;width:20px;height:20px;border-color:var(--gold);border-style:solid;border-width:0;z-index:5;transition:opacity .3s}
+/* Floating noise texture */
+.hv-photo-card::after{
+  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  opacity:.6;mix-blend-mode:overlay;
+}
+
+/* Corner brackets */
+.hv-corners .hc{position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;border-width:0;z-index:5;transition:all .4s}
 .hc.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:6px 0 0 0}
 .hc.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px;border-radius:0 6px 0 0}
 .hc.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 6px}
 .hc.br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 6px 0}
+.hv-photo-card:hover .hc{border-color:var(--gold-lt)}
 
 /* Frame data overlays */
 .hv-frame-data{
-  position:absolute;
-  bottom:16px;left:16px;right:16px;
-  z-index:5;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  pointer-events:none;
+  position:absolute;bottom:16px;left:16px;right:16px;
+  z-index:5;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;
 }
 .hv-frame-left{display:flex;flex-direction:column;gap:4px}
-.hv-frame-tag{
-  font-family:var(--ff-mono);
-  font-size:.5rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.5);
-  text-shadow:0 1px 4px rgba(0,0,0,.8);
+.hv-frame-tag{font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.hv-frame-name{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+
+/* Available badge */
+.hv-badge{position:absolute;top:14px;right:14px;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:7px;z-index:6}
+.hv-badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 8px rgba(74,222,128,.8);animation:blink 2s ease-in-out infinite}
+.hv-badge-txt{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+
+/* Floating year tag */
+.hv-year-tag{
+  position:absolute;top:14px;left:14px;z-index:6;
+  font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.1);padding:5px 10px;border-radius:999px;
+  backdrop-filter:blur(8px);
 }
-.hv-frame-name{
-  font-family:var(--ff-display);
-  font-size:1.1rem;
-  font-weight:700;
-  color:#fff;
-  text-shadow:0 2px 12px rgba(0,0,0,.7);
-}
-.hv-frame-rec{
-  display:flex;align-items:center;gap:5px;
-  font-family:var(--ff-mono);font-size:.5rem;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(255,255,255,.7);
-  text-shadow:0 1px 4px rgba(0,0,0,.8);
-}
-.hv-rec-dot{
-  width:7px;height:7px;
-  background:#ff4444;
-  border-radius:50%;
-  box-shadow:0 0 8px rgba(255,68,68,.8);
-  animation:blink 1.4s ease-in-out infinite;
-}
+
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* PLAYING state */
-.hv-video-card.playing .hv-poster{opacity:0;pointer-events:none}
-.hv-video-card.playing .hv-play-overlay{opacity:0;pointer-events:none}
-.hv-video-card.playing .hv-scan-line{opacity:0;animation:none}
-
-/* Pause overlay when playing */
-.hv-pause-overlay{
-  position:absolute;
-  inset:0;
-  z-index:6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent;
-  opacity:0;
-  transition:opacity .3s;
-}
-.hv-video-card.playing:hover .hv-pause-overlay{opacity:1}
-.hv-pause-btn{
-  width:60px;height:60px;
-  border-radius:50%;
-  background:rgba(0,0,0,.5);
-  border:1.5px solid rgba(255,255,255,.3);
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.8);
-  font-size:1.1rem;
-  backdrop-filter:blur(8px);
-  transition:all .3s;
-}
-.hv-pause-btn:hover{background:rgba(0,0,0,.7);border-color:#fff;color:#fff}
-
 /* Photo info row */
-.hv-photo-row{display:flex;align-items:center;gap:16px;background:var(--bg3);border:1.5px solid var(--gold-border);border-radius:20px;padding:16px 20px;transition:border-color .3s}
-.hv-photo-row:hover{border-color:var(--gold)}
-.hv-photo-frame{width:80px;height:80px;border-radius:14px;overflow:hidden;border:2px solid rgba(201,168,76,.5);flex-shrink:0}
+.hv-info-row{display:flex;align-items:center;gap:16px;background:var(--bg3);border:1.5px solid var(--gold-border);border-radius:20px;padding:16px 20px;transition:border-color .3s,transform .4s,box-shadow .4s}
+.hv-info-row:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,.1)}
+.hv-photo-frame{width:72px;height:72px;border-radius:12px;overflow:hidden;border:2px solid rgba(201,168,76,.5);flex-shrink:0}
 .hv-photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
-.hv-photo-row:hover .hv-photo-frame img{transform:scale(1.07)}
+.hv-info-row:hover .hv-photo-frame img{transform:scale(1.08)}
 .hv-photo-info{display:flex;flex-direction:column;gap:5px}
 .hv-name{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--text)}
 .hv-title-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:999px;padding:4px 12px;width:fit-content}
 .hv-title-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
 .hv-title-txt{font-family:var(--ff-mono);font-size:.55rem;font-weight:500;color:var(--gold-lt);letter-spacing:.08em;text-transform:uppercase}
 .hv-sub{font-family:var(--ff-mono);font-size:.6rem;color:var(--muted);margin-top:1px}
-
-.hv-badge{position:absolute;top:14px;right:14px;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:7px;z-index:6}
-.hv-badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 8px rgba(74,222,128,.8);animation:blink 2s ease-in-out infinite}
-.hv-badge-txt{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
 
 .scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;z-index:5;animation:fadeIn 1s ease 3.8s both}
 .scroll-track{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollGrow 2s ease-in-out infinite}
@@ -706,9 +670,6 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 .typing span:nth-child(2){animation-delay:.16s}.typing span:nth-child(3){animation-delay:.32s}
 @keyframes tyDot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
 
-/* ═══════════════════════════════════
-   MAGNETIC BUTTONS
-═══════════════════════════════════ */
 .mag-btn{transition:transform .3s cubic-bezier(.16,1,.3,1)}
 
 /* ═══════════════════════════════════
@@ -760,15 +721,57 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   <div class="cine-bar bot"></div>
 </div>
 
-<!-- PRELOADER -->
-<div id="preloader">
+<!-- ══════════════════════════════════
+     VIDEO INTRO (plays before portfolio)
+══════════════════════════════════ -->
+<div id="video-intro">
+  <!-- Cinematic bars -->
+  <div class="vi-bar top"></div>
+  <div class="vi-bar bot"></div>
+
+  <!-- Corner accents -->
+  <div class="vi-corner tl"></div>
+  <div class="vi-corner tr"></div>
+  <div class="vi-corner bl"></div>
+  <div class="vi-corner br"></div>
+
+  <!-- Scan line -->
+  <div class="vi-scan"></div>
+
+  <!-- The video -->
+  <video
+    id="intro-video"
+    src="images/new_vid.mp4"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+  ></video>
+
+  <!-- Name overlay shown after bars open -->
+  <div class="vi-title">
+    <div class="vi-title-name">RENNIEL SALAZAR</div>
+    <div class="vi-title-sub">Software Engineer &amp; Tech Founder</div>
+  </div>
+
+  <!-- Skip button -->
+  <button id="skip-btn" onclick="skipIntro()">Skip <i class="fa-solid fa-forward" style="font-size:.5rem;margin-left:3px"></i></button>
+
+  <!-- Progress bar -->
+  <div class="vi-progress">
+    <div class="vi-progress-fill" id="vi-prog"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PORTFOLIO PRELOADER (brief transition)
+══════════════════════════════════ -->
+<div id="preloader" style="display:none;">
   <div class="pre-scan"></div>
   <div class="pre-corners">
     <div class="pc tl"></div><div class="pc tr"></div>
     <div class="pc bl"></div><div class="pc br"></div>
   </div>
-  <div class="pre-top-bar"><div class="pre-top-bar-fill" id="pre-top-bar"></div></div>
-  <div class="pre-count">00</div>
   <div class="pre-center">
     <div class="pre-name" id="pre-letters"></div>
     <div class="pre-divider"></div>
@@ -825,33 +828,24 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
         </div>
       </div>
 
-      <!-- ══ HERO VISUAL: VIDEO PORTRAIT ══ -->
+      <!-- ══ HERO VISUAL: CINEMATIC PHOTO PORTRAIT ══ -->
       <div class="hero-visual">
         <div class="hv-wrap">
 
-          <!-- VIDEO CARD — click to play -->
-          <div class="hv-video-card" id="hv-video-card" onclick="toggleHeroVideo()">
+          <!-- PHOTO PORTRAIT CARD -->
+          <div class="hv-photo-card">
 
-            <!-- Poster/thumbnail shown by default -->
             <img
-              class="hv-poster"
-              id="hv-poster"
+              class="hv-portrait"
               src="images/ceo.jpg"
               alt="Renniel Salazar"
               onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=600'"
             >
 
-            <!-- The actual video -->
-            <video
-              class="hv-video"
-              id="hv-video"
-              src="images/new_vid.mp4"
-              loop
-              playsinline
-              preload="none"
-            ></video>
+            <!-- Gradient vignette -->
+            <div class="hv-portrait-overlay"></div>
 
-            <!-- Scanning line animation -->
+            <!-- Scan line animation -->
             <div class="hv-scan-line"></div>
 
             <!-- Corner brackets -->
@@ -862,42 +856,26 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
               <div class="hc br"></div>
             </div>
 
-            <!-- Status badge (top right) -->
+            <!-- Year tag -->
+            <div class="hv-year-tag">Portfolio · 2026</div>
+
+            <!-- Available badge -->
             <div class="hv-badge">
               <div class="hv-badge-dot"></div>
               <span class="hv-badge-txt">Available</span>
             </div>
 
-            <!-- Play overlay -->
-            <div class="hv-play-overlay" id="hv-play-overlay">
-              <div class="hv-play-btn">
-                <i class="fa-solid fa-play" id="hv-play-icon" style="margin-left:3px"></i>
-              </div>
-              <span class="hv-play-label">Tap to Play</span>
-            </div>
-
-            <!-- Pause overlay (shows on hover when playing) -->
-            <div class="hv-pause-overlay">
-              <div class="hv-pause-btn">
-                <i class="fa-solid fa-pause"></i>
-              </div>
-            </div>
-
             <!-- Bottom frame data -->
             <div class="hv-frame-data">
               <div class="hv-frame-left">
-                <span class="hv-frame-tag">Portfolio · 2026</span>
+                <span class="hv-frame-tag">Full-Stack Engineer</span>
                 <span class="hv-frame-name">Renniel Salazar</span>
-              </div>
-              <div class="hv-frame-rec">
-                <div class="hv-rec-dot"></div>
-                <span id="hv-rec-label">Preview</span>
               </div>
             </div>
           </div>
 
-          <!-- Info row below video -->
-          <div class="hv-photo-row">
+          <!-- Info row below photo -->
+          <div class="hv-info-row">
             <div class="hv-photo-frame">
               <img src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=160'">
             </div>
@@ -1026,45 +1004,39 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
     </div>
     <div class="services-grid">
       <div class="svc-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
-        <div class="svc-num">01</div>
-        <div class="svc-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="svc-num">01</div><div class="svc-icon"><i class="fa-solid fa-globe"></i></div>
         <div class="svc-title">Web Application Development</div>
-        <div class="svc-desc">End-to-end custom web applications engineered for performance, security, and scale — from architecture design to production deployment.</div>
+        <div class="svc-desc">End-to-end custom web applications engineered for performance, security, and scale.</div>
         <div class="svc-tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">REST APIs</span></div>
       </div>
       <div class="svc-card" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
-        <div class="svc-num">02</div>
-        <div class="svc-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <div class="svc-num">02</div><div class="svc-icon"><i class="fa-solid fa-layer-group"></i></div>
         <div class="svc-title">UI / UX & Frontend Engineering</div>
-        <div class="svc-desc">High-fidelity, responsive interfaces crafted with pixel precision. Every component interactive, accessible, and performant across all devices.</div>
+        <div class="svc-desc">High-fidelity, responsive interfaces crafted with pixel precision across all devices.</div>
         <div class="svc-tags"><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
       </div>
       <div class="svc-card" data-aos="fade-up" data-aos-delay="240" data-aos-duration="900">
-        <div class="svc-num">03</div>
-        <div class="svc-icon"><i class="fa-solid fa-plug"></i></div>
+        <div class="svc-num">03</div><div class="svc-icon"><i class="fa-solid fa-plug"></i></div>
         <div class="svc-title">API Gateway & Integration</div>
-        <div class="svc-desc">Designing robust, versioned REST API gateways and third-party integrations that power complex business workflows without friction.</div>
+        <div class="svc-desc">Designing robust, versioned REST API gateways and third-party integrations.</div>
         <div class="svc-tags"><span class="tag">REST</span><span class="tag">JSON</span><span class="tag">Auth</span><span class="tag">Webhooks</span></div>
       </div>
       <div class="svc-card" data-aos="fade-up" data-aos-delay="60" data-aos-duration="900">
-        <div class="svc-num">04</div>
-        <div class="svc-icon"><i class="fa-solid fa-microchip"></i></div>
+        <div class="svc-num">04</div><div class="svc-icon"><i class="fa-solid fa-microchip"></i></div>
         <div class="svc-title">IoT & Embedded Systems</div>
-        <div class="svc-desc">Custom C++ firmware for Arduino-based microcontrollers, bridging real-world sensors to cloud dashboards with reliable, low-latency data pipelines.</div>
+        <div class="svc-desc">Custom C++ firmware bridging real-world sensors to cloud dashboards.</div>
         <div class="svc-tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">MQTT</span></div>
       </div>
       <div class="svc-card" data-aos="fade-up" data-aos-delay="180" data-aos-duration="900">
-        <div class="svc-num">05</div>
-        <div class="svc-icon"><i class="fa-solid fa-cloud"></i></div>
+        <div class="svc-num">05</div><div class="svc-icon"><i class="fa-solid fa-cloud"></i></div>
         <div class="svc-title">Cloud Infrastructure & DevOps</div>
-        <div class="svc-desc">Provisioning high-availability cloud environments with automated CI/CD pipelines, monitoring, and 99%+ uptime SLA commitments.</div>
+        <div class="svc-desc">High-availability cloud environments with automated CI/CD and 99%+ uptime SLAs.</div>
         <div class="svc-tags"><span class="tag">Cloud</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Deploy</span></div>
       </div>
       <div class="svc-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
-        <div class="svc-num">06</div>
-        <div class="svc-icon"><i class="fa-solid fa-database"></i></div>
+        <div class="svc-num">06</div><div class="svc-icon"><i class="fa-solid fa-database"></i></div>
         <div class="svc-title">Database Architecture</div>
-        <div class="svc-desc">Optimized relational and NoSQL schema design, query tuning, and migration strategies for systems that handle millions of records reliably.</div>
+        <div class="svc-desc">Optimized relational and NoSQL schema design for systems handling millions of records.</div>
         <div class="svc-tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Indexing</span></div>
       </div>
     </div>
@@ -1083,26 +1055,10 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
       <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmVhZDJuZzIyOGhheGcxajR2Zm1iNHRucXFveml1cDFoNWpvbXUxMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/F9pTIJBJfuQdx81Ovr/giphy.gif" alt="Process Animation" style="width:350px;height:auto;border-radius:12px;object-fit:contain;flex-shrink:0;" data-aos="fade-left" data-aos-delay="300">
     </div>
     <div class="process-steps">
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
-        <div class="proc-num">01</div>
-        <div class="proc-title">Discovery</div>
-        <div class="proc-desc">Deep-dive into your goals, constraints, and success criteria. No code written until the problem is fully understood.</div>
-      </div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
-        <div class="proc-num">02</div>
-        <div class="proc-title">Architecture</div>
-        <div class="proc-desc">System diagrams, tech selection, and database schema before a single line of code. Built to last.</div>
-      </div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="240" data-aos-duration="900">
-        <div class="proc-num">03</div>
-        <div class="proc-title">Engineering</div>
-        <div class="proc-desc">Iterative development with weekly demos. Clean, documented, version-controlled code throughout.</div>
-      </div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="360" data-aos-duration="900">
-        <div class="proc-num">04</div>
-        <div class="proc-title">Deploy & Scale</div>
-        <div class="proc-desc">Production-hardened deployment with monitoring, load testing, and post-launch support built in.</div>
-      </div>
+      <div class="proc-step" data-aos="fade-up" data-aos-delay="0"><div class="proc-num">01</div><div class="proc-title">Discovery</div><div class="proc-desc">Deep-dive into your goals, constraints, and success criteria.</div></div>
+      <div class="proc-step" data-aos="fade-up" data-aos-delay="120"><div class="proc-num">02</div><div class="proc-title">Architecture</div><div class="proc-desc">System diagrams, tech selection, and database schema before a single line of code.</div></div>
+      <div class="proc-step" data-aos="fade-up" data-aos-delay="240"><div class="proc-num">03</div><div class="proc-title">Engineering</div><div class="proc-desc">Iterative development with weekly demos. Clean, documented, version-controlled code.</div></div>
+      <div class="proc-step" data-aos="fade-up" data-aos-delay="360"><div class="proc-num">04</div><div class="proc-title">Deploy & Scale</div><div class="proc-desc">Production-hardened deployment with monitoring, load testing, and post-launch support.</div></div>
     </div>
   </div>
 </section>
@@ -1113,7 +1069,7 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
     <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Projects</div>
     <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px;margin-bottom:60px;">
       <h2 class="sec-title" style="margin-bottom:0;flex-shrink:0;" data-aos="fade-up" data-aos-delay="100">SELECTED<br>WORK</h2>
-      <div style="width:100%;max-width:500px;" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+      <div style="width:100%;max-width:500px;" data-aos="fade-left" data-aos-delay="200">
         <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjlodjN0czF4ZDR1YTh0bGpvMHJ5Z2VwMG43eW5pdzhuZnZpcHJmYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PI3QGKFN6XZUCMMqJm/giphy.gif" alt="Tech Animation" style="width:100%;height:auto;border-radius:12px;opacity:.9;box-shadow:0 8px 32px rgba(0,0,0,.4);display:block;">
       </div>
     </div>
@@ -1126,7 +1082,7 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
         <div class="proj-body">
           <div class="proj-role">Founder & CEO · Est. 2026</div>
           <div class="proj-name">EasyWeb PH</div>
-          <p class="proj-desc">A premium digital agency provisioning enterprise-grade web infrastructure. Custom applications, complex API gateways, and high-availability cloud environments for Philippine businesses.</p>
+          <p class="proj-desc">A premium digital agency provisioning enterprise-grade web infrastructure for Philippine businesses.</p>
           <div class="tags"><span class="tag">Laravel</span><span class="tag">Cloud</span><span class="tag">APIs</span><span class="tag">UI/UX</span></div>
         </div>
         <div class="proj-foot"><span class="proj-link-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
@@ -1136,8 +1092,8 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
         <div class="proj-body">
           <div class="proj-role">Lead Architect · IoT</div>
           <div class="proj-name">SmartBasura</div>
-          <p class="proj-desc">Precision hardware-integrated IoT waste management system. Real-time sensor parsing, robust hardware communications, and sustainable data workflows powered by custom C++ logic running on Arduino.</p>
-          <div class="tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT</span><span class="tag">Sensors</span><span class="tag">Real-time</span></div>
+          <p class="proj-desc">Precision hardware-integrated IoT waste management system with real-time sensor data pipelines.</p>
+          <div class="tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT</span><span class="tag">Sensors</span></div>
         </div>
         <div class="proj-foot"><span class="proj-link-txt">Hardware Project</span><i class="fa-solid fa-microchip"></i></div>
       </div>
@@ -1149,39 +1105,32 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 <section id="oss">
   <div class="wrap">
     <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Open Source</div>
-    
-    <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:48px; margin-bottom:3.5rem;">
-      <div style="display:flex; flex-direction:column; gap:24px;">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:48px;margin-bottom:3.5rem;">
+      <div style="display:flex;flex-direction:column;gap:24px;">
         <h2 class="sec-title" style="margin-bottom:0;" data-aos="fade-up" data-aos-delay="100">CODE<br>CONTRIBUTIONS</h2>
         <p style="max-width:400px;font-size:.85rem;color:var(--muted);line-height:1.8;margin-bottom:0;" data-aos="fade-left" data-aos-delay="180">Public work, utilities, and tooling that power real projects.</p>
       </div>
-
-      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzRyYTcwa3dvMHV3ZDdsbGY1Z2dwNmFjcTVnbGJrZmIybXB1eWl6bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif" 
-           alt="Open Source Animation" 
-           style="width: 350px; height: auto; border-radius: 12px; object-fit: contain; flex-shrink: 0;"
-           data-aos="fade-left" 
-           data-aos-delay="300">
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzRyYTcwa3dvMHV3ZDdsbGY1Z2dwNmFjcTVnbGJrZmIybXB1eWl6bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif" alt="Open Source Animation" style="width:350px;height:auto;border-radius:12px;object-fit:contain;flex-shrink:0;" data-aos="fade-left" data-aos-delay="300">
     </div>
-
     <div class="oss-grid">
       <div class="oss-card" data-aos="fade-right" data-aos-duration="900" data-aos-delay="0">
         <div class="oss-head"><div class="oss-name">laravel-sensor-bridge</div><span class="oss-lang">C++ / PHP</span></div>
-        <div class="oss-desc">Bi-directional bridge connecting Arduino IoT firmware to Laravel backend APIs via serial-to-HTTP relay daemon. Powers SmartBasura and related sensor projects.</div>
+        <div class="oss-desc">Bi-directional bridge connecting Arduino IoT firmware to Laravel backend APIs via serial-to-HTTP relay daemon.</div>
         <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 12</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 4</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#4ade80;font-size:.5rem"></i> Active</span></div>
       </div>
       <div class="oss-card" data-aos="fade-left" data-aos-duration="900" data-aos-delay="100">
         <div class="oss-head"><div class="oss-name">php-api-scaffold</div><span class="oss-lang">PHP</span></div>
-        <div class="oss-desc">Opinionated Laravel API scaffolding with auth, rate limiting, versioning, and structured JSON error handling. Jumpstarts any REST API project with production defaults.</div>
+        <div class="oss-desc">Opinionated Laravel API scaffolding with auth, rate limiting, versioning, and structured JSON error handling.</div>
         <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 8</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 2</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#4ade80;font-size:.5rem"></i> Active</span></div>
       </div>
       <div class="oss-card" data-aos="fade-right" data-aos-duration="900" data-aos-delay="200">
         <div class="oss-head"><div class="oss-name">easyweb-ui-kit</div><span class="oss-lang">HTML/CSS</span></div>
-        <div class="oss-desc">Internal component library for EasyWeb PH client projects. Dark-first design tokens, accessible components, and pre-built page sections for rapid deployment.</div>
+        <div class="oss-desc">Internal component library for EasyWeb PH client projects. Dark-first design tokens and pre-built page sections.</div>
         <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 5</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 1</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:.5rem"></i> Beta</span></div>
       </div>
       <div class="oss-card" data-aos="fade-left" data-aos-duration="900" data-aos-delay="300">
         <div class="oss-head"><div class="oss-name">dti-workflow-tools</div><span class="oss-lang">Python</span></div>
-        <div class="oss-desc">Automation scripts developed during DTI Region 3 internship for report generation, data validation, and document processing pipelines across government workflows.</div>
+        <div class="oss-desc">Automation scripts for report generation, data validation, and document processing across government workflows.</div>
         <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 3</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 0</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#888;font-size:.5rem"></i> Internal</span></div>
       </div>
     </div>
@@ -1201,112 +1150,34 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 <section id="awards">
   <div class="wrap">
     <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Recognition</div>
-    
-    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 2rem;">
-        <h2 class="sec-title" style="margin: 0;" data-aos="fade-up" data-aos-delay="100">AWARDS &<br>CREDENTIALS</h2>
-        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWhtejg0YTVyZnVibXMxcnc0cHhycmdzZWlodHBxZWV4dGRtNzJxbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/349qKnoIBHK1i/giphy.gif" 
-             alt="Awards Animation"
-             style="width: 550px; height: 350px; border-radius: 12px; object-fit: cover;"
-             data-aos="fade-left" 
-             data-aos-delay="200">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:2rem;">
+      <h2 class="sec-title" style="margin:0;" data-aos="fade-up" data-aos-delay="100">AWARDS &<br>CREDENTIALS</h2>
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWhtejg0YTVyZnVibXMxcnc0cHhycmdzZWlodHBxZWV4dGRtNzJxbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/349qKnoIBHK1i/giphy.gif" alt="Awards Animation" style="width:550px;height:350px;border-radius:12px;object-fit:cover;" data-aos="fade-left" data-aos-delay="200">
     </div>
-
     <div class="awards-grid">
-      <div class="award-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-building-columns"></i></div>
-        <div class="award-year">2026</div>
-        <div class="award-title">DTI Region 3 Engineering Intern</div>
-        <div class="award-body">Selected for a highly competitive 486-hour government software engineering placement, contributing to digital transformation of regional operations.</div>
-      </div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-briefcase"></i></div>
-        <div class="award-year">2026</div>
-        <div class="award-title">Founder & CEO — EasyWeb PH</div>
-        <div class="award-body">Registered digital technology startup under DTI. Built and launched a full-service web agency serving businesses across the Philippines.</div>
-      </div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="240" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <div class="award-year">2022 – Present</div>
-        <div class="award-title">BSIT — City College San Fernando</div>
-        <div class="award-body">Specializing in information systems architecture, software engineering, embedded technology, and enterprise database management.</div>
-      </div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="60" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-microchip"></i></div>
-        <div class="award-year">2025</div>
-        <div class="award-title">IoT Systems Lead — SmartBasura</div>
-        <div class="award-body">Designed and shipped a full IoT waste management system from firmware to cloud dashboard, recognized as a capstone innovation project.</div>
-      </div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="180" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-code"></i></div>
-        <div class="award-year">2021 – 2022</div>
-        <div class="award-title">Freelance Developer — Pampanga SMEs</div>
-        <div class="award-body">Delivered production-grade web applications for local businesses independently, earning real-world project experience before formal schooling concluded.</div>
-      </div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
-        <div class="award-icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="award-year">Ongoing</div>
-        <div class="award-title">Security-First Engineering Practice</div>
-        <div class="award-body">Every project ships with auth hardening, input validation, and OWASP-aligned API security standards as non-negotiable engineering requirements.</div>
-      </div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="0"><div class="award-icon"><i class="fa-solid fa-building-columns"></i></div><div class="award-year">2026</div><div class="award-title">DTI Region 3 Engineering Intern</div><div class="award-body">Selected for a highly competitive 486-hour government software engineering placement.</div></div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="120"><div class="award-icon"><i class="fa-solid fa-briefcase"></i></div><div class="award-year">2026</div><div class="award-title">Founder & CEO — EasyWeb PH</div><div class="award-body">Registered digital technology startup under DTI. Built and launched a full-service web agency.</div></div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="240"><div class="award-icon"><i class="fa-solid fa-graduation-cap"></i></div><div class="award-year">2022 – Present</div><div class="award-title">BSIT — City College San Fernando</div><div class="award-body">Specializing in information systems architecture, software engineering, and embedded technology.</div></div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="60"><div class="award-icon"><i class="fa-solid fa-microchip"></i></div><div class="award-year">2025</div><div class="award-title">IoT Systems Lead — SmartBasura</div><div class="award-body">Designed and shipped a full IoT waste management system from firmware to cloud dashboard.</div></div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="180"><div class="award-icon"><i class="fa-solid fa-code"></i></div><div class="award-year">2021 – 2022</div><div class="award-title">Freelance Developer — Pampanga SMEs</div><div class="award-body">Delivered production-grade web applications for local businesses before formal schooling concluded.</div></div>
+      <div class="award-card" data-aos="fade-up" data-aos-delay="300"><div class="award-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="award-year">Ongoing</div><div class="award-title">Security-First Engineering Practice</div><div class="award-body">Every project ships with auth hardening, input validation, and OWASP-aligned API security standards.</div></div>
     </div>
   </div>
 </section>
 
 <!-- ══ STACK ══ -->
 <section id="stack">
-  <div class="wrap">
-    <div class="stack-label" data-aos="fade-up" data-aos-duration="700">Technologies & Tools</div>
-  </div>
+  <div class="wrap"><div class="stack-label" data-aos="fade-up" data-aos-duration="700">Technologies & Tools</div></div>
   <div class="stack-row" data-aos="fade" data-aos-duration="1000">
     <div class="stack-track">
-      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span>
-      <span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span>
-      <span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span>
-      <span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span>
-      <span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span>
-      <span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span>
-      <span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span>
-      <span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span>
-      <span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span>
-      <span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span>
-      <span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span>
-      <span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
-      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span>
-      <span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span>
-      <span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span>
-      <span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span>
-      <span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span>
-      <span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span>
-      <span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span>
-      <span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span>
-      <span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span>
-      <span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span>
-      <span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span>
-      <span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
+      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span><span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span><span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span><span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span><span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span><span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span><span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span><span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span><span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span><span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span><span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span><span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
+      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span><span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span><span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span><span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span><span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span><span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span><span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span><span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span><span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span><span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span><span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span><span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
     </div>
   </div>
   <div class="stack-row" style="margin-top:0;" data-aos="fade" data-aos-duration="1000" data-aos-delay="100">
     <div class="stack-track rev">
-      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
-      <span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span>
-      <span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span>
-      <span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span>
-      <span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span>
-      <span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span>
-      <span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span>
-      <span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span>
-      <span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span>
-      <span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
-      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
-      <span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span>
-      <span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span>
-      <span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span>
-      <span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span>
-      <span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span>
-      <span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span>
-      <span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span>
-      <span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span>
-      <span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
+      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span><span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span><span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span><span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span><span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span><span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span><span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span><span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span><span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span><span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
+      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span><span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span><span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span><span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span><span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span><span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span><span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span><span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span><span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span><span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
     </div>
   </div>
 </section>
@@ -1322,38 +1193,14 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
       </div>
     </div>
     <div class="gallery-grid">
-      <div class="gal-item" onclick="openLb('images/picko.jpg')" data-aos="fade-right" data-aos-duration="900" data-aos-delay="0">
-        <img src="images/picko.jpg" alt="Event photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/data-privacy.jpg')" data-aos="fade-down" data-aos-duration="900" data-aos-delay="120">
-        <img src="images/data-privacy.jpg" alt="Data Privacy event">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/bpm.jpg')" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200">
-        <img src="images/bpm.jpg" alt="BPM event">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/pickoto.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
-        <img src="images/pickoto.jpg" alt="Photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/newpic.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
-        <img src="images/newpic.jpg" alt="Photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/newpic1.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
-        <img src="images/newpic1.jpg" alt="Photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/prof1.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
-        <img src="images/prof1.jpg" alt="Photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gal-item" onclick="openLb('images/newme.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
-        <img src="images/newme.jpg" alt="Photo">
-        <div class="gal-overlay"><i class="fa-solid fa-expand"></i></div>
-      </div>
+      <div class="gal-item" onclick="openLb('images/picko.jpg')" data-aos="fade-right" data-aos-duration="900" data-aos-delay="0"><img src="images/picko.jpg" alt="Event photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/data-privacy.jpg')" data-aos="fade-down" data-aos-duration="900" data-aos-delay="120"><img src="images/data-privacy.jpg" alt="Data Privacy event"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/bpm.jpg')" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200"><img src="images/bpm.jpg" alt="BPM event"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/pickoto.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300"><img src="images/pickoto.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/newpic.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300"><img src="images/newpic.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/newpic1.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300"><img src="images/newpic1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/prof1.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300"><img src="images/prof1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item" onclick="openLb('images/newme.jpg')" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300"><img src="images/newme.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
     </div>
   </div>
 </section>
@@ -1366,24 +1213,21 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
     <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Right Now</div>
     <h2 class="sec-title" data-aos="fade-up" data-aos-delay="100">CURRENTLY<br>ACTIVE</h2>
     <div class="now-grid">
-      <div class="now-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
-        <div class="now-label">Building</div>
-        <div class="now-title">EasyWeb PH — v2 Platform</div>
-        <div class="now-meta">Shipping a full client portal with project tracking, invoicing, and asset delivery built on Laravel + Tailwind.</div>
+      <div class="now-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="now-label">Building</div><div class="now-title">EasyWeb PH — v2 Platform</div>
+        <div class="now-meta">Shipping a full client portal with project tracking, invoicing, and asset delivery.</div>
         <div class="now-prog-wrap"><div class="now-prog" data-prog="72" style="width:0%"></div></div>
         <div style="font-family:var(--ff-mono);font-size:.58rem;color:var(--muted);margin-top:.4rem">72% Complete</div>
       </div>
-      <div class="now-card" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
-        <div class="now-label">Interning</div>
-        <div class="now-title">DTI Region 3 — 486hr Placement</div>
-        <div class="now-meta">Automating government document workflows and building internal tools for regional business registration processing.</div>
+      <div class="now-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="now-label">Interning</div><div class="now-title">DTI Region 3 — 486hr Placement</div>
+        <div class="now-meta">Automating government document workflows and building internal tools.</div>
         <div class="now-prog-wrap"><div class="now-prog" data-prog="58" style="width:0%"></div></div>
         <div style="font-family:var(--ff-mono);font-size:.58rem;color:var(--muted);margin-top:.4rem">58% Complete</div>
       </div>
-      <div class="now-card" data-aos="fade-up" data-aos-delay="240" data-aos-duration="900">
-        <div class="now-label">Learning</div>
-        <div class="now-title">Advanced System Design Patterns</div>
-        <div class="now-meta">Deep-diving CQRS, event sourcing, and distributed cache strategies to level up architecture thinking for complex SaaS systems.</div>
+      <div class="now-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="now-label">Learning</div><div class="now-title">Advanced System Design Patterns</div>
+        <div class="now-meta">Deep-diving CQRS, event sourcing, and distributed cache strategies.</div>
         <div class="now-prog-wrap"><div class="now-prog" data-prog="35" style="width:0%"></div></div>
         <div style="font-family:var(--ff-mono);font-size:.58rem;color:var(--muted);margin-top:.4rem">35% Through</div>
       </div>
@@ -1400,30 +1244,9 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
       <p style="max-width:420px;font-size:.85rem;color:var(--muted);line-height:1.8;" data-aos="fade-left" data-aos-delay="180">Words from collaborators, clients, and peers who've seen the work up close.</p>
     </div>
     <div class="testi-grid">
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
-        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <div class="testi-text">"Renniel delivered a complete web platform ahead of schedule. His attention to backend security and API architecture was exactly what our business needed."</div>
-        <div class="testi-author">
-          <div class="testi-av">MR</div>
-          <div><div class="testi-name">Mark Reyes</div><div class="testi-role">Client · SME Owner, Pampanga</div></div>
-        </div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="140" data-aos-duration="900">
-        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <div class="testi-text">"His IoT system for SmartBasura was genuinely impressive — real-time sensor data flowing cleanly to our dashboard. The firmware was rock-solid from day one."</div>
-        <div class="testi-author">
-          <div class="testi-av">LC</div>
-          <div><div class="testi-name">Liza Cruz</div><div class="testi-role">Thesis Adviser · City College SF</div></div>
-        </div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="280" data-aos-duration="900">
-        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <div class="testi-text">"As a co-intern at DTI Region 3, I watched Renniel solve complex workflow problems with elegant code. He's one of those rare developers who thinks in systems."</div>
-        <div class="testi-author">
-          <div class="testi-av">JM</div>
-          <div><div class="testi-name">James Manalo</div><div class="testi-role">Fellow Intern · DTI Region 3</div></div>
-        </div>
-      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="0"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"Renniel delivered a complete web platform ahead of schedule. His attention to backend security and API architecture was exactly what our business needed."</div><div class="testi-author"><div class="testi-av">MR</div><div><div class="testi-name">Mark Reyes</div><div class="testi-role">Client · SME Owner, Pampanga</div></div></div></div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="140"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"His IoT system for SmartBasura was genuinely impressive — real-time sensor data flowing cleanly to our dashboard. The firmware was rock-solid from day one."</div><div class="testi-author"><div class="testi-av">LC</div><div><div class="testi-name">Liza Cruz</div><div class="testi-role">Thesis Adviser · City College SF</div></div></div></div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="280"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"As a co-intern at DTI Region 3, I watched Renniel solve complex workflow problems with elegant code. He's one of those rare developers who thinks in systems."</div><div class="testi-author"><div class="testi-av">JM</div><div><div class="testi-name">James Manalo</div><div class="testi-role">Fellow Intern · DTI Region 3</div></div></div></div>
     </div>
   </div>
 </section>
@@ -1440,58 +1263,16 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
     </div>
     <div class="journey-grid">
       <div class="timeline">
-        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="0">
-          <div class="tl-dot active"></div>
-          <div class="tl-period">2026 — Present</div>
-          <div class="tl-role">Software Engineering Intern</div>
-          <div class="tl-org">DTI Region 3</div>
-          <div class="tl-desc">Executing a 486-hour government internship, deploying advanced software engineering principles to optimize regional digital operations and infrastructure.</div>
-        </div>
-        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="180">
-          <div class="tl-dot active"></div>
-          <div class="tl-period">2026 — Present</div>
-          <div class="tl-role">Founder &amp; CEO</div>
-          <div class="tl-org">EasyWeb PH</div>
-          <div class="tl-desc">Established a premium digital agency delivering custom cloud architectures, enterprise software, and API gateways for Philippine businesses.</div>
-        </div>
-        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="360">
-          <div class="tl-dot"></div>
-          <div class="tl-period">2022 — Present</div>
-          <div class="tl-role">BSIT Student — 4th Year</div>
-          <div class="tl-org">City College San Fernando</div>
-          <div class="tl-desc">Specialization in full-stack development, database algorithms, IoT integrations, and campus information systems.</div>
-        </div>
-        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="480">
-          <div class="tl-dot"></div>
-          <div class="tl-period">2021 — 2022</div>
-          <div class="tl-role">Freelance Web Developer</div>
-          <div class="tl-org">Independent</div>
-          <div class="tl-desc">Built and deployed custom websites and web applications for local businesses in Pampanga, gaining real-world production experience early in my career.</div>
-        </div>
+        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="0"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Software Engineering Intern</div><div class="tl-org">DTI Region 3</div><div class="tl-desc">Executing a 486-hour government internship, deploying advanced software engineering principles to optimize regional digital operations.</div></div>
+        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="180"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Founder &amp; CEO</div><div class="tl-org">EasyWeb PH</div><div class="tl-desc">Established a premium digital agency delivering custom cloud architectures, enterprise software, and API gateways for Philippine businesses.</div></div>
+        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="360"><div class="tl-dot"></div><div class="tl-period">2022 — Present</div><div class="tl-role">BSIT Student — 4th Year</div><div class="tl-org">City College San Fernando</div><div class="tl-desc">Specialization in full-stack development, database algorithms, IoT integrations, and campus information systems.</div></div>
+        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="480"><div class="tl-dot"></div><div class="tl-period">2021 — 2022</div><div class="tl-role">Freelance Web Developer</div><div class="tl-org">Independent</div><div class="tl-desc">Built and deployed custom websites and web applications for local businesses in Pampanga.</div></div>
       </div>
       <div class="info-stack">
-        <div class="info-card accent" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
-          <div class="ic-label">Core Specialization</div>
-          <div class="ic-head">Full-Stack Architecture</div>
-          <div class="ic-body">Designing scalable web applications from secure backend APIs to fluid, high-fidelity user interfaces. Every layer thoughtfully engineered for performance and longevity.</div>
-        </div>
-        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="260">
-          <div class="ic-label">Secondary Domain</div>
-          <div class="ic-head">Hardware &amp; IoT</div>
-          <div class="ic-body">Writing precision C++ logic for microcontrollers. Bridging the gap between physical sensors and cloud-based dashboards seamlessly.</div>
-        </div>
-        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="380">
-          <div class="ic-label">Education</div>
-          <div class="ic-head">BSIT · 4th Year</div>
-          <div class="ic-body">City College San Fernando, Pampanga. Specializing in information systems, software engineering, and embedded technology.</div>
-        </div>
-        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="420">
-          <div class="ic-label">Location</div>
-          <div class="ic-body" style="display:flex;align-items:center;gap:.6rem">
-            <i class="fa-solid fa-location-dot" style="color:var(--gold)"></i>
-            <span>San Fernando, Pampanga, Philippines</span>
-          </div>
-        </div>
+        <div class="info-card accent" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100"><div class="ic-label">Core Specialization</div><div class="ic-head">Full-Stack Architecture</div><div class="ic-body">Designing scalable web applications from secure backend APIs to fluid, high-fidelity user interfaces.</div></div>
+        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="260"><div class="ic-label">Secondary Domain</div><div class="ic-head">Hardware &amp; IoT</div><div class="ic-body">Writing precision C++ logic for microcontrollers. Bridging the gap between physical sensors and cloud-based dashboards.</div></div>
+        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="380"><div class="ic-label">Education</div><div class="ic-head">BSIT · 4th Year</div><div class="ic-body">City College San Fernando, Pampanga. Specializing in information systems, software engineering, and embedded technology.</div></div>
+        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="420"><div class="ic-label">Location</div><div class="ic-body" style="display:flex;align-items:center;gap:.6rem"><i class="fa-solid fa-location-dot" style="color:var(--gold)"></i><span>San Fernando, Pampanga, Philippines</span></div></div>
       </div>
     </div>
   </div>
@@ -1502,15 +1283,11 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   <div class="cta-orb"></div>
   <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;">
     <div class="sec-eyebrow" style="justify-content:center;margin-bottom:20px;" data-aos="fade-down" data-aos-duration="800">Let's Build Together</div>
-    <div style="max-width:250px;margin-bottom:20px;" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="800">
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHdvMnE2OWRrNnRtY2Y5YTZoY3o3enVzZWNiNTVmM25jN2ZrMXdtYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4Epf4eyuKz0fsi7S/giphy.gif" alt="Message Animation" style="width:100%;height:auto;display:block;margin:0 auto;">
-    </div>
-    <h2 class="cta-h" data-aos="fade-up" data-aos-delay="180" data-aos-duration="900" style="margin-top:0;">GOT A<br><span>PROJECT?</span></h2>
-    <span class="cta-email" data-aos="fade-up" data-aos-delay="280" data-aos-duration="800">rennielsalazar948@gmail.com</span>
-    <div data-aos="zoom-in-up" data-aos-delay="380" data-aos-duration="900">
-      <a href="mailto:rennielsalazar948@gmail.com" class="btn-gold mag-btn" style="font-size:.75rem;padding:1rem 2.5rem;display:inline-flex;align-items:center;gap:8px;">
-        Initiate Contact <i class="fa-solid fa-arrow-right" style="font-size:.65rem"></i>
-      </a>
+    <div style="max-width:250px;margin-bottom:20px;" data-aos="zoom-in" data-aos-delay="100"><img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHdvMnE2OWRrNnRtY2Y5YTZoY3o3enVzZWNiNTVmM25jN2ZrMXdtYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4Epf4eyuKz0fsi7S/giphy.gif" alt="CTA Animation" style="width:100%;height:auto;display:block;margin:0 auto;"></div>
+    <h2 class="cta-h" data-aos="fade-up" data-aos-delay="180" style="margin-top:0;">GOT A<br><span>PROJECT?</span></h2>
+    <span class="cta-email" data-aos="fade-up" data-aos-delay="280">rennielsalazar948@gmail.com</span>
+    <div data-aos="zoom-in-up" data-aos-delay="380">
+      <a href="mailto:rennielsalazar948@gmail.com" class="btn-gold mag-btn" style="font-size:.75rem;padding:1rem 2.5rem;display:inline-flex;align-items:center;gap:8px;">Initiate Contact <i class="fa-solid fa-arrow-right" style="font-size:.65rem"></i></a>
     </div>
   </div>
 </section>
@@ -1549,8 +1326,99 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
+/* ══════════════════════════════════════
+   VIDEO INTRO SYSTEM
+   1. Video plays fullscreen with cinematic bars
+   2. After video ends (or skip), transition to portfolio
+══════════════════════════════════════ */
+(function(){
+  const intro = document.getElementById('video-intro');
+  const video = document.getElementById('intro-video');
+  const progBar = document.getElementById('vi-prog');
+  let introDone = false;
+
+  function launchPortfolio() {
+    if (introDone) return;
+    introDone = true;
+
+    // Fade out intro
+    intro.classList.add('out');
+
+    // Show brief preloader then launch
+    const preloader = document.getElementById('preloader');
+    preloader.style.display = 'flex';
+
+    // Animate preloader letters
+    const el = document.getElementById('pre-letters');
+    'RENNIEL'.split('').forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.textContent = ch;
+      s.style.animationDelay = (i * .05) + 's';
+      el.appendChild(s);
+    });
+
+    // Quick percentage count
+    const pctEl = document.getElementById('pre-pct-val');
+    let pct = 0;
+    const ct = setInterval(() => {
+      pct = Math.min(pct + Math.floor(Math.random() * 8) + 3, 100);
+      pctEl.textContent = pct + '%';
+      if (pct >= 100) clearInterval(ct);
+    }, 20);
+
+    setTimeout(() => {
+      preloader.classList.add('out');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        document.getElementById('cine-lines').classList.add('open');
+        animCounters();
+        animMetrics();
+        animProgress();
+        AOS.init({duration:900,easing:'ease-out-cubic',once:false,mirror:true,offset:60,anchorPlacement:'top-bottom'});
+      }, 900);
+    }, 1200);
+  }
+
+  // Open cinematic bars after brief delay, then show video
+  setTimeout(() => {
+    intro.classList.add('bars-open');
+    setTimeout(() => {
+      video.classList.add('visible');
+      video.play().catch(() => {
+        // Autoplay blocked — skip straight to portfolio
+        setTimeout(launchPortfolio, 1000);
+      });
+    }, 800);
+  }, 400);
+
+  // Progress bar sync
+  video.addEventListener('timeupdate', () => {
+    if (video.duration) {
+      const pct = (video.currentTime / video.duration) * 100;
+      progBar.style.width = pct + '%';
+      progBar.style.transition = 'width .3s linear';
+    }
+  });
+
+  // When video ends → launch portfolio
+  video.addEventListener('ended', () => {
+    setTimeout(launchPortfolio, 600);
+  });
+
+  // Fallback: if video doesn't load in 8s, skip
+  setTimeout(() => {
+    if (!introDone) launchPortfolio();
+  }, 18000);
+
+  // Skip button
+  window.skipIntro = function() {
+    video.pause();
+    launchPortfolio();
+  };
+})();
+
 /* ── AOS ── */
-AOS.init({duration:900,easing:'ease-out-cubic',once:false,mirror:true,offset:60,anchorPlacement:'top-bottom'});
+// AOS.init called after intro completes (see above)
 
 /* ── THEME ── */
 const themeToggle=document.getElementById('theme-toggle');
@@ -1570,19 +1438,10 @@ const cDot=document.getElementById('c-dot'),cRing=document.getElementById('c-rin
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cDot.style.left=mx+'px';cDot.style.top=my+'px'});
 (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cRing.style.left=rx+'px';cRing.style.top=ry+'px';requestAnimationFrame(loop)})();
-
-/* Interactive hover for cursor */
-document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card,.svc-card,.testi-card,.award-card,.oss-card,.now-card,.proc-step').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cRing.classList.add('big');cRing.classList.remove('play')});
-  el.addEventListener('mouseleave',()=>{cRing.classList.remove('big');cRing.classList.remove('play')});
+document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card,.svc-card,.testi-card,.award-card,.oss-card,.now-card,.proc-step,.hv-photo-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cRing.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cRing.classList.remove('big'));
 });
-
-/* Special cursor for video card */
-const videoCard=document.getElementById('hv-video-card');
-if(videoCard){
-  videoCard.addEventListener('mouseenter',()=>{cRing.classList.add('play');cRing.classList.remove('big')});
-  videoCard.addEventListener('mouseleave',()=>{cRing.classList.remove('play');cRing.classList.remove('big')});
-}
 
 /* ── MAGNETIC BUTTONS ── */
 document.querySelectorAll('.mag-btn').forEach(btn=>{
@@ -1613,83 +1472,10 @@ window.addEventListener('scroll',()=>{
   for(let i=0;i<90;i++) pts.push(mk());
   (function draw(){
     ctx.clearRect(0,0,w,h);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>w)p.vx*=-1;
-      if(p.y<0||p.y>h)p.vy*=-1;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(201,168,76,.35)';ctx.fill();
-    });
-    pts.forEach((p,i)=>{
-      for(let j=i+1;j<pts.length;j++){
-        const d=Math.hypot(p.x-pts[j].x,p.y-pts[j].y);
-        if(d<110){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(201,168,76,${(1-d/110)*.12})`;ctx.lineWidth=.6;ctx.stroke();}
-      }
-    });
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(201,168,76,.35)';ctx.fill();});
+    pts.forEach((p,i)=>{for(let j=i+1;j<pts.length;j++){const d=Math.hypot(p.x-pts[j].x,p.y-pts[j].y);if(d<110){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(201,168,76,${(1-d/110)*.12})`;ctx.lineWidth=.6;ctx.stroke();}}});
     requestAnimationFrame(draw);
   })();
-})();
-
-/* ═══════════════════════════════════
-   HERO VIDEO TOGGLE
-   Click → play video, poster fades out
-   Click again → pause, poster fades back
-═══════════════════════════════════ */
-let heroVideoPlaying=false;
-window.toggleHeroVideo=function(){
-  const card=document.getElementById('hv-video-card');
-  const video=document.getElementById('hv-video');
-  const recLabel=document.getElementById('hv-rec-label');
-  const recDot=card.querySelector('.hv-rec-dot');
-
-  if(!heroVideoPlaying){
-    /* ─ PLAY ─ */
-    video.play().then(()=>{
-      card.classList.add('playing');
-      heroVideoPlaying=true;
-      if(recLabel) recLabel.textContent='Live';
-      if(recDot){recDot.style.background='#ff4444';recDot.style.boxShadow='0 0 8px rgba(255,68,68,.8)'}
-    }).catch(()=>{
-      /* Autoplay blocked — still show playing state */
-      card.classList.add('playing');
-      heroVideoPlaying=true;
-    });
-  } else {
-    /* ─ PAUSE ─ */
-    video.pause();
-    card.classList.remove('playing');
-    heroVideoPlaying=false;
-    if(recLabel) recLabel.textContent='Preview';
-    if(recDot){recDot.style.background='';recDot.style.boxShadow=''}
-  }
-};
-
-/* ── PRELOADER ── */
-(function(){
-  const el=document.getElementById('pre-letters');
-  'RENNIEL'.split('').forEach((ch,i)=>{
-    const s=document.createElement('span');
-    s.textContent=ch;s.style.animationDelay=(i*.07)+'s';
-    el.appendChild(s);
-  });
-  const pctEl=document.getElementById('pre-pct-val');
-  const countEl=document.querySelector('.pre-count');
-  let pct=0;
-  const countTimer=setInterval(()=>{
-    pct=Math.min(pct+Math.floor(Math.random()*4)+1,100);
-    pctEl.textContent=pct+'%';
-    countEl.textContent=pct.toString().padStart(2,'0');
-    if(pct>=100)clearInterval(countTimer);
-  },24);
-  window.addEventListener('load',()=>{
-    setTimeout(()=>{
-      document.getElementById('preloader').classList.add('out');
-      setTimeout(()=>{document.getElementById('cine-lines').classList.add('open')},200);
-      setTimeout(animCounters,800);
-      setTimeout(animMetrics,1000);
-      setTimeout(animProgress,1200);
-    },2400);
-  });
 })();
 
 /* ── STAT COUNTER ── */
@@ -1722,15 +1508,11 @@ function animProgress(){
 }
 
 /* ── INTERSECTION OBSERVERS ── */
-const metObserver=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting){animMetrics();metObserver.disconnect();}});
-},{threshold:.3});
+const metObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){animMetrics();metObserver.disconnect();}});},{threshold:.3});
 const metStrip=document.querySelector('.metrics-strip');
 if(metStrip)metObserver.observe(metStrip);
 
-const nowObserver=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting){animProgress();nowObserver.disconnect();}});
-},{threshold:.2});
+const nowObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){animProgress();nowObserver.disconnect();}});},{threshold:.2});
 const nowSection=document.getElementById('now');
 if(nowSection)nowObserver.observe(nowSection);
 
@@ -1754,16 +1536,10 @@ KEY FACTS: Startup: EasyWeb PH (2026). Education: 4th-year BSIT at CCSF. Interns
 RULES: 1.Act strictly as Renniel. 2.Speak definitively. 3.Max 2-3 sentences. 4.No emojis.`;
 let chatHistory=[{role:"user",parts:[{text:systemPrompt}]},{role:"model",parts:[{text:"SYSTEM READY."}]}];
 
-async function checkServer(){
-  try{
-    const r=await fetch('https://portfolio-website-iyv7.onrender.com/');
-    if(r.ok||r.status===404){document.getElementById('status-text').textContent='System Online';document.getElementById('status-dot').classList.add('online');}
-  }catch(e){}
-}
+async function checkServer(){try{const r=await fetch('https://portfolio-website-iyv7.onrender.com/');if(r.ok||r.status===404){document.getElementById('status-text').textContent='System Online';document.getElementById('status-dot').classList.add('online');}}catch(e){}}
 checkServer();
 
 window.toggleChat=()=>{chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen)};
-
 document.getElementById('chat-form').addEventListener('submit',async e=>{
   e.preventDefault();
   const msg=document.getElementById('user-input').value.trim();
@@ -1775,28 +1551,12 @@ document.getElementById('chat-form').addEventListener('submit',async e=>{
     removeEl(lid);
     if(!res.ok) throw new Error(res.status>=500?'cold':'err');
     const data=await res.json();
-    if(data.text){
-      addMsg('ai',data.text);
-      chatHistory.push({role:"user",parts:[{text:msg}]});
-      chatHistory.push({role:"model",parts:[{text:data.text}]});
-    }
-  }catch(err){
-    removeEl(lid);
-    addMsg('ai',err.message==='cold'?'Server cold start initiated. Await 30 seconds then retry.':'System error. Reroute request.');
-  }
+    if(data.text){addMsg('ai',data.text);chatHistory.push({role:"user",parts:[{text:msg}]});chatHistory.push({role:"model",parts:[{text:data.text}]});}
+  }catch(err){removeEl(lid);addMsg('ai',err.message==='cold'?'Server cold start initiated. Await 30 seconds then retry.':'System error. Reroute request.');}
 });
 
-function addMsg(s,t){
-  const w=document.getElementById('chat-msgs'),d=document.createElement('div');
-  d.className=`msg ${s}`;d.innerHTML=`<div class="bubble">${t}</div>`;
-  w.appendChild(d);w.scrollTop=w.scrollHeight;
-}
-function addTyping(){
-  const id='ty-'+Date.now(),w=document.getElementById('chat-msgs'),d=document.createElement('div');
-  d.id=id;d.className='msg ai';
-  d.innerHTML='<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
-  w.appendChild(d);w.scrollTop=w.scrollHeight;return id;
-}
+function addMsg(s,t){const w=document.getElementById('chat-msgs'),d=document.createElement('div');d.className=`msg ${s}`;d.innerHTML=`<div class="bubble">${t}</div>`;w.appendChild(d);w.scrollTop=w.scrollHeight;}
+function addTyping(){const id='ty-'+Date.now(),w=document.getElementById('chat-msgs'),d=document.createElement('div');d.id=id;d.className='msg ai';d.innerHTML='<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';w.appendChild(d);w.scrollTop=w.scrollHeight;return id;}
 function removeEl(id){const el=document.getElementById(id);if(el){el.style.opacity='0';setTimeout(()=>el.remove(),250);}}
 </script>
 </body>
