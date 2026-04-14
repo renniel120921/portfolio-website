@@ -62,13 +62,12 @@ img{display:block}
 body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.04'/%3E%3C/svg%3E");opacity:.35;mix-blend-mode:overlay;transition:opacity .4s}
 
 /* ═══════════════════════════════════
-   PRELOADER — with glitch effect
+   PRELOADER
 ═══════════════════════════════════ */
 #preloader{position:fixed;inset:0;z-index:100000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .8s,visibility .8s,background .4s}
 #preloader.out{opacity:0;visibility:hidden}
 .pre-name{font-family:var(--ff-display);font-size:clamp(2.5rem,8vw,6rem);font-weight:900;letter-spacing:.05em;color:var(--text);overflow:hidden;display:flex;position:relative}
 .pre-name span{display:inline-block;animation:preCharUp .7s cubic-bezier(.16,1,.3,1) both}
-/* Glitch layers */
 .pre-name::before,.pre-name::after{content:attr(data-text);position:absolute;top:0;left:0;font-family:var(--ff-display);font-size:clamp(2.5rem,8vw,6rem);font-weight:900;letter-spacing:.05em;display:flex;pointer-events:none}
 .pre-name::before{color:var(--gold);clip-path:polygon(0 0,100% 0,100% 33%,0 33%);animation:glitchTop 3s infinite 1.2s;opacity:0}
 .pre-name::after{color:#4488ff;clip-path:polygon(0 66%,100% 66%,100% 100%,0 100%);animation:glitchBot 3s infinite 1.2s;opacity:0}
@@ -87,7 +86,7 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 2rem}
 
 /* ═══════════════════════════════════
-   NAV — animated entrance
+   NAV
 ═══════════════════════════════════ */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.75rem 0;transition:background .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent}
 nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);border-color:var(--border)}
@@ -99,6 +98,7 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .nav-links li{animation:navDrop .6s cubic-bezier(.16,1,.3,1) both}
 .nav-links li:nth-child(1){animation-delay:.3s}.nav-links li:nth-child(2){animation-delay:.38s}
 .nav-links li:nth-child(3){animation-delay:.46s}.nav-links li:nth-child(4){animation-delay:.54s}
+.nav-links li:nth-child(5){animation-delay:.62s}
 @keyframes navDrop{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
 .nav-links a{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .3s}
@@ -111,10 +111,9 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .nav-hire:hover{background:var(--gold);color:#000;border-color:var(--gold);transform:translateY(-2px)}
 
 /* ═══════════════════════════════════
-   HERO — staged entrance animations
+   HERO
 ═══════════════════════════════════ */
 #hero{min-height:100vh;display:flex;align-items:center;padding:7rem 0 4rem;position:relative;overflow:hidden}
-/* Orb glows */
 #hero .orb1{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%);top:-100px;right:-100px;z-index:0;animation:orbFloat 8s ease-in-out infinite;pointer-events:none}
 #hero .orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(68,136,255,.05) 0%,transparent 70%);bottom:0;left:-50px;z-index:0;animation:orbFloat 10s ease-in-out infinite reverse;pointer-events:none}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.06)}}
@@ -146,34 +145,38 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .stat-n sup{font-size:1.2rem;vertical-align:super}
 .stat-l{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
 
+/* ── Hero Visual (new separated layout) ── */
 .hero-visual{position:relative;display:flex;align-items:center;justify-content:flex-end;animation:heroFadeScale .9s cubic-bezier(.16,1,.3,1) 2.2s both}
 @keyframes heroFadeScale{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}
 
-.hero-frame{position:relative;width:100%;max-width:480px;height:480px}
-.hf-gif{position:absolute;inset:0;border-radius:var(--r-xl);overflow:hidden;background:var(--bg2)}
-.hf-gif img{width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .4s}
-.hf-glass{position:absolute;inset:0;border-radius:var(--r-xl);border:1px solid var(--border2);background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(68,136,255,.03),transparent);pointer-events:none}
-.hf-corners .c{position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;border-width:0;opacity:0;animation:cornerPop .4s cubic-bezier(.16,1,.3,1) forwards}
-.c.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:6px 0 0 0;animation-delay:2.9s}
-.c.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px;border-radius:0 6px 0 0;animation-delay:3s}
-.c.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 6px;animation-delay:3.1s}
-.c.br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 6px 0;animation-delay:3.2s}
-@keyframes cornerPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.hv-wrap{display:flex;flex-direction:column;gap:16px;width:100%;max-width:460px}
 
-.hf-photo{position:absolute;bottom:-2rem;left:-2.5rem;width:200px;height:240px;border-radius:var(--r-lg);overflow:hidden;border:3px solid var(--bg);box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px var(--border2);z-index:4;transition:border-color .4s;animation:photoSlide .8s cubic-bezier(.16,1,.3,1) 3.2s both}
-@keyframes photoSlide{from{opacity:0;transform:translate(24px,24px) scale(.9)}to{opacity:1;transform:none}}
-.hf-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.hf-photo:hover img{transform:scale(1.06)}
-
-.hf-badge{position:absolute;top:2rem;right:-1.5rem;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:var(--r-md);padding:.85rem 1.2rem;z-index:5;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 32px rgba(0,0,0,.15);transition:background .4s;animation:badgeSlide .6s cubic-bezier(.16,1,.3,1) 3.4s both}
-@keyframes badgeSlide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
-.hf-badge-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;box-shadow:0 0 8px rgba(74,222,128,.8);animation:blink 2s ease-in-out infinite}
+.hv-gif-card{position:relative;border-radius:20px;overflow:hidden;border:1.5px solid var(--gold-border);aspect-ratio:16/9;background:var(--bg2)}
+.hv-gif-card img{width:100%;height:100%;object-fit:cover;display:block}
+.hv-badge{position:absolute;top:14px;right:14px;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:7px}
+.hv-badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 8px rgba(74,222,128,.8);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-.hf-badge-txt{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.hv-badge-txt{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
 
-.hf-pill{position:absolute;bottom:3.5rem;right:-2rem;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--gold-dim);border-radius:3rem;padding:.6rem 1.2rem;z-index:5;font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-lt);animation:floatY 4s ease-in-out infinite,pillSlide .6s cubic-bezier(.16,1,.3,1) 3.5s both;transition:background .4s}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes pillSlide{from{opacity:0;transform:translateX(24px) translateY(0)}to{opacity:1;transform:translateY(0)}}
+.hv-photo-row{display:flex;align-items:center;gap:16px;background:var(--bg3);border:1.5px solid var(--gold-border);border-radius:20px;padding:16px 20px;transition:border-color .3s}
+.hv-photo-row:hover{border-color:var(--gold)}
+.hv-photo-frame{width:80px;height:80px;border-radius:14px;overflow:hidden;border:2px solid rgba(201,168,76,.5);flex-shrink:0}
+.hv-photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.hv-photo-row:hover .hv-photo-frame img{transform:scale(1.07)}
+.hv-photo-info{display:flex;flex-direction:column;gap:5px}
+.hv-name{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--text)}
+.hv-title-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:999px;padding:4px 12px;width:fit-content}
+.hv-title-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+.hv-title-txt{font-family:var(--ff-mono);font-size:.55rem;font-weight:500;color:var(--gold-lt);letter-spacing:.08em;text-transform:uppercase}
+.hv-sub{font-family:var(--ff-mono);font-size:.6rem;color:var(--muted);margin-top:1px}
+
+/* Corner decoration on gif card */
+.hv-corners .hc{position:absolute;width:20px;height:20px;border-color:var(--gold);border-style:solid;border-width:0;opacity:0;animation:cornerPop .4s cubic-bezier(.16,1,.3,1) forwards}
+.hc.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:6px 0 0 0;animation-delay:2.9s}
+.hc.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px;border-radius:0 6px 0 0;animation-delay:3s}
+.hc.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 6px;animation-delay:3.1s}
+.hc.br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 6px 0;animation-delay:3.2s}
+@keyframes cornerPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
 
 .scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;z-index:5;animation:fadeIn 1s ease 3.8s both}
 .scroll-track{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollGrow 2s ease-in-out infinite}
@@ -221,6 +224,26 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .tag:hover{border-color:var(--gold);color:var(--gold-lt);transform:translateY(-2px)}
 
 /* ═══════════════════════════════════
+   SERVICES — NEW SECTION
+═══════════════════════════════════ */
+#services{padding:7rem 0;background:var(--bg2);position:relative;overflow:hidden}
+#services::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-border),transparent)}
+#services::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-border),transparent)}
+.services-intro{max-width:600px;font-size:.95rem;color:var(--muted);line-height:1.9;margin-bottom:3.5rem}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.svc-card{padding:2rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden;transition:all .45s cubic-bezier(.16,1,.3,1)}
+.svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-dim),transparent);opacity:0;transition:opacity .4s}
+.svc-card:hover{border-color:var(--gold-border);transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.2)}
+.svc-card:hover::before{opacity:1}
+.svc-num{font-family:var(--ff-display);font-size:3rem;font-weight:900;color:var(--border2);line-height:1;margin-bottom:1.2rem;transition:color .3s}
+.svc-card:hover .svc-num{color:rgba(201,168,76,.2)}
+.svc-icon{width:42px;height:42px;background:var(--gold-dim);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1rem;margin-bottom:1rem;transition:transform .3s}
+.svc-card:hover .svc-icon{transform:scale(1.12) rotate(-8deg)}
+.svc-title{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.7rem;letter-spacing:.02em}
+.svc-desc{font-size:.8rem;color:var(--muted);line-height:1.8;margin-bottom:1.2rem}
+.svc-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+
+/* ═══════════════════════════════════
    PROJECTS
 ═══════════════════════════════════ */
 #projects{padding:7rem 0}
@@ -249,7 +272,6 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .phi-wrap{margin:4rem 0;padding:5rem 4rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-2xl);text-align:center;position:relative;overflow:hidden;transition:border-color .4s}
 .phi-wrap:hover{border-color:var(--gold-border)}
 .phi-wrap::before{content:'"';position:absolute;top:-2rem;left:50%;transform:translateX(-50%);font-family:var(--ff-display);font-size:18rem;font-weight:900;color:var(--surf2);line-height:1;pointer-events:none;z-index:0}
-/* Animated scan line */
 .phi-wrap .scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:0;animation:scan 5s ease-in-out infinite 1s}
 @keyframes scan{0%{top:0;opacity:0}5%{opacity:.5}80%{opacity:.3}100%{top:100%;opacity:0}}
 .phi-text{position:relative;z-index:1;font-family:var(--ff-display);font-size:clamp(1.5rem,3vw,2.6rem);font-weight:400;font-style:italic;line-height:1.4;color:var(--text);max-width:860px;margin:0 auto 1.5rem}
@@ -288,6 +310,24 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .sec-divider{height:1px;background:linear-gradient(to right,transparent,var(--border2),transparent);opacity:.5}
 
 /* ═══════════════════════════════════
+   TESTIMONIALS — NEW
+═══════════════════════════════════ */
+#testimonials{padding:7rem 0;background:var(--bg2);position:relative;overflow:hidden}
+#testimonials::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-border),transparent)}
+#testimonials::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-border),transparent)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.testi-card{padding:2rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.testi-card::before{content:'"';position:absolute;top:-.5rem;right:1.2rem;font-family:var(--ff-display);font-size:7rem;font-weight:900;color:var(--surf2);line-height:1;pointer-events:none}
+.testi-card:hover{border-color:var(--gold-border);transform:translateY(-5px)}
+.testi-stars{display:flex;gap:3px;margin-bottom:1rem}
+.testi-stars i{color:var(--gold);font-size:.7rem}
+.testi-text{font-size:.85rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.75rem}
+.testi-av{width:36px;height:36px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:.75rem;font-weight:700;color:var(--gold);flex-shrink:0}
+.testi-name{font-size:.8rem;font-weight:600;color:var(--text)}
+.testi-role{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.08em;color:var(--muted)}
+
+/* ═══════════════════════════════════
    JOURNEY
 ═══════════════════════════════════ */
 #journey{padding:7rem 0}
@@ -317,6 +357,19 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 .ic-label{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
 .ic-head{font-family:var(--ff-display);font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:.6rem}
 .ic-body{font-size:.82rem;color:var(--muted);font-weight:300;line-height:1.75}
+
+/* ═══════════════════════════════════
+   STACK MARQUEE — NEW
+═══════════════════════════════════ */
+#stack{padding:5rem 0}
+.stack-label{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:2rem}
+.stack-row{overflow:hidden;margin-bottom:1rem}
+.stack-track{display:flex;gap:1rem;width:max-content;animation:ticker 18s linear infinite}
+.stack-track.rev{animation-direction:reverse;animation-duration:22s}
+.stack-track:hover{animation-play-state:paused}
+.stack-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.2rem;background:var(--surf);border:1px solid var(--border);border-radius:999px;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap;transition:all .3s}
+.stack-chip:hover{border-color:var(--gold-border);color:var(--gold-lt);background:var(--gold-dim)}
+.stack-chip i{font-size:.7rem;color:var(--gold)}
 
 /* ═══════════════════════════════════
    LIGHTBOX
@@ -382,9 +435,6 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 .typing span:nth-child(2){animation-delay:.16s}.typing span:nth-child(3){animation-delay:.32s}
 @keyframes tyDot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
 
-/* ═══════════════════════════════════
-   AOS OVERRIDE — smoother curves
-═══════════════════════════════════ */
 [data-aos]{transition-timing-function:cubic-bezier(0.16,1,0.3,1) !important}
 
 /* ═══════════════════════════════════
@@ -392,12 +442,12 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 ═══════════════════════════════════ */
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr;gap:3rem}
-  .hero-frame{width:100%;height:360px}
-  .hf-photo{width:150px;height:185px;bottom:-1rem;left:-1rem}
-  .hf-badge{right:1rem}.hf-pill{right:.5rem;bottom:2.5rem}
+  .hv-wrap{max-width:100%}
   .about-grid{grid-template-columns:1fr;gap:3rem}
   .proj-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
   .journey-grid{grid-template-columns:1fr;gap:3rem}
+  .testi-grid{grid-template-columns:1fr}
   .nav-links{display:none}
   .foot-row{flex-direction:column;gap:1rem;text-align:center}
   #chat-win{width:calc(100vw - 2rem);right:1rem}
@@ -410,6 +460,8 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   .gallery-grid .gal-item:nth-child(2),.gallery-grid .gal-item:nth-child(3),.gallery-grid .gal-item:nth-child(4){grid-column:span 1;height:160px}
   #gallery .gif-badge{width:90px}
   #journey .gif-badge{width:80px}
+  .services-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -436,6 +488,7 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
       <a href="#" class="nav-logo">R<em>.</em>Salazar</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#journey">Journey</a></li>
@@ -471,14 +524,37 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
           <div><div class="stat-n" data-count="99">0<sup>%</sup></div><div class="stat-l">Uptime Record</div></div>
         </div>
       </div>
+
+      <!-- ── NEW HERO VISUAL ── -->
       <div class="hero-visual">
-        <div class="hero-frame">
-          <div class="hf-gif"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXBrOXl1Ynk4NDczZXFtemxudmdlNzhodjFlMWFwdnA2Z3Y1eWZ2NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/odVWOVV9wOKgM1zJdp/giphy.gif" alt=""></div>
-          <div class="hf-glass"></div>
-          <div class="hf-corners"><div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div></div>
-          <div class="hf-photo"><img src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=240'"></div>
-          <div class="hf-badge"><div class="hf-badge-dot"></div><div class="hf-badge-txt">Available for Work</div></div>
-          <div class="hf-pill">CEO · EasyWeb PH</div>
+        <div class="hv-wrap">
+          <!-- GIF card — standalone -->
+          <div class="hv-gif-card">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXBrOXl1Ynk4NDczZXFtemxudmdlNzhodjFlMWFwdnA2Z3Y1eWZ2NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/odVWOVV9wOKgM1zJdp/giphy.gif" alt="I can do this">
+            <div class="hv-corners">
+              <div class="hc tl"></div><div class="hc tr"></div>
+              <div class="hc bl"></div><div class="hc br"></div>
+            </div>
+            <div class="hv-badge">
+              <div class="hv-badge-dot"></div>
+              <span class="hv-badge-txt">Available for Work</span>
+            </div>
+          </div>
+          <!-- Profile card — separate, below -->
+          <div class="hv-photo-row">
+            <div class="hv-photo-frame">
+              <img src="images/ceo.jpg" alt="Renniel Salazar"
+                onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=240'">
+            </div>
+            <div class="hv-photo-info">
+              <div class="hv-name">Renniel Salazar</div>
+              <div class="hv-title-pill">
+                <div class="hv-title-dot"></div>
+                <span class="hv-title-txt">CEO · EasyWeb PH</span>
+              </div>
+              <div class="hv-sub">Full-Stack Engineer &amp; Tech Founder</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -557,6 +633,61 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   </div>
 </section>
 
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Services</div>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:3.5rem;">
+      <h2 class="sec-title" style="margin-bottom:0;" data-aos="fade-up" data-aos-delay="100">WHAT I<br>DELIVER</h2>
+      <p class="services-intro" style="margin-bottom:0;" data-aos="fade-left" data-aos-delay="200">From pixel-perfect interfaces to precision-engineered hardware systems — every engagement is scoped, architected, and deployed with enterprise-level rigour.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
+        <div class="svc-num">01</div>
+        <div class="svc-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="svc-title">Web Application Development</div>
+        <div class="svc-desc">End-to-end custom web applications engineered for performance, security, and scale — from architecture design to production deployment.</div>
+        <div class="svc-tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">REST APIs</span></div>
+      </div>
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
+        <div class="svc-num">02</div>
+        <div class="svc-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <div class="svc-title">UI / UX & Frontend Engineering</div>
+        <div class="svc-desc">High-fidelity, responsive interfaces crafted with pixel precision. Every component interactive, accessible, and performant across all devices.</div>
+        <div class="svc-tags"><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
+      </div>
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="240" data-aos-duration="900">
+        <div class="svc-num">03</div>
+        <div class="svc-icon"><i class="fa-solid fa-plug"></i></div>
+        <div class="svc-title">API Gateway & Integration</div>
+        <div class="svc-desc">Designing robust, versioned REST API gateways and third-party integrations that power complex business workflows without friction.</div>
+        <div class="svc-tags"><span class="tag">REST</span><span class="tag">JSON</span><span class="tag">Auth</span><span class="tag">Webhooks</span></div>
+      </div>
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="60" data-aos-duration="900">
+        <div class="svc-num">04</div>
+        <div class="svc-icon"><i class="fa-solid fa-microchip"></i></div>
+        <div class="svc-title">IoT & Embedded Systems</div>
+        <div class="svc-desc">Custom C++ firmware for Arduino-based microcontrollers, bridging real-world sensors to cloud dashboards with reliable, low-latency data pipelines.</div>
+        <div class="svc-tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">MQTT</span></div>
+      </div>
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="180" data-aos-duration="900">
+        <div class="svc-num">05</div>
+        <div class="svc-icon"><i class="fa-solid fa-cloud"></i></div>
+        <div class="svc-title">Cloud Infrastructure & DevOps</div>
+        <div class="svc-desc">Provisioning high-availability cloud environments with automated CI/CD pipelines, monitoring, and 99%+ uptime SLA commitments.</div>
+        <div class="svc-tags"><span class="tag">Cloud</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Deploy</span></div>
+      </div>
+      <div class="svc-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
+        <div class="svc-num">06</div>
+        <div class="svc-icon"><i class="fa-solid fa-database"></i></div>
+        <div class="svc-title">Database Architecture</div>
+        <div class="svc-desc">Optimized relational and NoSQL schema design, query tuning, and migration strategies for systems that handle millions of records reliably.</div>
+        <div class="svc-tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Indexing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ PROJECTS ══ -->
 <section id="projects">
   <div class="wrap">
@@ -604,6 +735,67 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   </div>
 </div>
 
+<!-- ══ STACK MARQUEE ══ -->
+<section id="stack">
+  <div class="wrap">
+    <div class="stack-label" data-aos="fade-up" data-aos-duration="700">Technologies & Tools</div>
+  </div>
+  <div class="stack-row" data-aos="fade" data-aos-duration="1000">
+    <div class="stack-track">
+      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span>
+      <span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span>
+      <span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span>
+      <span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span>
+      <span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span>
+      <span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span>
+      <span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span>
+      <span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span>
+      <span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span>
+      <span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span>
+      <span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span>
+      <span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
+      <!-- duplicate for seamless loop -->
+      <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span>
+      <span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span>
+      <span class="stack-chip"><i class="fa-brands fa-js"></i> JavaScript</span>
+      <span class="stack-chip"><i class="fa-brands fa-python"></i> Python</span>
+      <span class="stack-chip"><i class="fa-brands fa-java"></i> Java</span>
+      <span class="stack-chip"><i class="fa-solid fa-code"></i> C++</span>
+      <span class="stack-chip"><i class="fa-solid fa-database"></i> MySQL</span>
+      <span class="stack-chip"><i class="fa-solid fa-leaf"></i> MongoDB</span>
+      <span class="stack-chip"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span>
+      <span class="stack-chip"><i class="fa-brands fa-html5"></i> HTML5</span>
+      <span class="stack-chip"><i class="fa-solid fa-microchip"></i> Arduino</span>
+      <span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
+    </div>
+  </div>
+  <div class="stack-row" style="margin-top:0;" data-aos="fade" data-aos-duration="1000" data-aos-delay="100">
+    <div class="stack-track rev">
+      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
+      <span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span>
+      <span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span>
+      <span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span>
+      <span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span>
+      <span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span>
+      <span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span>
+      <span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span>
+      <span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span>
+      <span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
+      <!-- duplicate -->
+      <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
+      <span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span>
+      <span class="stack-chip"><i class="fa-brands fa-git-alt"></i> Git</span>
+      <span class="stack-chip"><i class="fa-brands fa-linux"></i> Linux</span>
+      <span class="stack-chip"><i class="fa-solid fa-server"></i> CI/CD</span>
+      <span class="stack-chip"><i class="fa-solid fa-wifi"></i> IoT / MQTT</span>
+      <span class="stack-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span>
+      <span class="stack-chip"><i class="fa-solid fa-shield-halved"></i> Security</span>
+      <span class="stack-chip"><i class="fa-solid fa-mobile-screen"></i> Responsive UI</span>
+      <span class="stack-chip"><i class="fa-solid fa-diagram-project"></i> System Design</span>
+    </div>
+  </div>
+</section>
+
 <!-- ══ GALLERY ══ -->
 <section id="gallery">
   <div class="wrap">
@@ -636,6 +828,43 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 </section>
 
 <div class="sec-divider"></div>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-eyebrow" data-aos="fade-right" data-aos-duration="700">Testimonials</div>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:1rem;">
+      <h2 class="sec-title" style="margin-bottom:0;" data-aos="fade-up" data-aos-delay="100">WHAT THEY<br>SAY</h2>
+      <p style="max-width:420px;font-size:.85rem;color:var(--muted);line-height:1.8;" data-aos="fade-left" data-aos-delay="180">Words from collaborators, clients, and peers who've seen the work up close.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="900">
+        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="testi-text">"Renniel delivered a complete web platform ahead of schedule. His attention to backend security and API architecture was exactly what our business needed."</div>
+        <div class="testi-author">
+          <div class="testi-av">MR</div>
+          <div><div class="testi-name">Mark Reyes</div><div class="testi-role">Client · SME Owner, Pampanga</div></div>
+        </div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="140" data-aos-duration="900">
+        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="testi-text">"His IoT system for SmartBasura was genuinely impressive — real-time sensor data flowing cleanly to our dashboard. The firmware was rock-solid from day one."</div>
+        <div class="testi-author">
+          <div class="testi-av">LC</div>
+          <div><div class="testi-name">Liza Cruz</div><div class="testi-role">Thesis Adviser · City College SF</div></div>
+        </div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="280" data-aos-duration="900">
+        <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="testi-text">"As a co-intern at DTI Region 3, I watched Renniel solve complex workflow problems with elegant code. He's one of those rare developers who thinks in systems."</div>
+        <div class="testi-author">
+          <div class="testi-av">JM</div>
+          <div><div class="testi-name">James Manalo</div><div class="testi-role">Fellow Intern · DTI Region 3</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══ JOURNEY ══ -->
 <section id="journey">
@@ -670,6 +899,13 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
           <div class="tl-org">City College San Fernando</div>
           <div class="tl-desc">Specialization in full-stack development, database algorithms, IoT integrations, and campus information systems.</div>
         </div>
+        <div class="tl-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="480">
+          <div class="tl-dot"></div>
+          <div class="tl-period">2021 — 2022</div>
+          <div class="tl-role">Freelance Web Developer</div>
+          <div class="tl-org">Independent</div>
+          <div class="tl-desc">Built and deployed custom websites and web applications for local businesses in Pampanga, gaining real-world production experience early in my career.</div>
+        </div>
       </div>
       <div class="info-stack">
         <div class="info-card accent" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
@@ -681,6 +917,11 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
           <div class="ic-label">Secondary Domain</div>
           <div class="ic-head">Hardware &amp; IoT</div>
           <div class="ic-body">Writing precision C++ logic for microcontrollers. Bridging the gap between physical sensors and cloud-based dashboards seamlessly.</div>
+        </div>
+        <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="380">
+          <div class="ic-label">Education</div>
+          <div class="ic-head">BSIT · 4th Year</div>
+          <div class="ic-body">City College San Fernando, Pampanga. Specializing in information systems, software engineering, and embedded technology.</div>
         </div>
         <div class="info-card" data-aos="fade-left" data-aos-duration="800" data-aos-delay="420">
           <div class="ic-label">Location</div>
@@ -785,7 +1026,7 @@ document.addEventListener('mousemove', e => {
   cRing.style.left=rx+'px'; cRing.style.top=ry+'px';
   requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card').forEach(el => {
+document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card,.svc-card,.testi-card').forEach(el => {
   el.addEventListener('mouseenter', () => cRing.classList.add('big'));
   el.addEventListener('mouseleave', () => cRing.classList.remove('big'));
 });
