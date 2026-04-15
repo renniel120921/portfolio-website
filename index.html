@@ -70,7 +70,7 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 #cine-lines.open .cine-bar{height:0}
 
 /* ═══════════════════════════════════
-   VIDEO INTRO (CINEMATIC PRELOADER)
+   VIDEO INTRO
 ═══════════════════════════════════ */
 #video-intro{
   position:fixed;inset:0;z-index:200000;
@@ -95,16 +95,65 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 .vi-bar.top{top:0}.vi-bar.bot{bottom:0}
 #video-intro.bars-open .vi-bar{height:0}
 
+/* ── ENTER GATE (replaces autoplay) ── */
+#vi-enter{
+  position:absolute;inset:0;z-index:30;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:opacity .5s ease;
+}
+#vi-enter .enter-inner{
+  display:flex;flex-direction:column;align-items:center;gap:1.4rem;
+  animation:fadeIn .8s ease .6s both;
+}
+#vi-enter .play-ring{
+  width:80px;height:80px;border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.6);
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(10px);
+  transition:all .35s cubic-bezier(.16,1,.3,1);
+  position:relative;
+}
+#vi-enter .play-ring::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1px dashed rgba(201,168,76,.25);
+  animation:spinDot 8s linear infinite;
+}
+#vi-enter:hover .play-ring{
+  border-color:var(--gold);
+  box-shadow:0 0 32px rgba(201,168,76,.3);
+  transform:scale(1.08);
+}
+#vi-enter .play-ring i{color:#c9a84c;font-size:1.5rem;margin-left:5px}
+#vi-enter .enter-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+}
+#vi-enter .enter-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.1rem,3vw,1.8rem);font-weight:700;letter-spacing:.14em;
+  color:rgba(255,255,255,.85);text-shadow:0 2px 20px rgba(0,0,0,.8);
+  text-align:center;
+}
+#vi-enter .enter-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(201,168,76,.7);text-align:center;
+}
+
 /* Skip button */
 #skip-btn{
-  position:absolute;bottom:40px;right:40px;z-index:20;
-  font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  position:absolute;bottom:40px;right:40px;z-index:35;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
   color:rgba(255,255,255,.5);background:rgba(0,0,0,.4);
   border:1px solid rgba(255,255,255,.15);
   padding:.5rem 1.2rem;border-radius:999px;
-  transition:all .3s;opacity:0;animation:fadeIn .6s ease forwards 2s;
+  transition:all .3s;opacity:0;
   backdrop-filter:blur(8px);
+  display:none;
 }
+#skip-btn.visible{display:block;animation:fadeIn .6s ease forwards}
 #skip-btn:hover{color:#fff;border-color:rgba(255,255,255,.5)}
 
 /* Intro overlay elements */
@@ -123,16 +172,17 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
   text-align:center;z-index:20;
   opacity:0;transform:translateY(20px);
   transition:opacity .8s ease, transform .8s ease;
+  pointer-events:none;
 }
-#video-intro.bars-open .vi-title{opacity:1;transform:translateY(0)}
-.vi-title-name{font-family:var(--ff-display);font-size:clamp(1.5rem,4vw,3rem);font-weight:900;letter-spacing:.12em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.8)}
-.vi-title-sub{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.8);margin-top:.4rem}
+#video-intro.playing .vi-title{opacity:1;transform:translateY(0)}
+.vi-title-name{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,3rem);font-weight:900;letter-spacing:.12em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+.vi-title-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.8);margin-top:.4rem}
 
-/* Loading bar under video */
+/* Loading bar */
 .vi-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.06);z-index:20}
-.vi-progress-fill{height:100%;width:0;background:var(--gold);transition:width linear}
+.vi-progress-fill{height:100%;width:0;background:#c9a84c;transition:width .3s linear}
 
-/* PRELOADER (after video, before portfolio) */
+/* PRELOADER */
 #preloader{position:fixed;inset:0;z-index:100000;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .8s ease,visibility .8s ease}
 #preloader.out{opacity:0;visibility:hidden}
 .pre-scan{position:absolute;width:100%;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:preScan 1.8s ease-in-out forwards;opacity:0}
@@ -144,14 +194,14 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 .pc.br{bottom:24px;right:24px;border-bottom-width:2px;border-right-width:2px;animation-delay:.2s}
 @keyframes pcPop{to{opacity:1}}
 .pre-center{display:flex;flex-direction:column;align-items:center;gap:1.5rem;z-index:1}
-.pre-name{font-family:var(--ff-display);font-size:clamp(2.2rem,7vw,5.5rem);font-weight:900;letter-spacing:.06em;color:#fff;display:flex;overflow:hidden}
+.pre-name{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,7vw,5.5rem);font-weight:900;letter-spacing:.06em;color:#fff;display:flex;overflow:hidden}
 .pre-name span{display:inline-block;animation:preCharUp .5s cubic-bezier(.16,1,.3,1) both}
 .pre-divider{width:0;height:1px;background:var(--gold);animation:divGrow .6s ease forwards .8s}
 @keyframes divGrow{to{width:200px}}
-.pre-sub{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.7);opacity:0;animation:fadeIn .5s ease forwards 1s}
+.pre-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.7);opacity:0;animation:fadeIn .5s ease forwards 1s}
 @keyframes preCharUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.pre-pct{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.15em;color:rgba(255,255,255,.3);margin-top:.5rem}
+.pre-pct{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:rgba(255,255,255,.3);margin-top:.5rem}
 .pre-pct-val{color:var(--gold);font-weight:500}
 
 /* ═══════════════════════════════════
@@ -236,100 +286,29 @@ nav.stuck{padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(24px);b
 @keyframes heroFadeScale{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}
 .hv-wrap{display:flex;flex-direction:column;gap:16px;width:100%;max-width:460px}
 
-/* ── CINEMATIC PHOTO PORTRAIT CARD ── */
-.hv-photo-card{
-  position:relative;
-  border-radius:20px;
-  overflow:hidden;
-  border:1.5px solid var(--gold-border);
-  aspect-ratio:3/4;
-  background:var(--bg2);
-  box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(201,168,76,.08), inset 0 1px 0 rgba(255,255,255,.05);
-  transition:border-color .4s,box-shadow .5s,transform .5s cubic-bezier(.16,1,.3,1);
-}
-.hv-photo-card:hover{
-  border-color:var(--gold);
-  box-shadow:0 40px 100px rgba(201,168,76,.18), 0 0 60px rgba(201,168,76,.08);
-  transform:translateY(-6px) scale(1.01);
-}
-.hv-photo-card img.hv-portrait{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;
-  position:absolute;inset:0;
-  transition:transform .8s cubic-bezier(.16,1,.3,1), filter .5s;
-  filter:saturate(.9) brightness(.92);
-}
-.hv-photo-card:hover img.hv-portrait{
-  transform:scale(1.04);
-  filter:saturate(1.05) brightness(.98);
-}
-
-/* Gradient overlay on portrait */
-.hv-portrait-overlay{
-  position:absolute;inset:0;z-index:2;
-  background:linear-gradient(180deg,
-    rgba(0,0,0,.0) 0%,
-    rgba(0,0,0,.0) 40%,
-    rgba(5,5,8,.5) 75%,
-    rgba(5,5,8,.88) 100%
-  );
-  pointer-events:none;
-}
-
-/* Animated scan line */
-.hv-scan-line{
-  position:absolute;
-  left:0;right:0;height:1px;
-  background:linear-gradient(to right,transparent,var(--gold),transparent);
-  opacity:0;pointer-events:none;z-index:4;
-  animation:hvScan 5s ease-in-out infinite 2s;
-}
-@keyframes hvScan{
-  0%{top:0;opacity:0}5%{opacity:.6}85%{opacity:.3}100%{top:100%;opacity:0}
-}
-
-/* Floating noise texture */
-.hv-photo-card::after{
-  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
-  opacity:.6;mix-blend-mode:overlay;
-}
-
-/* Corner brackets */
+.hv-photo-card{position:relative;border-radius:20px;overflow:hidden;border:1.5px solid var(--gold-border);aspect-ratio:3/4;background:var(--bg2);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(201,168,76,.08),inset 0 1px 0 rgba(255,255,255,.05);transition:border-color .4s,box-shadow .5s,transform .5s cubic-bezier(.16,1,.3,1)}
+.hv-photo-card:hover{border-color:var(--gold);box-shadow:0 40px 100px rgba(201,168,76,.18),0 0 60px rgba(201,168,76,.08);transform:translateY(-6px) scale(1.01)}
+.hv-photo-card img.hv-portrait{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s;filter:saturate(.9) brightness(.92)}
+.hv-photo-card:hover img.hv-portrait{transform:scale(1.04);filter:saturate(1.05) brightness(.98)}
+.hv-portrait-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.0) 0%,rgba(0,0,0,.0) 40%,rgba(5,5,8,.5) 75%,rgba(5,5,8,.88) 100%);pointer-events:none}
+.hv-scan-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:0;pointer-events:none;z-index:4;animation:hvScan 5s ease-in-out infinite 2s}
+@keyframes hvScan{0%{top:0;opacity:0}5%{opacity:.6}85%{opacity:.3}100%{top:100%;opacity:0}}
+.hv-photo-card::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.6;mix-blend-mode:overlay}
 .hv-corners .hc{position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;border-width:0;z-index:5;transition:all .4s}
 .hc.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:6px 0 0 0}
 .hc.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px;border-radius:0 6px 0 0}
 .hc.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 6px}
 .hc.br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 6px 0}
 .hv-photo-card:hover .hc{border-color:var(--gold-lt)}
-
-/* Frame data overlays */
-.hv-frame-data{
-  position:absolute;bottom:16px;left:16px;right:16px;
-  z-index:5;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;
-}
+.hv-frame-data{position:absolute;bottom:16px;left:16px;right:16px;z-index:5;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
 .hv-frame-left{display:flex;flex-direction:column;gap:4px}
 .hv-frame-tag{font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .hv-frame-name{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7)}
-
-/* Available badge */
 .hv-badge{position:absolute;top:14px;right:14px;background:var(--glass-bg);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:7px;z-index:6}
 .hv-badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 8px rgba(74,222,128,.8);animation:blink 2s ease-in-out infinite}
 .hv-badge-txt{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
-
-/* Floating year tag */
-.hv-year-tag{
-  position:absolute;top:14px;left:14px;z-index:6;
-  font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);background:rgba(0,0,0,.4);
-  border:1px solid rgba(255,255,255,.1);padding:5px 10px;border-radius:999px;
-  backdrop-filter:blur(8px);
-}
-
+.hv-year-tag{position:absolute;top:14px;left:14px;z-index:6;font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6);background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);padding:5px 10px;border-radius:999px;backdrop-filter:blur(8px)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* Photo info row */
 .hv-info-row{display:flex;align-items:center;gap:16px;background:var(--bg3);border:1.5px solid var(--gold-border);border-radius:20px;padding:16px 20px;transition:border-color .3s,transform .4s,box-shadow .4s}
 .hv-info-row:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,.1)}
 .hv-photo-frame{width:72px;height:72px;border-radius:12px;overflow:hidden;border:2px solid rgba(201,168,76,.5);flex-shrink:0}
@@ -706,6 +685,8 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   #journey .gif-badge{width:80px}
   .services-grid{grid-template-columns:1fr}
   .awards-grid{grid-template-columns:1fr}
+  #vi-enter .enter-name{font-size:1.1rem}
+  #skip-btn{bottom:20px;right:20px}
 }
 </style>
 </head>
@@ -722,7 +703,7 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 </div>
 
 <!-- ══════════════════════════════════
-     VIDEO INTRO (plays before portfolio)
+     VIDEO INTRO
 ══════════════════════════════════ -->
 <div id="video-intro">
   <!-- Cinematic bars -->
@@ -738,23 +719,36 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
   <!-- Scan line -->
   <div class="vi-scan"></div>
 
-  <!-- The video -->
+  <!-- VIDEO — no autoplay, no muted, full audio on click -->
   <video
     id="intro-video"
     src="images/new_vid.mp4"
-    autoplay
     playsinline
     preload="auto"
   ></video>
 
-  <!-- Name overlay shown after bars open -->
+  <!-- CLICK TO ENTER GATE -->
+  <div id="vi-enter">
+    <div class="enter-inner">
+      <div class="enter-name">RENNIEL SALAZAR</div>
+      <div class="enter-sub">Software Engineer &amp; Tech Founder</div>
+      <div class="play-ring">
+        <i class="fa-solid fa-play"></i>
+      </div>
+      <div class="enter-label">Click to Enter</div>
+    </div>
+  </div>
+
+  <!-- Name overlay shown while video plays -->
   <div class="vi-title">
     <div class="vi-title-name">RENNIEL SALAZAR</div>
     <div class="vi-title-sub">Software Engineer &amp; Tech Founder</div>
   </div>
 
-  <!-- Skip button -->
-  <button id="skip-btn" onclick="skipIntro()">Skip <i class="fa-solid fa-forward" style="font-size:.5rem;margin-left:3px"></i></button>
+  <!-- Skip button (shown after video starts) -->
+  <button id="skip-btn" onclick="skipIntro()">
+    Skip <i class="fa-solid fa-forward" style="font-size:.5rem;margin-left:3px"></i>
+  </button>
 
   <!-- Progress bar -->
   <div class="vi-progress">
@@ -763,7 +757,7 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 </div>
 
 <!-- ══════════════════════════════════
-     PORTFOLIO PRELOADER (brief transition)
+     PRELOADER
 ══════════════════════════════════ -->
 <div id="preloader" style="display:none;">
   <div class="pre-scan"></div>
@@ -827,44 +821,21 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
         </div>
       </div>
 
-      <!-- ══ HERO VISUAL: CINEMATIC PHOTO PORTRAIT ══ -->
       <div class="hero-visual">
         <div class="hv-wrap">
-
-          <!-- PHOTO PORTRAIT CARD -->
           <div class="hv-photo-card">
-
-            <img
-              class="hv-portrait"
-              src="images/ceo.jpg"
-              alt="Renniel Salazar"
-              onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=600'"
-            >
-
-            <!-- Gradient vignette -->
+            <img class="hv-portrait" src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=600'">
             <div class="hv-portrait-overlay"></div>
-
-            <!-- Scan line animation -->
             <div class="hv-scan-line"></div>
-
-            <!-- Corner brackets -->
             <div class="hv-corners">
-              <div class="hc tl"></div>
-              <div class="hc tr"></div>
-              <div class="hc bl"></div>
-              <div class="hc br"></div>
+              <div class="hc tl"></div><div class="hc tr"></div>
+              <div class="hc bl"></div><div class="hc br"></div>
             </div>
-
-            <!-- Year tag -->
             <div class="hv-year-tag">Portfolio · 2026</div>
-
-            <!-- Available badge -->
             <div class="hv-badge">
               <div class="hv-badge-dot"></div>
               <span class="hv-badge-txt">Available</span>
             </div>
-
-            <!-- Bottom frame data -->
             <div class="hv-frame-data">
               <div class="hv-frame-left">
                 <span class="hv-frame-tag">Full-Stack Engineer</span>
@@ -872,8 +843,6 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
               </div>
             </div>
           </div>
-
-          <!-- Info row below photo -->
           <div class="hv-info-row">
             <div class="hv-photo-frame">
               <img src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0f0f18&color=c9a84c&size=160'">
@@ -887,7 +856,6 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
               <div class="hv-sub">Full-Stack Engineer &amp; Tech Founder</div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -1327,27 +1295,28 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
 <script>
 /* ══════════════════════════════════════
    VIDEO INTRO SYSTEM
-   1. Video plays fullscreen with cinematic bars
-   2. After video ends (or skip), transition to portfolio
+   - No autoplay, no muted
+   - User clicks the gate → video plays with full audio
+   - Video ends → portfolio launches
 ══════════════════════════════════════ */
 (function(){
-  const intro = document.getElementById('video-intro');
-  const video = document.getElementById('intro-video');
-  const progBar = document.getElementById('vi-prog');
-  let introDone = false;
+  const intro    = document.getElementById('video-intro');
+  const video    = document.getElementById('intro-video');
+  const gate     = document.getElementById('vi-enter');
+  const skipBtn  = document.getElementById('skip-btn');
+  const progBar  = document.getElementById('vi-prog');
+  let introDone  = false;
 
+  /* ── launch portfolio ── */
   function launchPortfolio() {
     if (introDone) return;
     introDone = true;
-
-    // Fade out intro
+    video.pause();
     intro.classList.add('out');
 
-    // Show brief preloader then launch
     const preloader = document.getElementById('preloader');
     preloader.style.display = 'flex';
 
-    // Animate preloader letters
     const el = document.getElementById('pre-letters');
     'RENNIEL'.split('').forEach((ch, i) => {
       const s = document.createElement('span');
@@ -1356,7 +1325,6 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
       el.appendChild(s);
     });
 
-    // Quick percentage count
     const pctEl = document.getElementById('pre-pct-val');
     let pct = 0;
     const ct = setInterval(() => {
@@ -1378,185 +1346,231 @@ footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-ind
     }, 1200);
   }
 
-  // Open cinematic bars after brief delay, then show video
-  setTimeout(() => {
-    intro.classList.add('bars-open');
-    setTimeout(() => {
-      video.classList.add('visible');
-      video.play().catch(() => {
-        // Autoplay blocked — skip straight to portfolio
-        setTimeout(launchPortfolio, 1000);
-      });
-    }, 800);
-  }, 400);
+  /* ── open cinematic bars on load ── */
+  setTimeout(() => intro.classList.add('bars-open'), 400);
 
-  // Progress bar sync
-  video.addEventListener('timeupdate', () => {
-    if (video.duration) {
-      const pct = (video.currentTime / video.duration) * 100;
-      progBar.style.width = pct + '%';
-      progBar.style.transition = 'width .3s linear';
+  /* ── gate click → play video with sound ── */
+  gate.addEventListener('click', () => {
+    /* fade out the gate */
+    gate.style.opacity = '0';
+    gate.style.pointerEvents = 'none';
+    setTimeout(() => { gate.style.display = 'none'; }, 500);
+
+    /* show video + title overlay */
+    video.classList.add('visible');
+    intro.classList.add('playing');
+
+    /* show skip button */
+    skipBtn.classList.add('visible');
+
+    /* play — full audio, no muted needed */
+    const p = video.play();
+    if (p !== undefined) {
+      p.catch(() => launchPortfolio());
     }
   });
 
-  // When video ends → launch portfolio
-  video.addEventListener('ended', () => {
-    setTimeout(launchPortfolio, 600);
+  /* ── progress bar ── */
+  video.addEventListener('timeupdate', () => {
+    if (video.duration) {
+      progBar.style.width = ((video.currentTime / video.duration) * 100) + '%';
+    }
   });
 
-  // Fallback: if video doesn't load in 8s, skip
-  setTimeout(() => {
-    if (!introDone) launchPortfolio();
-  }, 18000);
+  /* ── video ends → launch ── */
+  video.addEventListener('ended', () => setTimeout(launchPortfolio, 600));
 
-  // Skip button
+  /* ── fallback: 60s of inactivity skips to portfolio ── */
+  const fallback = setTimeout(() => { if (!introDone) launchPortfolio(); }, 60000);
+
+  /* ── skip button ── */
   window.skipIntro = function() {
-    video.pause();
+    clearTimeout(fallback);
     launchPortfolio();
   };
 })();
 
-/* ── AOS ── */
-// AOS.init called after intro completes (see above)
-
 /* ── THEME ── */
-const themeToggle=document.getElementById('theme-toggle');
-const themeIcon=document.getElementById('theme-icon');
-function updateThemeIcon(t){themeIcon.classList.toggle('fa-sun',t!=='dark');themeIcon.classList.toggle('fa-moon',t==='dark')}
-updateThemeIcon(document.documentElement.getAttribute('data-theme')||'dark');
-themeToggle.addEventListener('click',()=>{
-  const cur=document.documentElement.getAttribute('data-theme')||'dark';
-  const nxt=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',nxt);
-  localStorage.setItem('portfolio-theme',nxt);
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon   = document.getElementById('theme-icon');
+function updateThemeIcon(t){
+  themeIcon.classList.toggle('fa-sun', t !== 'dark');
+  themeIcon.classList.toggle('fa-moon', t === 'dark');
+}
+updateThemeIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  const nxt = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('portfolio-theme', nxt);
   updateThemeIcon(nxt);
 });
 
 /* ── CURSOR ── */
-const cDot=document.getElementById('c-dot'),cRing=document.getElementById('c-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cDot.style.left=mx+'px';cDot.style.top=my+'px'});
-(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cRing.style.left=rx+'px';cRing.style.top=ry+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card,.svc-card,.testi-card,.award-card,.oss-card,.now-card,.proc-step,.hv-photo-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cRing.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cRing.classList.remove('big'));
+const cDot = document.getElementById('c-dot'), cRing = document.getElementById('c-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cDot.style.left = mx+'px'; cDot.style.top = my+'px';
+});
+(function loop(){
+  rx += (mx-rx)*.11; ry += (my-ry)*.11;
+  cRing.style.left = rx+'px'; cRing.style.top = ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.proj-card,.gal-item,.skill-card,.svc-card,.testi-card,.award-card,.oss-card,.now-card,.proc-step,.hv-photo-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cRing.classList.add('big'));
+  el.addEventListener('mouseleave', () => cRing.classList.remove('big'));
 });
 
 /* ── MAGNETIC BUTTONS ── */
-document.querySelectorAll('.mag-btn').forEach(btn=>{
-  btn.addEventListener('mousemove',e=>{
-    const r=btn.getBoundingClientRect();
-    const cx=r.left+r.width/2,cy=r.top+r.height/2;
-    const dx=(e.clientX-cx)*.18,dy=(e.clientY-cy)*.18;
-    btn.style.transform=`translate(${dx}px,${dy}px)`;
+document.querySelectorAll('.mag-btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const dx = (e.clientX - r.left - r.width/2) * .18;
+    const dy = (e.clientY - r.top  - r.height/2) * .18;
+    btn.style.transform = `translate(${dx}px,${dy}px)`;
   });
-  btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
 });
 
 /* ── SCROLL PROGRESS ── */
-window.addEventListener('scroll',()=>{
-  const sp=document.getElementById('scroll-prog');
-  const pct=(scrollY/(document.body.scrollHeight-innerHeight))*100;
-  sp.style.width=Math.min(pct,100)+'%';
-  document.getElementById('nav').classList.toggle('stuck',scrollY>60);
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-prog').style.width =
+    Math.min((scrollY / (document.body.scrollHeight - innerHeight)) * 100, 100) + '%';
+  document.getElementById('nav').classList.toggle('stuck', scrollY > 60);
 });
 
 /* ── PARTICLE CANVAS ── */
 (function(){
-  const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
-  let w,h,pts=[];
-  const resize=()=>{w=c.width=innerWidth;h=c.height=innerHeight};
-  resize();window.addEventListener('resize',resize);
-  const mk=()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.2+.3});
+  const c = document.getElementById('bg-canvas'), ctx = c.getContext('2d');
+  let w, h, pts = [];
+  const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; };
+  resize(); window.addEventListener('resize', resize);
+  const mk = () => ({x:Math.random()*w, y:Math.random()*h, vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25, r:Math.random()*1.2+.3});
   for(let i=0;i<90;i++) pts.push(mk());
   (function draw(){
     ctx.clearRect(0,0,w,h);
-    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(201,168,76,.35)';ctx.fill();});
-    pts.forEach((p,i)=>{for(let j=i+1;j<pts.length;j++){const d=Math.hypot(p.x-pts[j].x,p.y-pts[j].y);if(d<110){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(201,168,76,${(1-d/110)*.12})`;ctx.lineWidth=.6;ctx.stroke();}}});
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(201,168,76,.35)'; ctx.fill();
+    });
+    pts.forEach((p,i)=>{
+      for(let j=i+1;j<pts.length;j++){
+        const d=Math.hypot(p.x-pts[j].x,p.y-pts[j].y);
+        if(d<110){
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(201,168,76,${(1-d/110)*.12})`; ctx.lineWidth=.6; ctx.stroke();
+        }
+      }
+    });
     requestAnimationFrame(draw);
   })();
 })();
 
 /* ── STAT COUNTER ── */
 function animCounters(){
-  document.querySelectorAll('.stat-n[data-count]').forEach(el=>{
-    const target=parseInt(el.dataset.count);
-    const sup=el.querySelector('sup').outerHTML;
-    let cur=0;const step=Math.ceil(target/36);
-    const t=setInterval(()=>{cur=Math.min(cur+step,target);el.innerHTML=cur+sup;if(cur>=target)clearInterval(t);},28);
+  document.querySelectorAll('.stat-n[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const sup = el.querySelector('sup').outerHTML;
+    let cur = 0; const step = Math.ceil(target/36);
+    const t = setInterval(() => { cur=Math.min(cur+step,target); el.innerHTML=cur+sup; if(cur>=target) clearInterval(t); }, 28);
   });
 }
 
-/* ── METRIC STRIP COUNTER ── */
+/* ── METRIC COUNTER ── */
 function animMetrics(){
-  document.querySelectorAll('.metric-big[data-count]').forEach(el=>{
-    const target=parseInt(el.dataset.count);
-    const sup=el.querySelector('sup').outerHTML;
-    const span=el.querySelector('.mval');
-    let cur=0;const step=Math.max(1,Math.ceil(target/60));
-    const t=setInterval(()=>{cur=Math.min(cur+step,target);span.textContent=cur;if(cur>=target)clearInterval(t);},20);
+  document.querySelectorAll('.metric-big[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const span = el.querySelector('.mval');
+    let cur = 0; const step = Math.max(1, Math.ceil(target/60));
+    const t = setInterval(() => { cur=Math.min(cur+step,target); span.textContent=cur; if(cur>=target) clearInterval(t); }, 20);
   });
 }
 
 /* ── PROGRESS BARS ── */
 function animProgress(){
-  document.querySelectorAll('.now-prog[data-prog]').forEach(el=>{
-    const target=parseInt(el.dataset.prog);
-    setTimeout(()=>{el.style.width=target+'%';},300);
+  document.querySelectorAll('.now-prog[data-prog]').forEach(el => {
+    setTimeout(() => { el.style.width = parseInt(el.dataset.prog) + '%'; }, 300);
   });
 }
 
 /* ── INTERSECTION OBSERVERS ── */
-const metObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){animMetrics();metObserver.disconnect();}});},{threshold:.3});
-const metStrip=document.querySelector('.metrics-strip');
-if(metStrip)metObserver.observe(metStrip);
+new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ animMetrics(); } });
+}, {threshold:.3}).observe(document.querySelector('.metrics-strip'));
 
-const nowObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){animProgress();nowObserver.disconnect();}});},{threshold:.2});
-const nowSection=document.getElementById('now');
-if(nowSection)nowObserver.observe(nowSection);
+new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ animProgress(); } });
+}, {threshold:.2}).observe(document.getElementById('now'));
 
 /* ── LIGHTBOX ── */
-window.openLb=src=>{document.getElementById('lb-img').src=src;document.getElementById('lightbox').classList.add('open')};
-window.closeLb=()=>document.getElementById('lightbox').classList.remove('open');
+window.openLb = src => { document.getElementById('lb-img').src=src; document.getElementById('lightbox').classList.add('open'); };
+window.closeLb = () => document.getElementById('lightbox').classList.remove('open');
 
 /* ── PARALLAX ── */
-window.addEventListener('scroll',()=>{
-  const y=scrollY;
-  document.querySelectorAll('.orb1').forEach(o=>o.style.transform=`translateY(${y*.08}px)`);
-  document.querySelectorAll('.orb2').forEach(o=>o.style.transform=`translateY(${-y*.05}px)`);
+window.addEventListener('scroll', () => {
+  const y = scrollY;
+  document.querySelectorAll('.orb1').forEach(o => o.style.transform=`translateY(${y*.08}px)`);
+  document.querySelectorAll('.orb2').forEach(o => o.style.transform=`translateY(${-y*.05}px)`);
 });
 
 /* ── CHAT ── */
-const API_URL='https://portfolio-website-iyv7.onrender.com/api/chat';
-let chatOpen=false;
-const systemPrompt=`You are Renniel Salazar, a Software Engineer and the Founder & CEO of EasyWeb PH.
+const API_URL = 'https://portfolio-website-iyv7.onrender.com/api/chat';
+let chatOpen = false;
+const systemPrompt = `You are Renniel Salazar, a Software Engineer and the Founder & CEO of EasyWeb PH.
 TONE: Highly technical, authoritative, direct, confident. Expert systems architect + decisive startup founder.
 KEY FACTS: Startup: EasyWeb PH (2026). Education: 4th-year BSIT at CCSF. Internship: 486-hour at DTI Region 3. Projects: SmartBasura (IoT,C++), Campus Info Systems. Tech: C++,Java,Python,PHP,Laravel,Tailwind,MySQL,MongoDB.
 RULES: 1.Act strictly as Renniel. 2.Speak definitively. 3.Max 2-3 sentences. 4.No emojis.`;
-let chatHistory=[{role:"user",parts:[{text:systemPrompt}]},{role:"model",parts:[{text:"SYSTEM READY."}]}];
+let chatHistory = [{role:"user",parts:[{text:systemPrompt}]},{role:"model",parts:[{text:"SYSTEM READY."}]}];
 
-async function checkServer(){try{const r=await fetch('https://portfolio-website-iyv7.onrender.com/');if(r.ok||r.status===404){document.getElementById('status-text').textContent='System Online';document.getElementById('status-dot').classList.add('online');}}catch(e){}}
+async function checkServer(){
+  try{
+    const r = await fetch('https://portfolio-website-iyv7.onrender.com/');
+    if(r.ok||r.status===404){
+      document.getElementById('status-text').textContent='System Online';
+      document.getElementById('status-dot').classList.add('online');
+    }
+  }catch(e){}
+}
 checkServer();
 
-window.toggleChat=()=>{chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen)};
-document.getElementById('chat-form').addEventListener('submit',async e=>{
+window.toggleChat = () => {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-win').classList.toggle('open', chatOpen);
+};
+
+document.getElementById('chat-form').addEventListener('submit', async e => {
   e.preventDefault();
-  const msg=document.getElementById('user-input').value.trim();
-  if(!msg)return;
-  addMsg('user',msg);document.getElementById('user-input').value='';
-  const lid=addTyping();
-  try{
-    const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:chatHistory.slice(-6)})});
+  const msg = document.getElementById('user-input').value.trim();
+  if(!msg) return;
+  addMsg('user', msg); document.getElementById('user-input').value = '';
+  const lid = addTyping();
+  try {
+    const res = await fetch(API_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:msg, history:chatHistory.slice(-6)})
+    });
     removeEl(lid);
     if(!res.ok) throw new Error(res.status>=500?'cold':'err');
-    const data=await res.json();
-    if(data.text){addMsg('ai',data.text);chatHistory.push({role:"user",parts:[{text:msg}]});chatHistory.push({role:"model",parts:[{text:data.text}]});}
-  }catch(err){removeEl(lid);addMsg('ai',err.message==='cold'?'Server cold start initiated. Await 30 seconds then retry.':'System error. Reroute request.');}
+    const data = await res.json();
+    if(data.text){
+      addMsg('ai', data.text);
+      chatHistory.push({role:"user",parts:[{text:msg}]});
+      chatHistory.push({role:"model",parts:[{text:data.text}]});
+    }
+  } catch(err) {
+    removeEl(lid);
+    addMsg('ai', err.message==='cold' ? 'Server cold start initiated. Await 30 seconds then retry.' : 'System error. Reroute request.');
+  }
 });
 
-function addMsg(s,t){const w=document.getElementById('chat-msgs'),d=document.createElement('div');d.className=`msg ${s}`;d.innerHTML=`<div class="bubble">${t}</div>`;w.appendChild(d);w.scrollTop=w.scrollHeight;}
-function addTyping(){const id='ty-'+Date.now(),w=document.getElementById('chat-msgs'),d=document.createElement('div');d.id=id;d.className='msg ai';d.innerHTML='<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';w.appendChild(d);w.scrollTop=w.scrollHeight;return id;}
-function removeEl(id){const el=document.getElementById(id);if(el){el.style.opacity='0';setTimeout(()=>el.remove(),250);}}
+function addMsg(s,t){ const w=document.getElementById('chat-msgs'),d=document.createElement('div');d.className=`msg ${s}`;d.innerHTML=`<div class="bubble">${t}</div>`;w.appendChild(d);w.scrollTop=w.scrollHeight; }
+function addTyping(){ const id='ty-'+Date.now(),w=document.getElementById('chat-msgs'),d=document.createElement('div');d.id=id;d.className='msg ai';d.innerHTML='<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';w.appendChild(d);w.scrollTop=w.scrollHeight;return id; }
+function removeEl(id){ const el=document.getElementById(id);if(el){el.style.opacity='0';setTimeout(()=>el.remove(),250);} }
 </script>
 </body>
 </html>
