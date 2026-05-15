@@ -8,64 +8,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 <script>
   const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
 <style>
 /* ═══════════════════════════════════
-   DESIGN TOKENS — CHROMATIC SYSTEM
+   DESIGN TOKENS
 ═══════════════════════════════════ */
 :root {
   --bg:        #03050a;
   --bg2:       #060912;
   --bg3:       #0a0f1e;
   --bg4:       #0e1428;
-
   --surf:      rgba(255,255,255,0.025);
   --surf2:     rgba(255,255,255,0.05);
   --surf3:     rgba(255,255,255,0.08);
-
   --border:    rgba(255,255,255,0.06);
   --border2:   rgba(255,255,255,0.11);
   --border3:   rgba(255,255,255,0.18);
-
-  /* Primary accent — electric cyan-violet */
   --c1:        #00e5ff;
   --c1-dim:    rgba(0,229,255,0.08);
   --c1-glow:   rgba(0,229,255,0.22);
   --c1-border: rgba(0,229,255,0.2);
-
-  /* Secondary — hot violet */
   --c2:        #b44fff;
   --c2-dim:    rgba(180,79,255,0.08);
   --c2-glow:   rgba(180,79,255,0.22);
-
-  /* Tertiary — electric lime */
   --c3:        #39ff8e;
   --c3-dim:    rgba(57,255,142,0.08);
-
-  /* Warm — amber (kept for gold accents) */
   --gold:      #ffb830;
   --gold-dim:  rgba(255,184,48,0.08);
-  --gold-glow: rgba(255,184,48,0.2);
-
   --text:      #e8edf8;
   --muted:     #6e7a96;
   --muted2:    #3d4557;
-
   --nav-bg:    rgba(3,5,10,0.9);
-
   --ff-display: 'Syne', sans-serif;
   --ff-ui:      'Space Grotesk', sans-serif;
   --ff-mono:    'JetBrains Mono', monospace;
-
   --r-xs:.4rem; --r-sm:.6rem; --r-md:1rem; --r-lg:1.4rem; --r-xl:2rem; --r-2xl:3rem;
   --ease-out: cubic-bezier(.16,1,.3,1);
   --ease-spring: cubic-bezier(.34,1.56,.64,1);
 }
-
 [data-theme="light"] {
   --bg:#f0f2f8; --bg2:#e8eaf5; --bg3:#dfe2f0; --bg4:#d5d8eb;
   --surf:rgba(0,0,0,0.025); --surf2:rgba(0,0,0,0.05); --surf3:rgba(0,0,0,0.075);
@@ -73,10 +56,7 @@
   --text:#080c18; --muted:#505878; --muted2:#8890a8;
   --nav-bg:rgba(240,242,248,0.9);
   --c1-dim:rgba(0,180,210,0.1); --c1-border:rgba(0,180,210,0.22);
-  --c1:#007fa8;
-  --c2:#7a1ecc;
-  --c3:#1a9e50;
-  --gold:#d4840a;
+  --c1:#007fa8; --c2:#7a1ecc; --c3:#1a9e50; --gold:#d4840a;
 }
 
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
@@ -89,7 +69,6 @@ img { display:block; }
 #c-dot  { position:fixed;z-index:99999;pointer-events:none;width:6px;height:6px;background:var(--c1);border-radius:50%;transform:translate(-50%,-50%);transition:background .3s,width .2s,height .2s; }
 #c-ring { position:fixed;z-index:99998;pointer-events:none;width:32px;height:32px;border:1px solid rgba(0,229,255,.35);border-radius:50%;transform:translate(-50%,-50%);transition:width .4s var(--ease-out),height .4s var(--ease-out),border-color .3s; }
 #c-ring.big { width:56px;height:56px;border-color:var(--c1); }
-#c-ring.hover { border-color:var(--c2);mix-blend-mode:difference; }
 
 /* ── WEBGL CANVAS ── */
 #bg-canvas { position:fixed;inset:0;z-index:0;pointer-events:none; }
@@ -108,14 +87,12 @@ img { display:block; }
 .vi-bar { position:absolute;left:0;right:0;height:95px;background:#000;z-index:10;transition:height 1.8s var(--ease-out); }
 .vi-bar.top{top:0} .vi-bar.bot{bottom:0}
 #video-intro.bars-open .vi-bar { height:0; }
-
 .vi-corner { position:absolute;width:34px;height:34px;border-color:rgba(0,229,255,.5);border-style:solid;border-width:0;z-index:15;opacity:0;transition:opacity .6s; }
 .vi-corner.tl{top:28px;left:28px;border-top-width:1.5px;border-left-width:1.5px}
 .vi-corner.tr{top:28px;right:28px;border-top-width:1.5px;border-right-width:1.5px}
 .vi-corner.bl{bottom:28px;left:28px;border-bottom-width:1.5px;border-left-width:1.5px}
 .vi-corner.br{bottom:28px;right:28px;border-bottom-width:1.5px;border-right-width:1.5px}
 #video-intro.bars-open .vi-corner { opacity:1; }
-
 #vi-enter { position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s; }
 .enter-inner { display:flex;flex-direction:column;align-items:center;gap:1.6rem;animation:fadeUp .8s ease .6s both; }
 .enter-name { font-family:var(--ff-display);font-size:clamp(1.4rem,4vw,2.6rem);color:#fff;letter-spacing:.14em;text-transform:uppercase;text-align:center; }
@@ -125,12 +102,10 @@ img { display:block; }
 .play-ring:hover,.enter-inner:hover .play-ring { border-color:var(--c1);box-shadow:0 0 50px rgba(0,229,255,.3),inset 0 0 20px rgba(0,229,255,.05);transform:scale(1.08); }
 .play-ring i { color:var(--c1);font-size:1.5rem;margin-left:5px; }
 .enter-label { font-family:var(--ff-mono);font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35); }
-
 .vi-title { position:absolute;bottom:95px;left:0;right:0;text-align:center;z-index:20;opacity:0;transform:translateY(20px);transition:opacity .8s,transform .8s;pointer-events:none; }
 #video-intro.playing .vi-title { opacity:1;transform:none; }
 .vi-title-name { font-family:var(--ff-display);font-size:clamp(1.8rem,5vw,4rem);color:#fff;letter-spacing:.12em;text-transform:uppercase; }
 .vi-title-sub { font-family:var(--ff-mono);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,229,255,.7);margin-top:.6rem; }
-
 #skip-btn { position:absolute;bottom:38px;right:38px;z-index:35;font-family:var(--ff-mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);padding:.5rem 1.3rem;border-radius:999px;transition:all .3s;opacity:0;backdrop-filter:blur(10px);display:none; }
 #skip-btn.visible { display:block;animation:fadeUp .6s forwards; }
 #skip-btn:hover { color:#fff;border-color:rgba(255,255,255,.4); }
@@ -170,6 +145,73 @@ img { display:block; }
 .wrap { position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 2.5rem; }
 
 /* ═══════════════════════════════════
+   3D SCROLL REVEAL CLASSES
+═══════════════════════════════════ */
+.reveal-3d {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(28deg) translateY(60px) scale(0.92);
+  transform-origin: center bottom;
+  transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+}
+.reveal-3d.in-view {
+  opacity: 1;
+  transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+}
+.reveal-3d-left {
+  opacity: 0;
+  transform: perspective(1200px) rotateY(-35deg) translateX(-80px) scale(0.88);
+  transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+}
+.reveal-3d-left.in-view {
+  opacity: 1;
+  transform: perspective(1200px) rotateY(0deg) translateX(0px) scale(1);
+}
+.reveal-3d-right {
+  opacity: 0;
+  transform: perspective(1200px) rotateY(35deg) translateX(80px) scale(0.88);
+  transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+}
+.reveal-3d-right.in-view {
+  opacity: 1;
+  transform: perspective(1200px) rotateY(0deg) translateX(0px) scale(1);
+}
+.reveal-flip {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(-90deg) translateY(40px);
+  transform-origin: top center;
+  transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+}
+.reveal-flip.in-view {
+  opacity: 1;
+  transform: perspective(1200px) rotateX(0deg) translateY(0);
+}
+.reveal-zoom {
+  opacity: 0;
+  transform: perspective(1200px) scale3d(0.7,0.7,0.7) translateZ(-120px);
+  transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+}
+.reveal-zoom.in-view {
+  opacity: 1;
+  transform: perspective(1200px) scale3d(1,1,1) translateZ(0px);
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.08s !important; }
+.delay-2 { transition-delay: 0.16s !important; }
+.delay-3 { transition-delay: 0.24s !important; }
+.delay-4 { transition-delay: 0.32s !important; }
+.delay-5 { transition-delay: 0.40s !important; }
+.delay-6 { transition-delay: 0.48s !important; }
+
+/* ── PARALLAX DEPTH LAYERS ── */
+.depth-layer { will-change: transform; }
+
+/* ═══════════════════════════════════
    NAV
 ═══════════════════════════════════ */
 nav { position:fixed;top:0;left:0;right:0;z-index:500;padding:2rem 0;transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent; }
@@ -201,8 +243,6 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
    HERO
 ═══════════════════════════════════ */
 #hero { min-height:100vh;display:flex;align-items:center;padding:9rem 0 6rem;position:relative;overflow:hidden; }
-
-/* 3D grid perspective floor */
 .hero-grid-3d { position:absolute;bottom:0;left:0;right:0;height:60%;pointer-events:none;z-index:0;
   background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);
   background-size:60px 60px;
@@ -210,22 +250,21 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
   transform-origin:bottom center;
   mask-image:linear-gradient(to top,rgba(0,0,0,.6),transparent);
   -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.6),transparent);
+  animation: gridPulse 6s ease-in-out infinite;
 }
-
-/* Ambient orbs */
+@keyframes gridPulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.5; }
+}
 .orb { position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);z-index:0; }
 .orb-1 { width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,.06),transparent 70%);top:-120px;right:-80px;animation:orbFloat 10s ease-in-out infinite; }
 .orb-2 { width:500px;height:500px;background:radial-gradient(circle,rgba(180,79,255,.05),transparent 70%);bottom:-60px;left:-60px;animation:orbFloat 13s ease-in-out infinite reverse; }
 .orb-3 { width:280px;height:280px;background:radial-gradient(circle,rgba(57,255,142,.04),transparent 70%);top:40%;left:42%;animation:orbFloat 16s ease-in-out infinite; }
 @keyframes orbFloat { 0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-36px)} }
-
 .hero-layout { display:grid;grid-template-columns:1.05fr 0.95fr;gap:6rem;align-items:center;position:relative;z-index:1; }
-
-/* LEFT */
 .hero-eyebrow { display:inline-flex;align-items:center;gap:.7rem;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--c1);margin-bottom:2.2rem;animation:heroUp .8s var(--ease-out) 2s both; }
 .hero-eyebrow-dot { width:8px;height:8px;background:var(--c3);border-radius:50%;box-shadow:0 0 10px rgba(57,255,142,.8);animation:blink 2.4s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)} }
-
 .hero-h1 { font-family:var(--ff-display);font-size:clamp(4.5rem,9vw,9.5rem);line-height:.88;letter-spacing:-.02em;color:var(--text);margin-bottom:1.8rem;animation:heroUp .9s var(--ease-out) 2.1s both;text-transform:uppercase; }
 .hero-h1 .italic-block { display:block;font-style:italic;font-weight:500;color:transparent;
   background:linear-gradient(135deg,var(--c1),var(--c2));
@@ -233,18 +272,13 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
   animation:heroUp .9s var(--ease-out) 2.1s both;
 }
 @keyframes heroUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none} }
-
 .hero-desc { font-size:.97rem;color:var(--muted);line-height:1.88;margin-bottom:2.7rem;max-width:420px;animation:heroUp .8s var(--ease-out) 2.25s both; }
 .hero-desc strong { color:var(--text);font-weight:500; }
-
 .hero-actions { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.8rem;animation:heroUp .8s var(--ease-out) 2.4s both; }
-
 .btn-primary { display:inline-flex;align-items:center;gap:.65rem;padding:.9rem 2.1rem;background:linear-gradient(135deg,var(--c1),var(--c2));color:#040608;font-family:var(--ff-mono);font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:var(--r-sm);transition:all .35s var(--ease-out);position:relative;overflow:hidden; }
-.btn-primary::after { content:'';position:absolute;inset:1px;border-radius:calc(var(--r-sm) - 1px);background:rgba(255,255,255,0);transition:background .3s; }
 .btn-primary:hover { transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,229,255,.25),0 0 80px rgba(180,79,255,.1); }
 .btn-secondary { display:inline-flex;align-items:center;gap:.65rem;padding:.9rem 1.8rem;border:1px solid var(--border2);color:var(--text);font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:var(--r-sm);transition:all .3s;background:var(--surf); }
 .btn-secondary:hover { border-color:var(--c1);color:var(--c1);transform:translateY(-3px);box-shadow:0 8px 20px var(--c1-glow); }
-
 .hero-stats { display:flex;gap:3rem;animation:heroUp .8s var(--ease-out) 2.5s both; }
 .stat { display:flex;flex-direction:column;gap:.25rem; }
 .stat-num { font-family:var(--ff-display);font-size:2.8rem;line-height:1;background:linear-gradient(135deg,var(--text),var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
@@ -254,7 +288,6 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 /* RIGHT — 3D photo card */
 .hero-photo-wrap { display:flex;flex-direction:column;gap:16px;animation:heroFade .9s var(--ease-out) 2.2s both; }
 @keyframes heroFade { from{opacity:0;transform:scale(.94) translateY(20px) rotateY(8deg)}to{opacity:1;transform:none} }
-
 .photo-3d-container { perspective:1000px; }
 .photo-card { position:relative;border-radius:24px;overflow:hidden;aspect-ratio:3/4;
   border:1px solid rgba(0,229,255,.15);
@@ -267,23 +300,16 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .photo-card img { width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:saturate(.85) brightness(.88);transition:transform .7s var(--ease-out),filter .5s; }
 .photo-card:hover img { transform:scale(1.04);filter:saturate(1) brightness(.95); }
 .photo-overlay { position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(3,5,10,.65) 70%,rgba(3,5,10,.96) 100%);z-index:2; }
-
-/* Holographic shimmer */
 .photo-holo { position:absolute;inset:0;z-index:3;opacity:0;background:linear-gradient(135deg,rgba(0,229,255,.04),rgba(180,79,255,.04),transparent 60%);transition:opacity .4s; }
 .photo-card:hover .photo-holo { opacity:1; }
-
-/* Scan line */
 .photo-scan { position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(0,229,255,.6),transparent);opacity:0;z-index:4;animation:scanLine 7s ease-in-out infinite 3s; }
 @keyframes scanLine { 0%{top:0;opacity:0}4%{opacity:.8}90%{opacity:.3}100%{top:100%;opacity:0} }
-
-/* Corner markers */
 .pcc { position:absolute;z-index:6; }
 .pcc-mark { position:absolute;width:22px;height:22px;border-color:var(--c1);border-style:solid;border-width:0; }
 .pcc-mark.tl{top:12px;left:12px;border-top-width:1.5px;border-left-width:1.5px}
 .pcc-mark.tr{top:12px;right:12px;border-top-width:1.5px;border-right-width:1.5px}
 .pcc-mark.bl{bottom:12px;left:12px;border-bottom-width:1.5px;border-left-width:1.5px}
 .pcc-mark.br{bottom:12px;right:12px;border-bottom-width:1.5px;border-right-width:1.5px}
-
 .photo-badge { position:absolute;top:16px;right:16px;z-index:7;background:rgba(3,5,10,.8);backdrop-filter:blur(16px);border:1px solid var(--border2);border-radius:999px;padding:7px 16px;display:flex;align-items:center;gap:8px; }
 .badge-dot { width:7px;height:7px;background:var(--c3);border-radius:50%;box-shadow:0 0 10px rgba(57,255,142,.9);animation:blink 2s ease-in-out infinite; }
 .badge-text { font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text); }
@@ -291,15 +317,11 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .photo-info { position:absolute;bottom:18px;left:18px;right:18px;z-index:5; }
 .photo-info-tag { font-family:var(--ff-mono);font-size:.47rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,229,255,.65);margin-bottom:4px; }
 .photo-info-name { font-family:var(--ff-display);font-size:1.1rem;color:#fff;letter-spacing:.04em; }
-
-/* Floating data chips */
 .chip-float { position:absolute;z-index:8;background:rgba(3,5,10,.85);backdrop-filter:blur(14px);border:1px solid var(--c1-border);border-radius:10px;padding:10px 14px;font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.08em;color:var(--c1);box-shadow:0 8px 24px rgba(0,0,0,.4);animation:chipFloat 4s ease-in-out infinite; }
 .chip-float.left { right:-60px;top:22%;animation-delay:.5s;animation-duration:5s; }
 .chip-float.bot { left:-55px;bottom:28%;animation-delay:1s; }
 @keyframes chipFloat { 0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)} }
 .chip-val { font-size:.78rem;font-weight:600;color:var(--text);display:block;margin-bottom:2px; }
-
-/* ID card */
 .id-card { display:flex;align-items:center;gap:15px;background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:15px 20px;transition:all .4s;position:relative;overflow:hidden; }
 .id-card::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--c1-dim),transparent);opacity:0;transition:opacity .4s; }
 .id-card:hover { border-color:var(--c1-border);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,229,255,.06); }
@@ -313,13 +335,10 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .id-pill-dot { width:5px;height:5px;background:var(--c1);border-radius:50%; }
 .id-pill-text { font-family:var(--ff-mono);font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c1); }
 .id-sub { font-family:var(--ff-mono);font-size:.56rem;color:var(--muted);letter-spacing:.04em; }
-
-/* Scroll cue */
 .scroll-cue { position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;z-index:5;animation:fadeIn 1s ease 4s both; }
 .scroll-bar { width:1px;height:55px;background:linear-gradient(to bottom,var(--c1),transparent);animation:scrollPulse 2.2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)} }
 .scroll-label { font-family:var(--ff-mono);font-size:.46rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);writing-mode:vertical-rl; }
-
 @keyframes spinRing { to{transform:rotate(360deg)} }
 
 /* ═══════════════════════════════════
@@ -350,7 +369,6 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .about-pull em { color:var(--c1);font-style:normal; }
 .about-body { font-size:.92rem;color:var(--muted);line-height:1.95; }
 .about-body p+p { margin-top:1.1rem; }
-
 .skills-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.8rem; }
 .skill-card { padding:1.5rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg);transition:all .45s var(--ease-out);position:relative;overflow:hidden; }
 .skill-card::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--c1-dim),transparent);opacity:0;transition:opacity .4s; }
@@ -399,25 +417,21 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .ps-card:hover::before { opacity:1; }
 .ps-num { font-family:var(--ff-display);font-size:1.9rem;color:var(--c1);line-height:1;position:relative;z-index:1; }
 .ps-lbl { font-family:var(--ff-mono);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.35rem;position:relative;z-index:1; }
-
 .proj-grid { display:grid;grid-template-columns:1fr 1fr;gap:1.3rem; }
 .proj-card { background:var(--surf);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;text-decoration:none;transition:all .45s var(--ease-out);position:relative; }
 .proj-card:hover { border-color:var(--border2);transform:translateY(-7px);box-shadow:0 30px 70px rgba(0,0,0,.25); }
 .proj-card.featured { border-color:rgba(0,229,255,.14); }
 .proj-card.featured:hover { border-color:rgba(0,229,255,.32);box-shadow:0 30px 70px rgba(0,229,255,.08); }
-
 .proj-live { position:absolute;top:15px;right:15px;display:inline-flex;align-items:center;gap:.4rem;font-family:var(--ff-mono);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--c3);background:var(--c3-dim);border:1px solid rgba(57,255,142,.22);border-radius:999px;padding:.3rem .7rem;z-index:3; }
 .proj-live::before { content:'';width:5px;height:5px;border-radius:50%;background:var(--c3);box-shadow:0 0 8px rgba(57,255,142,.9); }
 .proj-live.offline { color:var(--muted);background:var(--surf2);border-color:var(--border); }
 .proj-live.offline::before { background:var(--muted);box-shadow:none; }
-
 .proj-top { padding:2.3rem 2.3rem 1.3rem;display:flex;align-items:flex-start;justify-content:space-between; }
 .proj-ico { width:50px;height:50px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:1.15rem;color:var(--muted);transition:transform .4s; }
 .proj-card:hover .proj-ico { transform:rotate(-6deg) scale(1.06); }
 .proj-ico img { width:100%;height:100%;object-fit:cover; }
 .proj-arr { color:var(--muted2);font-size:.8rem;transition:all .35s; }
 .proj-card:hover .proj-arr { color:var(--c1);transform:translate(5px,-5px); }
-
 .proj-body { padding:0 2.3rem 2rem; }
 .proj-role { font-family:var(--ff-mono);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin-bottom:.55rem; }
 .proj-name { font-family:var(--ff-display);font-size:1.9rem;color:var(--text);margin-bottom:.3rem;letter-spacing:.01em; }
@@ -425,7 +439,6 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .proj-desc { font-size:.8rem;color:var(--muted);line-height:1.85;margin-bottom:1.3rem; }
 .proj-meta { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem; }
 .proj-mini { font-family:var(--ff-mono);font-size:.48rem;letter-spacing:.07em;text-transform:uppercase;color:var(--c1);background:var(--c1-dim);border:1px solid var(--c1-border);border-radius:999px;padding:.22rem .6rem; }
-
 .proj-foot { padding:1rem 2.3rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
 .proj-foot-txt { font-family:var(--ff-mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .3s; }
 .proj-card:hover .proj-foot-txt { color:var(--c1); }
@@ -495,7 +508,6 @@ nav.stuck { padding:1.1rem 0;background:var(--nav-bg);backdrop-filter:blur(30px)
 .tl-item:hover .tl-role { color:var(--c1); }
 .tl-org { font-size:.78rem;color:var(--muted);margin-bottom:.6rem; }
 .tl-desc { font-size:.78rem;color:var(--muted);line-height:1.78; }
-
 .info-stack { display:flex;flex-direction:column;gap:1rem; }
 .info-card { padding:1.7rem 2rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg);transition:all .4s var(--ease-out);position:relative;overflow:hidden; }
 .info-card::before { content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--c1),var(--c2));transform:scaleY(0);transform-origin:bottom;transition:transform .4s; }
@@ -666,11 +678,35 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 @keyframes tyDot { 0%,80%,100%{transform:scale(0)}40%{transform:scale(1)} }
 
 /* ═══════════════════════════════════
+   3D SECTION DIVIDERS
+═══════════════════════════════════ */
+.section-3d-divider {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+.section-3d-divider canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── FLOATING 3D ELEMENTS ── */
+.float-3d-el {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.06;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════ */
-@media(max-width:1100px){
-  .chip-float { display:none; }
-}
+@media(max-width:1100px){ .chip-float{display:none} }
 @media(max-width:960px){
   .hero-layout{grid-template-columns:1fr;gap:4rem}
   .hero-photo-wrap{max-width:100%}
@@ -821,7 +857,6 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
           <div class="stat"><div class="stat-num" data-count="99">0<sup>%</sup></div><div class="stat-lbl">Uptime Record</div></div>
         </div>
       </div>
-
       <div class="hero-photo-wrap">
         <div class="photo-3d-container" id="photoContainer">
           <div class="photo-card" id="photoCard">
@@ -833,10 +868,7 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
               <div class="pcc-mark tl"></div><div class="pcc-mark tr"></div>
               <div class="pcc-mark bl"></div><div class="pcc-mark br"></div>
             </div>
-            <div class="photo-badge">
-              <div class="badge-dot"></div>
-              <span class="badge-text">Available</span>
-            </div>
+            <div class="photo-badge"><div class="badge-dot"></div><span class="badge-text">Available</span></div>
             <div class="photo-year">Portfolio · 2026</div>
             <div class="photo-info">
               <div class="photo-info-tag">Full-Stack Engineer</div>
@@ -844,27 +876,13 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
             </div>
           </div>
         </div>
-
-        <!-- Floating chips -->
-        <div class="chip-float left">
-          <span class="chip-val">12+</span>
-          Systems Shipped
-        </div>
-        <div class="chip-float bot">
-          <span class="chip-val">486h</span>
-          DTI Internship
-        </div>
-
+        <div class="chip-float left"><span class="chip-val">12+</span>Systems Shipped</div>
+        <div class="chip-float bot"><span class="chip-val">486h</span>DTI Internship</div>
         <div class="id-card">
-          <div class="id-thumb">
-            <img src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0a0f1e&color=00e5ff&size=160'">
-          </div>
+          <div class="id-thumb"><img src="images/ceo.jpg" alt="Renniel Salazar" onerror="this.src='https://ui-avatars.com/api/?name=RS&background=0a0f1e&color=00e5ff&size=160'"></div>
           <div class="id-info">
             <div class="id-name">Renniel Salazar</div>
-            <div class="id-pill">
-              <div class="id-pill-dot"></div>
-              <span class="id-pill-text">CEO · EasyWeb PH</span>
-            </div>
+            <div class="id-pill"><div class="id-pill-dot"></div><span class="id-pill-text">CEO · EasyWeb PH</span></div>
             <div class="id-sub">Full-Stack Engineer &amp; Tech Founder</div>
           </div>
         </div>
@@ -878,7 +896,7 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 </section>
 
 <!-- TICKER -->
-<div class="ticker-wrap" data-aos="fade" data-aos-duration="1400">
+<div class="ticker-wrap">
   <div class="ticker-track">
     <span class="tick-item">Full-Stack Development</span><span class="tick-sep">✦</span>
     <span class="tick-item">Laravel & PHP</span><span class="tick-sep">✦</span>
@@ -910,40 +928,24 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div class="about-grid">
       <div class="about-left">
-        <div class="sec-tag" data-aos="fade-right">About</div>
-        <div data-aos="zoom-in" data-aos-delay="80">
+        <div class="sec-tag reveal-3d">About</div>
+        <div class="reveal-zoom" style="transition-delay:.1s">
           <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3BrdmsxOW51cWp1dDd1cnZlbWJtd200ZzA2eW9mbm1hb25iNnoyNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/o97PZpOYKmxNE46fp7/giphy.gif" alt="About Me" style="width:100%;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);">
         </div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="100">WHO<br>I AM</h2>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.15s">WHO<br>I AM</h2>
       </div>
       <div>
-        <p class="about-pull" data-aos="fade-left" data-aos-delay="100">Bridging <em>hardware precision</em> with elegant, scalable software.</p>
-        <div class="about-body" data-aos="fade-up" data-aos-delay="200">
+        <p class="about-pull reveal-3d-right">Bridging <em>hardware precision</em> with elegant, scalable software.</p>
+        <div class="about-body reveal-3d" style="transition-delay:.2s">
           <p>I'm a 4th-year BSIT student at City College San Fernando with 4+ years of hands-on engineering experience. I specialize in designing full-stack systems — from secure backend APIs to high-fidelity interfaces — all the way down to embedded hardware logic.</p>
           <p>As Founder & CEO of EasyWeb PH, I lead a digital agency delivering enterprise-grade web infrastructure, custom applications, and complex API gateways for businesses across the Philippines.</p>
           <p>Currently completing a 486-hour internship at DTI Region 3, applying advanced software engineering principles to optimize regional government operations.</p>
         </div>
         <div class="skills-grid">
-          <div class="skill-card" data-aos="zoom-in-up" data-aos-delay="100">
-            <div class="skill-icon"><i class="fa-solid fa-server"></i></div>
-            <div class="skill-name">Backend</div>
-            <div class="tags"><span class="tag">PHP / Laravel</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">REST APIs</span></div>
-          </div>
-          <div class="skill-card" data-aos="zoom-in-up" data-aos-delay="180">
-            <div class="skill-icon"><i class="fa-solid fa-laptop-code"></i></div>
-            <div class="skill-name">Frontend</div>
-            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">HTML / CSS</span></div>
-          </div>
-          <div class="skill-card" data-aos="zoom-in-up" data-aos-delay="260">
-            <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
-            <div class="skill-name">Database & Cloud</div>
-            <div class="tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Cloud Deploy</span></div>
-          </div>
-          <div class="skill-card" data-aos="zoom-in-up" data-aos-delay="340">
-            <div class="skill-icon"><i class="fa-solid fa-microchip"></i></div>
-            <div class="skill-name">Hardware & IoT</div>
-            <div class="tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT Sensors</span></div>
-          </div>
+          <div class="skill-card reveal-3d delay-1"><div class="skill-icon"><i class="fa-solid fa-server"></i></div><div class="skill-name">Backend</div><div class="tags"><span class="tag">PHP / Laravel</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">REST APIs</span></div></div>
+          <div class="skill-card reveal-3d delay-2"><div class="skill-icon"><i class="fa-solid fa-laptop-code"></i></div><div class="skill-name">Frontend</div><div class="tags"><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">HTML / CSS</span></div></div>
+          <div class="skill-card reveal-3d delay-3"><div class="skill-icon"><i class="fa-solid fa-database"></i></div><div class="skill-name">Database & Cloud</div><div class="tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Cloud Deploy</span></div></div>
+          <div class="skill-card reveal-3d delay-4"><div class="skill-icon"><i class="fa-solid fa-microchip"></i></div><div class="skill-name">Hardware & IoT</div><div class="tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT Sensors</span></div></div>
         </div>
       </div>
     </div>
@@ -953,23 +955,11 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 <!-- METRICS -->
 <section id="metrics">
   <div class="wrap">
-    <div class="metrics-strip" data-aos="fade-up">
-      <div class="metric-cell">
-        <div class="metric-big" data-count="486"><span class="mval">0</span><sup>hrs</sup></div>
-        <div class="metric-sub">DTI Internship Hours</div>
-      </div>
-      <div class="metric-cell">
-        <div class="metric-big" data-count="12"><span class="mval">0</span><sup>+</sup></div>
-        <div class="metric-sub">Systems Shipped</div>
-      </div>
-      <div class="metric-cell">
-        <div class="metric-big" data-count="4"><span class="mval">0</span><sup>+</sup></div>
-        <div class="metric-sub">Years Experience</div>
-      </div>
-      <div class="metric-cell">
-        <div class="metric-big" data-count="99"><span class="mval">0</span><sup>%</sup></div>
-        <div class="metric-sub">Uptime Record</div>
-      </div>
+    <div class="metrics-strip reveal-zoom">
+      <div class="metric-cell"><div class="metric-big" data-count="486"><span class="mval">0</span><sup>hrs</sup></div><div class="metric-sub">DTI Internship Hours</div></div>
+      <div class="metric-cell"><div class="metric-big" data-count="12"><span class="mval">0</span><sup>+</sup></div><div class="metric-sub">Systems Shipped</div></div>
+      <div class="metric-cell"><div class="metric-big" data-count="4"><span class="mval">0</span><sup>+</sup></div><div class="metric-sub">Years Experience</div></div>
+      <div class="metric-cell"><div class="metric-big" data-count="99"><span class="mval">0</span><sup>%</sup></div><div class="metric-sub">Uptime Record</div></div>
     </div>
   </div>
 </section>
@@ -979,57 +969,21 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div class="svc-header">
       <div>
-        <div class="sec-tag" data-aos="fade-right">Services</div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">WHAT I<br>DELIVER</h2>
+        <div class="sec-tag reveal-3d-left">Services</div>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.1s">WHAT I<br>DELIVER</h2>
       </div>
       <div>
-        <p class="svc-intro" data-aos="fade-left" data-aos-delay="120">From pixel-perfect interfaces to precision-engineered hardware systems — every engagement is scoped, architected, and deployed with enterprise-level rigour.</p>
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWVoZHF3eGQ2c2V6Z29sMXJuaHZzbjh5YWs5MGpkNmprcXF3bzdyZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2Eh9l5e0QH41sg0bbL/giphy.gif" alt="Services" style="width:100%;max-width:300px;border-radius:12px;margin-top:18px;border:1px solid var(--border);" data-aos="fade-up" data-aos-delay="180">
+        <p class="svc-intro reveal-3d-right">From pixel-perfect interfaces to precision-engineered hardware systems — every engagement is scoped, architected, and deployed with enterprise-level rigour.</p>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWVoZHF3eGQ2c2V6Z29sMXJuaHZzbjh5YWs5MGpkNmprcXF3bzdyZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2Eh9l5e0QH41sg0bbL/giphy.gif" alt="Services" style="width:100%;max-width:300px;border-radius:12px;margin-top:18px;border:1px solid var(--border);" class="reveal-zoom" style="transition-delay:.2s">
       </div>
     </div>
     <div class="services-grid">
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="svc-num">/ 01</div>
-        <div class="svc-icon"><i class="fa-solid fa-globe"></i></div>
-        <div class="svc-title">Web Application Development</div>
-        <div class="svc-desc">End-to-end custom web applications engineered for performance, security, and scale.</div>
-        <div class="svc-tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">REST APIs</span></div>
-      </div>
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="svc-num">/ 02</div>
-        <div class="svc-icon"><i class="fa-solid fa-layer-group"></i></div>
-        <div class="svc-title">UI / UX & Frontend Engineering</div>
-        <div class="svc-desc">High-fidelity, responsive interfaces crafted with pixel precision across all devices.</div>
-        <div class="svc-tags"><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
-      </div>
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="svc-num">/ 03</div>
-        <div class="svc-icon"><i class="fa-solid fa-plug"></i></div>
-        <div class="svc-title">API Gateway & Integration</div>
-        <div class="svc-desc">Designing robust, versioned REST API gateways and third-party integrations.</div>
-        <div class="svc-tags"><span class="tag">REST</span><span class="tag">JSON</span><span class="tag">Auth</span><span class="tag">Webhooks</span></div>
-      </div>
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="40">
-        <div class="svc-num">/ 04</div>
-        <div class="svc-icon"><i class="fa-solid fa-microchip"></i></div>
-        <div class="svc-title">IoT & Embedded Systems</div>
-        <div class="svc-desc">Custom C++ firmware bridging real-world sensors to cloud dashboards.</div>
-        <div class="svc-tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">MQTT</span></div>
-      </div>
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="140">
-        <div class="svc-num">/ 05</div>
-        <div class="svc-icon"><i class="fa-solid fa-cloud"></i></div>
-        <div class="svc-title">Cloud Infrastructure & DevOps</div>
-        <div class="svc-desc">High-availability cloud environments with automated CI/CD and 99%+ uptime SLAs.</div>
-        <div class="svc-tags"><span class="tag">Cloud</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Deploy</span></div>
-      </div>
-      <div class="svc-card" data-aos="fade-up" data-aos-delay="240">
-        <div class="svc-num">/ 06</div>
-        <div class="svc-icon"><i class="fa-solid fa-database"></i></div>
-        <div class="svc-title">Database Architecture</div>
-        <div class="svc-desc">Optimized relational and NoSQL schema design for systems handling millions of records.</div>
-        <div class="svc-tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Indexing</span></div>
-      </div>
+      <div class="svc-card reveal-3d delay-1"><div class="svc-num">/ 01</div><div class="svc-icon"><i class="fa-solid fa-globe"></i></div><div class="svc-title">Web Application Development</div><div class="svc-desc">End-to-end custom web applications engineered for performance, security, and scale.</div><div class="svc-tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">REST APIs</span></div></div>
+      <div class="svc-card reveal-3d delay-2"><div class="svc-num">/ 02</div><div class="svc-icon"><i class="fa-solid fa-layer-group"></i></div><div class="svc-title">UI / UX & Frontend Engineering</div><div class="svc-desc">High-fidelity, responsive interfaces crafted with pixel precision across all devices.</div><div class="svc-tags"><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div></div>
+      <div class="svc-card reveal-3d delay-3"><div class="svc-num">/ 03</div><div class="svc-icon"><i class="fa-solid fa-plug"></i></div><div class="svc-title">API Gateway & Integration</div><div class="svc-desc">Designing robust, versioned REST API gateways and third-party integrations.</div><div class="svc-tags"><span class="tag">REST</span><span class="tag">JSON</span><span class="tag">Auth</span><span class="tag">Webhooks</span></div></div>
+      <div class="svc-card reveal-3d delay-2"><div class="svc-num">/ 04</div><div class="svc-icon"><i class="fa-solid fa-microchip"></i></div><div class="svc-title">IoT & Embedded Systems</div><div class="svc-desc">Custom C++ firmware bridging real-world sensors to cloud dashboards.</div><div class="svc-tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">MQTT</span></div></div>
+      <div class="svc-card reveal-3d delay-3"><div class="svc-num">/ 05</div><div class="svc-icon"><i class="fa-solid fa-cloud"></i></div><div class="svc-title">Cloud Infrastructure & DevOps</div><div class="svc-desc">High-availability cloud environments with automated CI/CD and 99%+ uptime SLAs.</div><div class="svc-tags"><span class="tag">Cloud</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Deploy</span></div></div>
+      <div class="svc-card reveal-3d delay-4"><div class="svc-num">/ 06</div><div class="svc-icon"><i class="fa-solid fa-database"></i></div><div class="svc-title">Database Architecture</div><div class="svc-desc">Optimized relational and NoSQL schema design for systems handling millions of records.</div><div class="svc-tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Indexing</span></div></div>
     </div>
   </div>
 </section>
@@ -1039,17 +993,17 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:56px;margin-bottom:4rem;">
       <div>
-        <div class="sec-tag" data-aos="fade-right">How I Work</div>
-        <h2 class="sec-h" style="margin-bottom:.6rem" data-aos="fade-up" data-aos-delay="80">THE<br>PROCESS</h2>
-        <p style="max-width:380px;font-size:.82rem;color:var(--muted);line-height:1.88;" data-aos="fade-left" data-aos-delay="140">A clear, repeatable framework built around transparency, precision, and delivering systems that outlast the project.</p>
+        <div class="sec-tag reveal-3d-left">How I Work</div>
+        <h2 class="sec-h reveal-3d" style="margin-bottom:.6rem;transition-delay:.1s">THE<br>PROCESS</h2>
+        <p style="max-width:380px;font-size:.82rem;color:var(--muted);line-height:1.88;" class="reveal-3d" style="transition-delay:.2s">A clear, repeatable framework built around transparency, precision, and delivering systems that outlast the project.</p>
       </div>
-      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmVhZDJuZzIyOGhheGcxajR2Zm1iNHRucXFveml1cDFoNWpvbXUxMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/F9pTIJBJfuQdx81Ovr/giphy.gif" alt="Process" style="width:280px;border-radius:12px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="220">
+      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmVhZDJuZzIyOGhheGcxajR2Zm1iNHRucXFveml1cDFoNWpvbXUxMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/F9pTIJBJfuQdx81Ovr/giphy.gif" alt="Process" style="width:280px;border-radius:12px;border:1px solid var(--border);" class="reveal-3d-right">
     </div>
     <div class="process-steps">
-      <div class="proc-step" data-aos="fade-up"><div class="proc-num">01</div><div class="proc-title">Discovery</div><div class="proc-desc">Deep-dive into your goals, constraints, and success criteria.</div></div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="100"><div class="proc-num">02</div><div class="proc-title">Architecture</div><div class="proc-desc">System diagrams, tech selection, and database schema before a single line of code.</div></div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="200"><div class="proc-num">03</div><div class="proc-title">Engineering</div><div class="proc-desc">Iterative development with weekly demos. Clean, documented, version-controlled code.</div></div>
-      <div class="proc-step" data-aos="fade-up" data-aos-delay="300"><div class="proc-num">04</div><div class="proc-title">Deploy & Scale</div><div class="proc-desc">Production-hardened deployment with monitoring, load testing, and post-launch support.</div></div>
+      <div class="proc-step reveal-flip delay-1"><div class="proc-num">01</div><div class="proc-title">Discovery</div><div class="proc-desc">Deep-dive into your goals, constraints, and success criteria.</div></div>
+      <div class="proc-step reveal-flip delay-2"><div class="proc-num">02</div><div class="proc-title">Architecture</div><div class="proc-desc">System diagrams, tech selection, and database schema before a single line of code.</div></div>
+      <div class="proc-step reveal-flip delay-3"><div class="proc-num">03</div><div class="proc-title">Engineering</div><div class="proc-desc">Iterative development with weekly demos. Clean, documented, version-controlled code.</div></div>
+      <div class="proc-step reveal-flip delay-4"><div class="proc-num">04</div><div class="proc-title">Deploy & Scale</div><div class="proc-desc">Production-hardened deployment with monitoring, load testing, and post-launch support.</div></div>
     </div>
   </div>
 </section>
@@ -1059,197 +1013,83 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div class="proj-header">
       <div>
-        <div class="sec-tag" data-aos="fade-right">Projects</div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">SELECTED<br>WORK</h2>
+        <div class="sec-tag reveal-3d-left">Projects</div>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.1s">SELECTED<br>WORK</h2>
       </div>
-      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjlodjN0czF4ZDR1YTh0bGpvMHJ5Z2VwMG43eW5pdzhuZnZpcHJmYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PI3QGKFN6XZUCMMqJm/giphy.gif" alt="Tech" style="width:100%;max-width:400px;border-radius:12px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="120">
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjlodjN0czF4ZDR1YTh0bGpvMHJ5Z2VwMG43eW5pdzhuZnZpcHJmYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PI3QGKFN6XZUCMMqJm/giphy.gif" alt="Tech" style="width:100%;max-width:400px;border-radius:12px;border:1px solid var(--border);" class="reveal-3d-right">
     </div>
-    <div class="proj-summary-row" data-aos="fade-up" data-aos-delay="160">
-      <div class="ps-card"><div class="ps-num">10+</div><div class="ps-lbl">Live Vercel Deployments</div></div>
-      <div class="ps-card"><div class="ps-num">7</div><div class="ps-lbl">Products / Business Sites</div></div>
-      <div class="ps-card"><div class="ps-num">100%</div><div class="ps-lbl">Responsive UI Focus</div></div>
+    <div class="proj-summary-row">
+      <div class="ps-card reveal-3d delay-1"><div class="ps-num">10+</div><div class="ps-lbl">Live Vercel Deployments</div></div>
+      <div class="ps-card reveal-3d delay-2"><div class="ps-num">7</div><div class="ps-lbl">Products / Business Sites</div></div>
+      <div class="ps-card reveal-3d delay-3"><div class="ps-num">100%</div><div class="ps-lbl">Responsive UI Focus</div></div>
     </div>
     <div class="proj-grid">
-
-      <a href="https://easyweb-ph.vercel.app/" target="_blank" rel="noopener" class="proj-card featured" data-aos="flip-left" data-aos-delay="80">
+      <a href="https://easyweb-ph.vercel.app/" target="_blank" rel="noopener" class="proj-card featured reveal-3d-left delay-1">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><img src="images/Easyweb_logo.jpg" alt="EasyWeb PH" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-globe\'></i>'"></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Founder & CEO · Agency Website</div>
-          <div class="proj-name">EasyWeb PH</div>
-          <div class="proj-domain">easyweb-ph.vercel.app</div>
-          <p class="proj-desc">A premium digital agency website presenting web development, UI/UX, and cloud deployment services for Philippine businesses.</p>
-          <div class="tags"><span class="tag">Business Site</span><span class="tag">UI/UX</span><span class="tag">Vercel</span><span class="tag">Responsive</span></div>
-          <div class="proj-meta"><span class="proj-mini">Featured</span><span class="proj-mini">Production</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><img src="images/Easyweb_logo.jpg" alt="EasyWeb PH" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-globe\'></i>'"></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Founder & CEO · Agency Website</div><div class="proj-name">EasyWeb PH</div><div class="proj-domain">easyweb-ph.vercel.app</div><p class="proj-desc">A premium digital agency website presenting web development, UI/UX, and cloud deployment services for Philippine businesses.</p><div class="tags"><span class="tag">Business Site</span><span class="tag">UI/UX</span><span class="tag">Vercel</span><span class="tag">Responsive</span></div><div class="proj-meta"><span class="proj-mini">Featured</span><span class="proj-mini">Production</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://easy-thesis-solution.vercel.app/" target="_blank" rel="noopener" class="proj-card featured" data-aos="flip-right" data-aos-delay="120">
+      <a href="https://easy-thesis-solution.vercel.app/" target="_blank" rel="noopener" class="proj-card featured reveal-3d-right delay-1">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-graduation-cap" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">AI Thesis Platform · SaaS Product</div>
-          <div class="proj-name">EasyThesis Solution</div>
-          <div class="proj-domain">easy-thesis-solution.vercel.app</div>
-          <p class="proj-desc">An AI-assisted academic writing platform built to help students create structured thesis drafts, manage outputs, and access guided research tools.</p>
-          <div class="tags"><span class="tag">AI Tools</span><span class="tag">Python</span><span class="tag">Supabase</span><span class="tag">Vercel</span></div>
-          <div class="proj-meta"><span class="proj-mini">Featured</span><span class="proj-mini">SaaS Product</span><span class="proj-mini">Latest</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-graduation-cap" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">AI Thesis Platform · SaaS Product</div><div class="proj-name">EasyThesis Solution</div><div class="proj-domain">easy-thesis-solution.vercel.app</div><p class="proj-desc">An AI-assisted academic writing platform built to help students create structured thesis drafts, manage outputs, and access guided research tools.</p><div class="tags"><span class="tag">AI Tools</span><span class="tag">Python</span><span class="tag">Supabase</span><span class="tag">Vercel</span></div><div class="proj-meta"><span class="proj-mini">Featured</span><span class="proj-mini">SaaS Product</span><span class="proj-mini">Latest</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://custom-dtr.vercel.app/" target="_blank" rel="noopener" class="proj-card featured" data-aos="flip-right" data-aos-delay="160">
+      <a href="https://custom-dtr.vercel.app/" target="_blank" rel="noopener" class="proj-card featured reveal-3d-left delay-2">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-id-card-clip" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Workflow System · DTR</div>
-          <div class="proj-name">Custom DTR</div>
-          <div class="proj-domain">custom-dtr.vercel.app</div>
-          <p class="proj-desc">A custom daily time record interface built for cleaner attendance tracking, structured records, and smooth user interaction.</p>
-          <div class="tags"><span class="tag">DTR</span><span class="tag">Dashboard</span><span class="tag">JavaScript</span><span class="tag">Vercel</span></div>
-          <div class="proj-meta"><span class="proj-mini">System UI</span><span class="proj-mini">Productivity</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-id-card-clip" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Workflow System · DTR</div><div class="proj-name">Custom DTR</div><div class="proj-domain">custom-dtr.vercel.app</div><p class="proj-desc">A custom daily time record interface built for cleaner attendance tracking, structured records, and smooth user interaction.</p><div class="tags"><span class="tag">DTR</span><span class="tag">Dashboard</span><span class="tag">JavaScript</span><span class="tag">Vercel</span></div><div class="proj-meta"><span class="proj-mini">System UI</span><span class="proj-mini">Productivity</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://coffeeshop-mu.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="60">
+      <a href="https://coffeeshop-mu.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-3d-right delay-2">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-mug-hot" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Business Website · Food & Beverage</div>
-          <div class="proj-name">CoffeeShop</div>
-          <div class="proj-domain">coffeeshop-mu.vercel.app</div>
-          <p class="proj-desc">A polished coffee shop landing page focused on product presentation, brand atmosphere, and mobile-friendly browsing.</p>
-          <div class="tags"><span class="tag">Landing Page</span><span class="tag">Food</span><span class="tag">Brand UI</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-mug-hot" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Business Website · Food & Beverage</div><div class="proj-name">CoffeeShop</div><div class="proj-domain">coffeeshop-mu.vercel.app</div><p class="proj-desc">A polished coffee shop landing page focused on product presentation, brand atmosphere, and mobile-friendly browsing.</p><div class="tags"><span class="tag">Landing Page</span><span class="tag">Food</span><span class="tag">Brand UI</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://renzdev-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="120">
+      <a href="https://renzdev-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-3d-left delay-3">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-user-astronaut" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Personal Brand · Developer Portfolio</div>
-          <div class="proj-name">Renz.dev</div>
-          <div class="proj-domain">renzdev-portfolio.vercel.app</div>
-          <p class="proj-desc">A personal developer portfolio highlighting technical identity, project work, and contact channels in a modern layout.</p>
-          <div class="tags"><span class="tag">Portfolio</span><span class="tag">Personal Brand</span><span class="tag">Frontend</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-user-astronaut" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Personal Brand · Developer Portfolio</div><div class="proj-name">Renz.dev</div><div class="proj-domain">renzdev-portfolio.vercel.app</div><p class="proj-desc">A personal developer portfolio highlighting technical identity, project work, and contact channels in a modern layout.</p><div class="tags"><span class="tag">Portfolio</span><span class="tag">Personal Brand</span><span class="tag">Frontend</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://kimarkengr-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="60">
+      <a href="https://kimarkengr-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-3d-right delay-3">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-helmet-safety" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Client Portfolio · Engineering</div>
-          <div class="proj-name">KimarkEngr Portfolio</div>
-          <div class="proj-domain">kimarkengr-portfolio.vercel.app</div>
-          <p class="proj-desc">An engineering-focused portfolio website designed to present professional credibility, services, and project background.</p>
-          <div class="tags"><span class="tag">Client Work</span><span class="tag">Portfolio</span><span class="tag">Engineering</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-helmet-safety" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Client Portfolio · Engineering</div><div class="proj-name">KimarkEngr Portfolio</div><div class="proj-domain">kimarkengr-portfolio.vercel.app</div><p class="proj-desc">An engineering-focused portfolio website designed to present professional credibility, services, and project background.</p><div class="tags"><span class="tag">Client Work</span><span class="tag">Portfolio</span><span class="tag">Engineering</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://jancher-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="120">
+      <a href="https://jancher-portfolio.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-3d-left delay-4">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-briefcase" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Client Portfolio · Professional Profile</div>
-          <div class="proj-name">Jancher Portfolio</div>
-          <div class="proj-domain">jancher-portfolio.vercel.app</div>
-          <p class="proj-desc">A clean professional portfolio layout built for profile presentation, service visibility, and direct contact conversion.</p>
-          <div class="tags"><span class="tag">Client Work</span><span class="tag">Portfolio</span><span class="tag">Responsive</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-briefcase" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Client Portfolio · Professional Profile</div><div class="proj-name">Jancher Portfolio</div><div class="proj-domain">jancher-portfolio.vercel.app</div><p class="proj-desc">A clean professional portfolio layout built for profile presentation, service visibility, and direct contact conversion.</p><div class="tags"><span class="tag">Client Work</span><span class="tag">Portfolio</span><span class="tag">Responsive</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://reynataladrohmua.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="60">
+      <a href="https://reynataladrohmua.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-3d-right delay-4">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Client Website · HMUA Brand</div>
-          <div class="proj-name">Reynataladro HMUA</div>
-          <div class="proj-domain">reynataladrohmua.vercel.app</div>
-          <p class="proj-desc">A beauty service website designed around visual presentation, service discovery, and stronger client inquiry flow.</p>
-          <div class="tags"><span class="tag">Beauty</span><span class="tag">Client Site</span><span class="tag">Brand UI</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Client Website · HMUA Brand</div><div class="proj-name">Reynataladro HMUA</div><div class="proj-domain">reynataladrohmua.vercel.app</div><p class="proj-desc">A beauty service website designed around visual presentation, service discovery, and stronger client inquiry flow.</p><div class="tags"><span class="tag">Beauty</span><span class="tag">Client Site</span><span class="tag">Brand UI</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://inc-aoflah.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="120">
+      <a href="https://inc-aoflah.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-flip delay-1">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-people-group" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Organization Website · Community</div>
-          <div class="proj-name">INC AOFLAH</div>
-          <div class="proj-domain">inc-aoflah.vercel.app</div>
-          <p class="proj-desc">A community-oriented website structured for clear content sections, announcements, and organized group presentation.</p>
-          <div class="tags"><span class="tag">Organization</span><span class="tag">Community</span><span class="tag">Content UI</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-people-group" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Organization Website · Community</div><div class="proj-name">INC AOFLAH</div><div class="proj-domain">inc-aoflah.vercel.app</div><p class="proj-desc">A community-oriented website structured for clear content sections, announcements, and organized group presentation.</p><div class="tags"><span class="tag">Organization</span><span class="tag">Community</span><span class="tag">Content UI</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <a href="https://bloom-bites.vercel.app/" target="_blank" rel="noopener" class="proj-card" data-aos="fade-up" data-aos-delay="60">
+      <a href="https://bloom-bites.vercel.app/" target="_blank" rel="noopener" class="proj-card reveal-flip delay-2">
         <span class="proj-live">Live</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-cake-candles" style="color:var(--c1)"></i></div>
-          <i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Business Website · Product Showcase</div>
-          <div class="proj-name">Bloom Bites</div>
-          <div class="proj-domain">bloom-bites.vercel.app</div>
-          <p class="proj-desc">A product-focused business website for showcasing baked goods, brand visuals, and customer-facing information.</p>
-          <div class="tags"><span class="tag">Business</span><span class="tag">Product UI</span><span class="tag">Landing Page</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-cake-candles" style="color:var(--c1)"></i></div><i class="fa-solid fa-arrow-up-right-from-square proj-arr"></i></div>
+        <div class="proj-body"><div class="proj-role">Business Website · Product Showcase</div><div class="proj-name">Bloom Bites</div><div class="proj-domain">bloom-bites.vercel.app</div><p class="proj-desc">A product-focused business website for showcasing baked goods, brand visuals, and customer-facing information.</p><div class="tags"><span class="tag">Business</span><span class="tag">Product UI</span><span class="tag">Landing Page</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">View Live Site</span><i class="fa-solid fa-arrow-right"></i></div>
       </a>
-
-      <div class="proj-card" style="cursor:default" data-aos="fade-up" data-aos-delay="120">
+      <div class="proj-card reveal-flip delay-3" style="cursor:default">
         <span class="proj-live offline">Capstone</span>
-        <div class="proj-top">
-          <div class="proj-ico"><i class="fa-solid fa-recycle" style="color:var(--c1)"></i></div>
-        </div>
-        <div class="proj-body">
-          <div class="proj-role">Lead Architect · IoT Capstone</div>
-          <div class="proj-name">SmartBasura</div>
-          <div class="proj-domain">IoT waste monitoring and logistics routing</div>
-          <p class="proj-desc">A hardware-integrated waste management platform with smart bin tracking, QR-based bin registration, driver routing, and admin dashboards.</p>
-          <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT</span></div>
-          <div class="proj-meta"><span class="proj-mini">Capstone</span><span class="proj-mini">Full System</span></div>
-        </div>
+        <div class="proj-top"><div class="proj-ico"><i class="fa-solid fa-recycle" style="color:var(--c1)"></i></div></div>
+        <div class="proj-body"><div class="proj-role">Lead Architect · IoT Capstone</div><div class="proj-name">SmartBasura</div><div class="proj-domain">IoT waste monitoring and logistics routing</div><p class="proj-desc">A hardware-integrated waste management platform with smart bin tracking, QR-based bin registration, driver routing, and admin dashboards.</p><div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT</span></div><div class="proj-meta"><span class="proj-mini">Capstone</span><span class="proj-mini">Full System</span></div></div>
         <div class="proj-foot"><span class="proj-foot-txt">Hardware + Web System</span><i class="fa-solid fa-microchip"></i></div>
       </div>
-
     </div>
   </div>
 </section>
@@ -1259,40 +1099,24 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:56px;margin-bottom:4rem;">
       <div>
-        <div class="sec-tag" data-aos="fade-right">Open Source</div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">CODE<br>CONTRIBUTIONS</h2>
-        <p style="max-width:360px;font-size:.82rem;color:var(--muted);line-height:1.88;" data-aos="fade-left" data-aos-delay="140">Public work, utilities, and tooling that power real projects.</p>
+        <div class="sec-tag reveal-3d-left">Open Source</div>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.1s">CODE<br>CONTRIBUTIONS</h2>
+        <p style="max-width:360px;font-size:.82rem;color:var(--muted);line-height:1.88;" class="reveal-3d" style="transition-delay:.2s">Public work, utilities, and tooling that power real projects.</p>
       </div>
-      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzRyYTcwa3dvMHV3ZDdsbGY1Z2dwNmFjcTVnbGJrZmIybXB1eWl6bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif" alt="Open Source" style="width:280px;border-radius:12px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="220">
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzRyYTcwa3dvMHV3ZDdsbGY1Z2dwNmFjcTVnbGJrZmIybXB1eWl6bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif" alt="Open Source" style="width:280px;border-radius:12px;border:1px solid var(--border);" class="reveal-3d-right">
     </div>
     <div class="oss-grid">
-      <div class="oss-card" data-aos="fade-right">
-        <div class="oss-head"><div class="oss-name">laravel-sensor-bridge</div><span class="oss-lang">C++ / PHP</span></div>
-        <div class="oss-desc">Bi-directional bridge connecting Arduino IoT firmware to Laravel backend APIs via serial-to-HTTP relay daemon.</div>
-        <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 12</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 4</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--c3);font-size:.46rem"></i> Active</span></div>
-      </div>
-      <div class="oss-card" data-aos="fade-left" data-aos-delay="80">
-        <div class="oss-head"><div class="oss-name">php-api-scaffold</div><span class="oss-lang">PHP</span></div>
-        <div class="oss-desc">Opinionated Laravel API scaffolding with auth, rate limiting, versioning, and structured JSON error handling.</div>
-        <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 8</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 2</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--c3);font-size:.46rem"></i> Active</span></div>
-      </div>
-      <div class="oss-card" data-aos="fade-right" data-aos-delay="160">
-        <div class="oss-head"><div class="oss-name">easyweb-ui-kit</div><span class="oss-lang">HTML/CSS</span></div>
-        <div class="oss-desc">Internal component library for EasyWeb PH client projects. Dark-first design tokens and pre-built page sections.</div>
-        <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 5</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 1</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:.46rem"></i> Beta</span></div>
-      </div>
-      <div class="oss-card" data-aos="fade-left" data-aos-delay="240">
-        <div class="oss-head"><div class="oss-name">dti-workflow-tools</div><span class="oss-lang">Python</span></div>
-        <div class="oss-desc">Automation scripts for report generation, data validation, and document processing across government workflows.</div>
-        <div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 3</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 0</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--muted);font-size:.46rem"></i> Internal</span></div>
-      </div>
+      <div class="oss-card reveal-3d-left delay-1"><div class="oss-head"><div class="oss-name">laravel-sensor-bridge</div><span class="oss-lang">C++ / PHP</span></div><div class="oss-desc">Bi-directional bridge connecting Arduino IoT firmware to Laravel backend APIs via serial-to-HTTP relay daemon.</div><div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 12</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 4</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--c3);font-size:.46rem"></i> Active</span></div></div>
+      <div class="oss-card reveal-3d-right delay-1"><div class="oss-head"><div class="oss-name">php-api-scaffold</div><span class="oss-lang">PHP</span></div><div class="oss-desc">Opinionated Laravel API scaffolding with auth, rate limiting, versioning, and structured JSON error handling.</div><div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 8</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 2</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--c3);font-size:.46rem"></i> Active</span></div></div>
+      <div class="oss-card reveal-3d-left delay-2"><div class="oss-head"><div class="oss-name">easyweb-ui-kit</div><span class="oss-lang">HTML/CSS</span></div><div class="oss-desc">Internal component library for EasyWeb PH client projects. Dark-first design tokens and pre-built page sections.</div><div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 5</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 1</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:.46rem"></i> Beta</span></div></div>
+      <div class="oss-card reveal-3d-right delay-2"><div class="oss-head"><div class="oss-name">dti-workflow-tools</div><span class="oss-lang">Python</span></div><div class="oss-desc">Automation scripts for report generation, data validation, and document processing across government workflows.</div><div class="oss-meta"><span class="oss-stat"><i class="fa-solid fa-star"></i> 3</span><span class="oss-stat"><i class="fa-solid fa-code-fork"></i> 0</span><span class="oss-stat"><i class="fa-solid fa-circle" style="color:var(--muted);font-size:.46rem"></i> Internal</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- PHILOSOPHY -->
 <div class="wrap">
-  <div class="phi-wrap" data-aos="zoom-in" data-aos-duration="1100">
+  <div class="phi-wrap reveal-zoom">
     <div class="phi-glow-l"></div>
     <div class="phi-glow-r"></div>
     <div class="phi-scan"></div>
@@ -1306,26 +1130,26 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-bottom:1.5rem;">
       <div>
-        <div class="sec-tag" data-aos="fade-right">Recognition</div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">AWARDS &<br>CREDENTIALS</h2>
+        <div class="sec-tag reveal-3d-left">Recognition</div>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.1s">AWARDS &<br>CREDENTIALS</h2>
       </div>
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWhtejg0YTVyZnVibXMxcnc0cHhycmdzZWlodHBxZWV4dGRtNzJxbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/349qKnoIBHK1i/giphy.gif" alt="Awards" style="width:460px;max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="160">
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWhtejg0YTVyZnVibXMxcnc0cHhycmdzZWlodHBxZWV4dGRtNzJxbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/349qKnoIBHK1i/giphy.gif" alt="Awards" style="width:460px;max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);" class="reveal-3d-right">
     </div>
     <div class="awards-grid">
-      <div class="award-card" data-aos="fade-up"><div class="award-icon"><i class="fa-solid fa-building-columns"></i></div><div class="award-year">2026</div><div class="award-title">DTI Region 3 Engineering Intern</div><div class="award-body">Selected for a highly competitive 486-hour government software engineering placement.</div></div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="100"><div class="award-icon"><i class="fa-solid fa-briefcase"></i></div><div class="award-year">2026</div><div class="award-title">Founder & CEO — EasyWeb PH</div><div class="award-body">Registered digital technology startup under DTI. Built and launched a full-service web agency.</div></div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="200"><div class="award-icon"><i class="fa-solid fa-graduation-cap"></i></div><div class="award-year">2022 – Present</div><div class="award-title">BSIT — City College San Fernando</div><div class="award-body">Specializing in information systems architecture, software engineering, and embedded technology.</div></div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="50"><div class="award-icon"><i class="fa-solid fa-microchip"></i></div><div class="award-year">2025</div><div class="award-title">IoT Systems Lead — SmartBasura</div><div class="award-body">Designed and shipped a full IoT waste management system from firmware to cloud dashboard.</div></div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="150"><div class="award-icon"><i class="fa-solid fa-code"></i></div><div class="award-year">2021 – 2022</div><div class="award-title">Freelance Developer — Pampanga SMEs</div><div class="award-body">Delivered production-grade web applications for local businesses before formal schooling concluded.</div></div>
-      <div class="award-card" data-aos="fade-up" data-aos-delay="250"><div class="award-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="award-year">Ongoing</div><div class="award-title">Security-First Engineering Practice</div><div class="award-body">Every project ships with auth hardening, input validation, and OWASP-aligned API security standards.</div></div>
+      <div class="award-card reveal-3d delay-1"><div class="award-icon"><i class="fa-solid fa-building-columns"></i></div><div class="award-year">2026</div><div class="award-title">DTI Region 3 Engineering Intern</div><div class="award-body">Selected for a highly competitive 486-hour government software engineering placement.</div></div>
+      <div class="award-card reveal-3d delay-2"><div class="award-icon"><i class="fa-solid fa-briefcase"></i></div><div class="award-year">2026</div><div class="award-title">Founder & CEO — EasyWeb PH</div><div class="award-body">Registered digital technology startup under DTI. Built and launched a full-service web agency.</div></div>
+      <div class="award-card reveal-3d delay-3"><div class="award-icon"><i class="fa-solid fa-graduation-cap"></i></div><div class="award-year">2022 – Present</div><div class="award-title">BSIT — City College San Fernando</div><div class="award-body">Specializing in information systems architecture, software engineering, and embedded technology.</div></div>
+      <div class="award-card reveal-3d delay-2"><div class="award-icon"><i class="fa-solid fa-microchip"></i></div><div class="award-year">2025</div><div class="award-title">IoT Systems Lead — SmartBasura</div><div class="award-body">Designed and shipped a full IoT waste management system from firmware to cloud dashboard.</div></div>
+      <div class="award-card reveal-3d delay-3"><div class="award-icon"><i class="fa-solid fa-code"></i></div><div class="award-year">2021 – 2022</div><div class="award-title">Freelance Developer — Pampanga SMEs</div><div class="award-body">Delivered production-grade web applications for local businesses before formal schooling concluded.</div></div>
+      <div class="award-card reveal-3d delay-4"><div class="award-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="award-year">Ongoing</div><div class="award-title">Security-First Engineering Practice</div><div class="award-body">Every project ships with auth hardening, input validation, and OWASP-aligned API security standards.</div></div>
     </div>
   </div>
 </section>
 
 <!-- STACK -->
 <section id="stack">
-  <div class="wrap"><div class="stack-label" data-aos="fade-up">Technologies & Tools</div></div>
-  <div class="stack-row" data-aos="fade">
+  <div class="wrap"><div class="stack-label reveal-3d">Technologies & Tools</div></div>
+  <div class="stack-row">
     <div class="stack-track">
       <span class="stack-chip"><i class="fa-brands fa-php"></i> PHP</span>
       <span class="stack-chip"><i class="fa-solid fa-l"></i> Laravel</span>
@@ -1353,7 +1177,7 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
       <span class="stack-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
     </div>
   </div>
-  <div class="stack-row" data-aos="fade" data-aos-delay="80">
+  <div class="stack-row" style="margin-top:.3rem">
     <div class="stack-track rev">
       <span class="stack-chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
       <span class="stack-chip"><i class="fa-solid fa-lock"></i> Auth Systems</span>
@@ -1382,20 +1206,20 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 <!-- GALLERY -->
 <section id="gallery">
   <div class="wrap">
-    <div class="sec-tag" data-aos="fade-right">Gallery</div>
+    <div class="sec-tag reveal-3d-left">Gallery</div>
     <div class="sec-head-row">
-      <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">MOMENTS<br>&amp; MILESTONES</h2>
-      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTU3OW9vamZvcnlnZHhvcWpvdWw3Y2w5bWlhZ29obmR1bHloZTAzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OLPQ6z2hlHmwFc4Hso/giphy.gif" alt="Gallery" style="width:100px;border-radius:10px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="120">
+      <h2 class="sec-h reveal-3d" style="transition-delay:.1s">MOMENTS<br>&amp; MILESTONES</h2>
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTU3OW9vamZvcnlnZHhvcWpvdWw3Y2w5bWlhZ29obmR1bHloZTAzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OLPQ6z2hlHmwFc4Hso/giphy.gif" alt="Gallery" style="width:100px;border-radius:10px;border:1px solid var(--border);" class="reveal-zoom">
     </div>
     <div class="gallery-grid">
-      <div class="gal-item" onclick="openLb('images/picko.jpg')" data-aos="fade-right"><img src="images/picko.jpg" alt="Event"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/data-privacy.jpg')" data-aos="fade-down" data-aos-delay="100"><img src="images/data-privacy.jpg" alt="Data Privacy"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/bpm.jpg')" data-aos="fade-left" data-aos-delay="180"><img src="images/bpm.jpg" alt="BPM"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/pickoto.jpg')" data-aos="zoom-in" data-aos-delay="260"><img src="images/pickoto.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/newpic.jpg')" data-aos="zoom-in" data-aos-delay="300"><img src="images/newpic.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/newpic1.jpg')" data-aos="zoom-in" data-aos-delay="340"><img src="images/newpic1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/prof1.jpg')" data-aos="zoom-in" data-aos-delay="380"><img src="images/prof1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
-      <div class="gal-item" onclick="openLb('images/newme.jpg')" data-aos="zoom-in" data-aos-delay="420"><img src="images/newme.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-3d-left" onclick="openLb('images/picko.jpg')"><img src="images/picko.jpg" alt="Event"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-3d" style="transition-delay:.1s" onclick="openLb('images/data-privacy.jpg')"><img src="images/data-privacy.jpg" alt="Data Privacy"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-3d" style="transition-delay:.2s" onclick="openLb('images/bpm.jpg')"><img src="images/bpm.jpg" alt="BPM"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-zoom" style="transition-delay:.3s" onclick="openLb('images/pickoto.jpg')"><img src="images/pickoto.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-zoom" style="transition-delay:.15s" onclick="openLb('images/newpic.jpg')"><img src="images/newpic.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-zoom" style="transition-delay:.25s" onclick="openLb('images/newpic1.jpg')"><img src="images/newpic1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-zoom" style="transition-delay:.35s" onclick="openLb('images/prof1.jpg')"><img src="images/prof1.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
+      <div class="gal-item reveal-zoom" style="transition-delay:.45s" onclick="openLb('images/newme.jpg')"><img src="images/newme.jpg" alt="Photo"><div class="gal-overlay"><i class="fa-solid fa-expand"></i></div></div>
     </div>
   </div>
 </section>
@@ -1403,30 +1227,12 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 <!-- NOW -->
 <section id="now">
   <div class="wrap">
-    <div class="sec-tag" data-aos="fade-right">Right Now</div>
-    <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">CURRENTLY<br>ACTIVE</h2>
+    <div class="sec-tag reveal-3d-left">Right Now</div>
+    <h2 class="sec-h reveal-3d" style="transition-delay:.1s">CURRENTLY<br>ACTIVE</h2>
     <div class="now-grid">
-      <div class="now-card" data-aos="fade-up">
-        <div class="now-label">Building</div>
-        <div class="now-title">EasyWeb PH — v2 Platform</div>
-        <div class="now-meta">Shipping a full client portal with project tracking, invoicing, and asset delivery.</div>
-        <div class="now-prog-wrap"><div class="now-prog" data-prog="72" style="width:0"></div></div>
-        <div class="now-pct">72% Complete</div>
-      </div>
-      <div class="now-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="now-label">Interning</div>
-        <div class="now-title">DTI Region 3 — 486hr Placement</div>
-        <div class="now-meta">Automating government document workflows and building internal tools.</div>
-        <div class="now-prog-wrap"><div class="now-prog" data-prog="58" style="width:0"></div></div>
-        <div class="now-pct">58% Complete</div>
-      </div>
-      <div class="now-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="now-label">Learning</div>
-        <div class="now-title">Advanced System Design Patterns</div>
-        <div class="now-meta">Deep-diving CQRS, event sourcing, and distributed cache strategies.</div>
-        <div class="now-prog-wrap"><div class="now-prog" data-prog="35" style="width:0"></div></div>
-        <div class="now-pct">35% Through</div>
-      </div>
+      <div class="now-card reveal-3d delay-1"><div class="now-label">Building</div><div class="now-title">EasyWeb PH — v2 Platform</div><div class="now-meta">Shipping a full client portal with project tracking, invoicing, and asset delivery.</div><div class="now-prog-wrap"><div class="now-prog" data-prog="72" style="width:0"></div></div><div class="now-pct">72% Complete</div></div>
+      <div class="now-card reveal-3d delay-2"><div class="now-label">Interning</div><div class="now-title">DTI Region 3 — 486hr Placement</div><div class="now-meta">Automating government document workflows and building internal tools.</div><div class="now-prog-wrap"><div class="now-prog" data-prog="58" style="width:0"></div></div><div class="now-pct">58% Complete</div></div>
+      <div class="now-card reveal-3d delay-3"><div class="now-label">Learning</div><div class="now-title">Advanced System Design Patterns</div><div class="now-meta">Deep-diving CQRS, event sourcing, and distributed cache strategies.</div><div class="now-prog-wrap"><div class="now-prog" data-prog="35" style="width:0"></div></div><div class="now-pct">35% Through</div></div>
     </div>
   </div>
 </section>
@@ -1436,15 +1242,15 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   <div class="wrap">
     <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:1.5rem;">
       <div>
-        <div class="sec-tag" data-aos="fade-right">Testimonials</div>
-        <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">WHAT THEY<br>SAY</h2>
+        <div class="sec-tag reveal-3d-left">Testimonials</div>
+        <h2 class="sec-h reveal-3d" style="transition-delay:.1s">WHAT THEY<br>SAY</h2>
       </div>
-      <p style="max-width:380px;font-size:.82rem;color:var(--muted);line-height:1.88;" data-aos="fade-left" data-aos-delay="120">Words from collaborators, clients, and peers who've seen the work up close.</p>
+      <p style="max-width:380px;font-size:.82rem;color:var(--muted);line-height:1.88;" class="reveal-3d-right">Words from collaborators, clients, and peers who've seen the work up close.</p>
     </div>
     <div class="testi-grid">
-      <div class="testi-card" data-aos="fade-up"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"Renniel delivered a complete web platform ahead of schedule. His attention to backend security and API architecture was exactly what our business needed."</div><div class="testi-author"><div class="testi-av">MR</div><div><div class="testi-name">Mark Reyes</div><div class="testi-role">Client · SME Owner, Pampanga</div></div></div></div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="120"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"His IoT system for SmartBasura was genuinely impressive — real-time sensor data flowing cleanly to our dashboard. The firmware was rock-solid from day one."</div><div class="testi-author"><div class="testi-av">LC</div><div><div class="testi-name">Liza Cruz</div><div class="testi-role">Thesis Adviser · City College SF</div></div></div></div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="240"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"As a co-intern at DTI Region 3, I watched Renniel solve complex workflow problems with elegant code. He's one of those rare developers who thinks in systems."</div><div class="testi-author"><div class="testi-av">JM</div><div><div class="testi-name">James Manalo</div><div class="testi-role">Fellow Intern · DTI Region 3</div></div></div></div>
+      <div class="testi-card reveal-3d delay-1"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"Renniel delivered a complete web platform ahead of schedule. His attention to backend security and API architecture was exactly what our business needed."</div><div class="testi-author"><div class="testi-av">MR</div><div><div class="testi-name">Mark Reyes</div><div class="testi-role">Client · SME Owner, Pampanga</div></div></div></div>
+      <div class="testi-card reveal-3d delay-2"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"His IoT system for SmartBasura was genuinely impressive — real-time sensor data flowing cleanly to our dashboard. The firmware was rock-solid from day one."</div><div class="testi-author"><div class="testi-av">LC</div><div><div class="testi-name">Liza Cruz</div><div class="testi-role">Thesis Adviser · City College SF</div></div></div></div>
+      <div class="testi-card reveal-3d delay-3"><div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div class="testi-text">"As a co-intern at DTI Region 3, I watched Renniel solve complex workflow problems with elegant code. He's one of those rare developers who thinks in systems."</div><div class="testi-author"><div class="testi-av">JM</div><div><div class="testi-name">James Manalo</div><div class="testi-role">Fellow Intern · DTI Region 3</div></div></div></div>
     </div>
   </div>
 </section>
@@ -1452,23 +1258,23 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 <!-- JOURNEY -->
 <section id="journey">
   <div class="wrap">
-    <div class="sec-tag" data-aos="fade-right">Journey</div>
+    <div class="sec-tag reveal-3d-left">Journey</div>
     <div class="sec-head-row">
-      <h2 class="sec-h" data-aos="fade-up" data-aos-delay="80">THE<br>TIMELINE</h2>
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjZ5dmw3cGFhM2J1cmc4aG9yZWczc2JyOGlmNDRtYXFjbmt1enNkOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OxtDecxSkeki10qZjk/giphy.gif" alt="Journey" style="width:88px;border-radius:10px;border:1px solid var(--border);" data-aos="fade-left" data-aos-delay="120">
+      <h2 class="sec-h reveal-3d" style="transition-delay:.1s">THE<br>TIMELINE</h2>
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjZ5dmw3cGFhM2J1cmc4aG9yZWczc2JyOGlmNDRtYXFjbmt1enNkOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OxtDecxSkeki10qZjk/giphy.gif" alt="Journey" style="width:88px;border-radius:10px;border:1px solid var(--border);" class="reveal-zoom">
     </div>
     <div class="journey-grid">
       <div class="timeline">
-        <div class="tl-item" data-aos="fade-right"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Software Engineering Intern</div><div class="tl-org">DTI Region 3</div><div class="tl-desc">Executing a 486-hour government internship, deploying advanced software engineering principles to optimize regional digital operations.</div></div>
-        <div class="tl-item" data-aos="fade-right" data-aos-delay="150"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Founder &amp; CEO</div><div class="tl-org">EasyWeb PH</div><div class="tl-desc">Established a premium digital agency delivering custom cloud architectures, enterprise software, and API gateways for Philippine businesses.</div></div>
-        <div class="tl-item" data-aos="fade-right" data-aos-delay="300"><div class="tl-dot"></div><div class="tl-period">2022 — Present</div><div class="tl-role">BSIT Student — 4th Year</div><div class="tl-org">City College San Fernando</div><div class="tl-desc">Specialization in full-stack development, database algorithms, IoT integrations, and campus information systems.</div></div>
-        <div class="tl-item" data-aos="fade-right" data-aos-delay="420"><div class="tl-dot"></div><div class="tl-period">2021 — 2022</div><div class="tl-role">Freelance Web Developer</div><div class="tl-org">Independent</div><div class="tl-desc">Built and deployed custom websites and web applications for local businesses in Pampanga.</div></div>
+        <div class="tl-item reveal-3d-left"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Software Engineering Intern</div><div class="tl-org">DTI Region 3</div><div class="tl-desc">Executing a 486-hour government internship, deploying advanced software engineering principles to optimize regional digital operations.</div></div>
+        <div class="tl-item reveal-3d-left delay-1"><div class="tl-dot active"></div><div class="tl-period">2026 — Present</div><div class="tl-role">Founder &amp; CEO</div><div class="tl-org">EasyWeb PH</div><div class="tl-desc">Established a premium digital agency delivering custom cloud architectures, enterprise software, and API gateways for Philippine businesses.</div></div>
+        <div class="tl-item reveal-3d-left delay-2"><div class="tl-dot"></div><div class="tl-period">2022 — Present</div><div class="tl-role">BSIT Student — 4th Year</div><div class="tl-org">City College San Fernando</div><div class="tl-desc">Specialization in full-stack development, database algorithms, IoT integrations, and campus information systems.</div></div>
+        <div class="tl-item reveal-3d-left delay-3"><div class="tl-dot"></div><div class="tl-period">2021 — 2022</div><div class="tl-role">Freelance Web Developer</div><div class="tl-org">Independent</div><div class="tl-desc">Built and deployed custom websites and web applications for local businesses in Pampanga.</div></div>
       </div>
       <div class="info-stack">
-        <div class="info-card accent" data-aos="fade-left" data-aos-delay="80"><div class="ic-label">Core Specialization</div><div class="ic-head">Full-Stack Architecture</div><div class="ic-body">Designing scalable web applications from secure backend APIs to fluid, high-fidelity user interfaces.</div></div>
-        <div class="info-card" data-aos="fade-left" data-aos-delay="200"><div class="ic-label">Secondary Domain</div><div class="ic-head">Hardware &amp; IoT</div><div class="ic-body">Writing precision C++ logic for microcontrollers. Bridging the gap between physical sensors and cloud-based dashboards.</div></div>
-        <div class="info-card" data-aos="fade-left" data-aos-delay="320"><div class="ic-label">Education</div><div class="ic-head">BSIT · 4th Year</div><div class="ic-body">City College San Fernando, Pampanga. Specializing in information systems, software engineering, and embedded technology.</div></div>
-        <div class="info-card" data-aos="fade-left" data-aos-delay="400"><div class="ic-label">Location</div><div class="ic-body" style="display:flex;align-items:center;gap:.6rem"><i class="fa-solid fa-location-dot" style="color:var(--c1)"></i><span>San Fernando, Pampanga, Philippines</span></div></div>
+        <div class="info-card accent reveal-3d-right delay-1"><div class="ic-label">Core Specialization</div><div class="ic-head">Full-Stack Architecture</div><div class="ic-body">Designing scalable web applications from secure backend APIs to fluid, high-fidelity user interfaces.</div></div>
+        <div class="info-card reveal-3d-right delay-2"><div class="ic-label">Secondary Domain</div><div class="ic-head">Hardware &amp; IoT</div><div class="ic-body">Writing precision C++ logic for microcontrollers. Bridging the gap between physical sensors and cloud-based dashboards.</div></div>
+        <div class="info-card reveal-3d-right delay-3"><div class="ic-label">Education</div><div class="ic-head">BSIT · 4th Year</div><div class="ic-body">City College San Fernando, Pampanga. Specializing in information systems, software engineering, and embedded technology.</div></div>
+        <div class="info-card reveal-3d-right delay-4"><div class="ic-label">Location</div><div class="ic-body" style="display:flex;align-items:center;gap:.6rem"><i class="fa-solid fa-location-dot" style="color:var(--c1)"></i><span>San Fernando, Pampanga, Philippines</span></div></div>
       </div>
     </div>
   </div>
@@ -1478,13 +1284,13 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
 <section id="cta">
   <div class="cta-orb"></div>
   <div class="wrap" style="display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;">
-    <div class="sec-tag" style="justify-content:center;margin-bottom:22px;" data-aos="fade-down">Let's Build Together</div>
-    <div style="max-width:180px;margin-bottom:22px;" data-aos="zoom-in" data-aos-delay="80">
+    <div class="sec-tag reveal-3d" style="justify-content:center;margin-bottom:22px;">Let's Build Together</div>
+    <div style="max-width:180px;margin-bottom:22px;" class="reveal-zoom delay-1">
       <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHdvMnE2OWRrNnRtY2Y5YTZoY3o3enVzZWNiNTVmM25jN2ZrMXdtYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4Epf4eyuKz0fsi7S/giphy.gif" alt="CTA" style="width:100%;border-radius:10px;border:1px solid var(--border);">
     </div>
-    <h2 class="cta-h" data-aos="fade-up" data-aos-delay="140">GOT A<br><span>PROJECT?</span></h2>
-    <span class="cta-email" data-aos="fade-up" data-aos-delay="220">rennielsalazar948@gmail.com</span>
-    <div data-aos="zoom-in-up" data-aos-delay="300">
+    <h2 class="cta-h reveal-3d delay-2">GOT A<br><span>PROJECT?</span></h2>
+    <span class="cta-email reveal-3d delay-3">rennielsalazar948@gmail.com</span>
+    <div class="reveal-zoom delay-4">
       <a href="mailto:rennielsalazar948@gmail.com" class="btn-primary mag-btn" style="font-size:.68rem;padding:1rem 2.6rem;">Initiate Contact <i class="fa-solid fa-arrow-right" style="font-size:.6rem"></i></a>
     </div>
   </div>
@@ -1523,7 +1329,6 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
   </form>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ══════════════════════════════════════
@@ -1539,7 +1344,20 @@ footer { padding:2.2rem 0;border-top:1px solid var(--border);position:relative;z
     'RENNIEL'.split('').forEach((ch,i)=>{const s=document.createElement('span');s.textContent=ch;s.style.animationDelay=(i*.06)+'s';el.appendChild(s);});
     const pv=document.getElementById('pre-pct-val');let p=0;
     const ct=setInterval(()=>{p=Math.min(p+Math.floor(Math.random()*8)+3,100);pv.textContent=p+'%';if(p>=100)clearInterval(ct);},18);
-    setTimeout(()=>{pre.classList.add('out');setTimeout(()=>{pre.style.display='none';document.getElementById('cine-lines').classList.add('open');initThree();animCounters();animMetrics();animProgress();AOS.init({duration:900,easing:'ease-out-cubic',once:false,mirror:true,offset:60,anchorPlacement:'top-bottom'});},900);},1200);
+    setTimeout(()=>{
+      pre.classList.add('out');
+      setTimeout(()=>{
+        pre.style.display='none';
+        document.getElementById('cine-lines').classList.add('open');
+        initThree();
+        animCounters();
+        animMetrics();
+        animProgress();
+        init3DScrollReveal();
+        initParallaxDepth();
+        initScrollMorphing();
+      },900);
+    },1200);
   }
   setTimeout(()=>intro.classList.add('bars-open'),400);
   gate.addEventListener('click',()=>{
@@ -1587,7 +1405,7 @@ document.querySelectorAll('.mag-btn').forEach(btn=>{
 });
 
 /* ══════════════════════════════════════
-   SCROLL
+   SCROLL PROGRESS
 ══════════════════════════════════════ */
 window.addEventListener('scroll',()=>{
   const pct=Math.min((scrollY/(document.body.scrollHeight-innerHeight))*100,100);
@@ -1603,12 +1421,9 @@ function initThree(){
   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(innerWidth,innerHeight);
-
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,1000);
   camera.position.z=5;
-
-  /* Particle geometry */
   const N=1800;
   const geo=new THREE.BufferGeometry();
   const pos=new Float32Array(N*3),clr=new Float32Array(N*3),sz=new Float32Array(N);
@@ -1624,58 +1439,27 @@ function initThree(){
   geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
   geo.setAttribute('color',new THREE.BufferAttribute(clr,3));
   geo.setAttribute('size',new THREE.BufferAttribute(sz,1));
-
-  /* Shader material */
   const mat=new THREE.ShaderMaterial({
     vertexColors:true,transparent:true,depthWrite:false,
-    vertexShader:`
-      attribute float size;
-      varying vec3 vColor;
-      void main(){
-        vColor=color;
-        vec4 mv=modelViewMatrix*vec4(position,1.);
-        gl_PointSize=size*(300./-mv.z);
-        gl_Position=projectionMatrix*mv;
-      }
-    `,
-    fragmentShader:`
-      varying vec3 vColor;
-      void main(){
-        float d=length(gl_PointCoord-.5)*2.;
-        if(d>1.)discard;
-        float a=(1.-d)*(1.-d)*.65;
-        gl_FragColor=vec4(vColor,a);
-      }
-    `
+    vertexShader:`attribute float size;varying vec3 vColor;void main(){vColor=color;vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=size*(300./-mv.z);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`varying vec3 vColor;void main(){float d=length(gl_PointCoord-.5)*2.;if(d>1.)discard;float a=(1.-d)*(1.-d)*.65;gl_FragColor=vec4(vColor,a);}`
   });
   const pts=new THREE.Points(geo,mat);
   scene.add(pts);
-
-  /* Connections mesh */
   const lineMat=new THREE.LineBasicMaterial({color:0x00e5ff,transparent:true,opacity:.04});
   const lineGeo=new THREE.BufferGeometry();
   const linePos=[];
   for(let i=0;i<N;i+=8){
     for(let j=i+8;j<N;j+=8){
       const dx=pos[i*3]-pos[j*3],dy=pos[i*3+1]-pos[j*3+1],dz=pos[i*3+2]-pos[j*3+2];
-      const dist=Math.sqrt(dx*dx+dy*dy+dz*dz);
-      if(dist<3){
-        linePos.push(pos[i*3],pos[i*3+1],pos[i*3+2]);
-        linePos.push(pos[j*3],pos[j*3+1],pos[j*3+2]);
-      }
+      if(Math.sqrt(dx*dx+dy*dy+dz*dz)<3){linePos.push(pos[i*3],pos[i*3+1],pos[i*3+2]);linePos.push(pos[j*3],pos[j*3+1],pos[j*3+2]);}
     }
   }
   lineGeo.setAttribute('position',new THREE.Float32BufferAttribute(linePos,3));
   scene.add(new THREE.LineSegments(lineGeo,lineMat));
-
-  /* Mouse parallax */
   let tx=0,ty=0;
   document.addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5)*.6;ty=(e.clientY/innerHeight-.5)*.4;});
-
-  /* Resize */
   window.addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();});
-
-  /* Animate */
   const clock=new THREE.Clock();
   (function animate(){
     requestAnimationFrame(animate);
@@ -1705,6 +1489,96 @@ if(photoCard){
 }
 
 /* ══════════════════════════════════════
+   3D SCROLL REVEAL — INTERSECTION OBSERVER
+══════════════════════════════════════ */
+function init3DScrollReveal(){
+  const selectors='.reveal-3d,.reveal-3d-left,.reveal-3d-right,.reveal-flip,.reveal-zoom';
+  const els=document.querySelectorAll(selectors);
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+      }
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>obs.observe(el));
+}
+
+/* ══════════════════════════════════════
+   PARALLAX DEPTH SCROLL EFFECT
+══════════════════════════════════════ */
+function initParallaxDepth(){
+  const orbs=document.querySelectorAll('.orb');
+  const heroGrid=document.querySelector('.hero-grid-3d');
+  let ticking=false;
+  window.addEventListener('scroll',()=>{
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const y=window.scrollY;
+        orbs.forEach((o,i)=>{
+          const speed=[0.07,0.05,0.04][i]||0.04;
+          const dir=i===1?-1:1;
+          o.style.transform=`translateY(${y*speed*dir}px)`;
+        });
+        if(heroGrid){
+          const p=Math.min(y/window.innerHeight,1);
+          heroGrid.style.opacity=1-p*0.6;
+        }
+        ticking=false;
+      });
+      ticking=true;
+    }
+  });
+}
+
+/* ══════════════════════════════════════
+   SCROLL-DRIVEN MORPHING FOR SECTION HEADINGS
+══════════════════════════════════════ */
+function initScrollMorphing(){
+  const secHeadings=document.querySelectorAll('.sec-h');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.style.transition='letter-spacing 0.8s cubic-bezier(.16,1,.3,1), opacity 0.6s';
+        entry.target.style.letterSpacing='-.02em';
+        entry.target.style.opacity='1';
+      } else {
+        entry.target.style.letterSpacing='.12em';
+        entry.target.style.opacity='0.3';
+      }
+    });
+  },{threshold:0.4});
+  secHeadings.forEach(h=>{
+    h.style.letterSpacing='.12em';
+    h.style.opacity='0.3';
+    obs.observe(h);
+  });
+}
+
+/* ══════════════════════════════════════
+   3D CARD HOVER TILT FOR ALL CARDS
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  const tiltCards=document.querySelectorAll('.proj-card,.svc-card,.award-card,.testi-card,.skill-card');
+  tiltCards.forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const cx=r.left+r.width/2,cy=r.top+r.height/2;
+      const dx=(e.clientX-cx)/r.width;
+      const dy=(e.clientY-cy)/r.height;
+      const rx=-dy*8;
+      const ry=dx*8;
+      card.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-7px) scale(1.02)`;
+      card.style.transition='transform 0.1s ease';
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='';
+      card.style.transition='transform 0.5s cubic-bezier(.16,1,.3,1)';
+    });
+  });
+});
+
+/* ══════════════════════════════════════
    COUNTERS
 ══════════════════════════════════════ */
 function animCounters(){
@@ -1726,15 +1600,6 @@ function animProgress(){
 }
 new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)animMetrics();});},{threshold:.3}).observe(document.querySelector('.metrics-strip'));
 new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)animProgress();});},{threshold:.2}).observe(document.getElementById('now'));
-
-/* ══════════════════════════════════════
-   PARALLAX ORBS
-══════════════════════════════════════ */
-window.addEventListener('scroll',()=>{
-  const y=scrollY;
-  document.querySelectorAll('.orb-1').forEach(o=>o.style.transform=`translateY(${y*.07}px)`);
-  document.querySelectorAll('.orb-2').forEach(o=>o.style.transform=`translateY(${-y*.05}px)`);
-});
 
 /* ══════════════════════════════════════
    LIGHTBOX
