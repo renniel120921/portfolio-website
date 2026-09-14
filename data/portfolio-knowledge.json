@@ -1,0 +1,201 @@
+{
+  "profile": {
+    "name": "Renniel Salazar",
+    "roles": [
+      "Web Developer at City Health Office (CHO)",
+      "Founder & CEO of EasyWeb PH"
+    ],
+    "location": "San Fernando, Pampanga, Philippines",
+    "education": "Bachelor of Science in Information Technology (BSIT), City College of San Fernando, Pampanga (2022–2026)",
+    "email": "rennielsalazar948@gmail.com",
+    "resume": "documents/Renniel-Salazar-Resume.pdf",
+    "website": "https://portfolio-website-iyv7.onrender.com",
+    "agency": "https://easyweb-ph.vercel.app/",
+    "github": "https://github.com/renniel120921",
+    "bio": "Full-stack software engineer and startup founder based in Pampanga, Philippines. Specializes in practical web applications, cloud architectures, and hardware-integrated IoT systems with a focus on simplicity, speed, and dependability."
+  },
+  "currentRole": {
+    "organization": "City Health Office (CHO)",
+    "position": "Web Developer",
+    "startDate": "2026-09-09",
+    "displayDate": "September 9, 2026 – Present",
+    "status": "Active / Ongoing System Development",
+    "officialDescription": "Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.",
+    "milestones": [
+      "Completed the initial data-gathering phase.",
+      "Currently organizing and defining the system workflow.",
+      "Preparing the foundation for system development and future enhancements."
+    ],
+    "importantNotes": "The system is currently in its initial workflow-organization and architectural definition stage. It is an ongoing milestone, not a completed or deployed system. No unannounced technologies or government metrics should be invented."
+  },
+  "featuredProjects": [
+    {
+      "name": "Likha Apps",
+      "fullName": "Likha Apps (PWA Storeapp)",
+      "badge": "Featured · Open Web",
+      "role": "Full-Stack Developer · PWA Directory",
+      "summary": "A progressive web app directory and discovery shelf designed to list, search, and launch web applications on the open web without app store barriers.",
+      "technologies": ["Next.js 16 (React 19)", "TypeScript", "Tailwind CSS v4", "Firebase / Firestore", "Lucide React", "Shadcn/UI", "PWA"],
+      "features": ["Debounced real-time search", "Category filtering & sorting", "Firebase auth", "Submission flow"],
+      "liveDemo": "https://likha-app-web.vercel.app",
+      "github": "https://github.com/renniel120921/PWA-Storeapp"
+    },
+    {
+      "name": "Tipid App",
+      "fullName": "Tipid App (Expenses Tracker)",
+      "badge": "Featured · Personal Finance",
+      "role": "Web Developer · Personal Finance",
+      "summary": "A personal finance and daily expense tracking web application with offline support, budgeting calculators, and financial visualization tools.",
+      "technologies": ["Vanilla JavaScript (ES6+)", "HTML5", "CSS3", "Firebase Auth", "Cloud Firestore", "Service Worker"],
+      "features": ["Expense charts", "Allowance calculator", "Bills center", "Grocery lists", "Debt/utang tracker", "Offline sync"],
+      "liveDemo": "https://tipid-tracker-nu.vercel.app",
+      "github": "https://github.com/renniel120921/Expenses-Tracker"
+    }
+  ],
+  "otherProjects": [
+    {
+      "name": "EasyWeb PH",
+      "role": "Founder & Lead Architect",
+      "summary": "Bespoke digital agency platform delivering custom web applications, responsive UI architecture, and cloud deployments for businesses.",
+      "technologies": ["HTML5", "CSS3", "JavaScript", "Responsive HIG Layout", "Vercel"],
+      "liveDemo": "https://easyweb-ph.vercel.app"
+    },
+    {
+      "name": "EasyThesis Solution",
+      "role": "Full-Stack & AI Systems Developer",
+      "summary": "AI-assisted academic writing tool built to help undergraduate researchers structure thesis drafts and synthesize literature sources.",
+      "technologies": ["Python", "Supabase", "JavaScript", "REST APIs", "Vercel"],
+      "liveDemo": "https://easy-thesis-solution.vercel.app"
+    },
+    {
+      "name": "Custom DTR",
+      "role": "Frontend & Workflow Developer",
+      "summary": "A custom daily time record interface built for staff attendance management, structured logs, and automated break/overtime reporting.",
+      "technologies": ["JavaScript (ES6+)", "Local Storage", "CSS Grid", "HTML5"],
+      "liveDemo": "https://custom-dtr.vercel.app"
+    },
+    {
+      "name": "SmartBasura",
+      "role": "Lead Systems & IoT Architect",
+      "summary": "Hardware-integrated municipal waste management platform pairing microcontroller ultrasonic sensors with a real-time Laravel/MySQL dispatch dashboard.",
+      "technologies": ["Arduino C++ Firmware", "Laravel", "MySQL", "Ultrasonic Sensors", "IoT"],
+      "status": "Academic Capstone Project"
+    },
+    {
+      "name": "CoffeeShop",
+      "role": "Business Website Developer",
+      "summary": "A coffee shop landing page focused on product presentation, menu discovery, and mobile-friendly brand atmosphere.",
+      "technologies": ["HTML5", "CSS3", "JavaScript", "Vercel"],
+      "liveDemo": "https://coffeeshop-mu.vercel.app"
+    },
+    {
+      "name": "Renz.dev",
+      "role": "Developer Showcase",
+      "summary": "Personal portfolio and developer branding site.",
+      "liveDemo": "https://renzdev-portfolio.vercel.app"
+    },
+    {
+      "name": "KimarkEngr Portfolio",
+      "role": "Civil & Structural Engineering Showcase",
+      "summary": "Engineering client portfolio for blueprints and structural consultation showcases.",
+      "liveDemo": "https://kimarkengr-portfolio.vercel.app"
+    },
+    {
+      "name": "Jancher Portfolio",
+      "role": "Client Portfolio",
+      "summary": "Professional profile portfolio layout for client visibility and inquiries.",
+      "liveDemo": "https://jancher-portfolio.vercel.app"
+    },
+    {
+      "name": "Reynataladro HMUA",
+      "role": "Beauty & Makeup Artistry Portfolio",
+      "summary": "Bridal and event makeup artist portfolio showcasing visual transformations and booking contact flows.",
+      "liveDemo": "https://reynataladrohmua.vercel.app"
+    },
+    {
+      "name": "INC AOFLAH",
+      "role": "Community Portal",
+      "summary": "Community portal designed for event coordination, schedules, and institutional identity.",
+      "liveDemo": "https://inc-aoflah.vercel.app"
+    },
+    {
+      "name": "Bloom Bites",
+      "role": "Artisanal Pastry Showcase",
+      "summary": "Artisanal pastry and bakery catalog showcasing menus and ordering inquiries.",
+      "liveDemo": "https://bloom-bites.vercel.app"
+    }
+  ],
+  "developerCommunities": [
+    {
+      "name": "ZAN Community",
+      "membership": "Member",
+      "url": "https://zancommunity.com/",
+      "summary": "Member of a Filipino tech community focused on learning, building, and shipping in public."
+    },
+    {
+      "name": "App Builders PH",
+      "membership": "Member",
+      "url": "https://appbuildersph.com/",
+      "summary": "Member of a community showcasing applications built by Filipino developers."
+    }
+  ],
+  "experience": [
+    {
+      "period": "September 9, 2026 – Present",
+      "role": "Web Developer",
+      "organization": "City Health Office (CHO)",
+      "description": "Working on the development and enhancement of a new system from the ground up through data-gathering and workflow definition."
+    },
+    {
+      "period": "2026 – Present",
+      "role": "Software Engineering Intern (486 Hours)",
+      "organization": "Department of Trade and Industry (DTI Region 3)",
+      "description": "Government engineering placement focused on digitizing internal workflows, automating tracking documents, and improving regional service software."
+    },
+    {
+      "period": "2026 – Present",
+      "role": "Founder & Chief Executive Officer",
+      "organization": "EasyWeb PH",
+      "description": "Founded independent digital agency providing custom full-stack web applications, business landing sites, and cloud database architectures."
+    },
+    {
+      "period": "2022 – 2026",
+      "role": "Bachelor of Science in Information Technology",
+      "organization": "City College of San Fernando, Pampanga",
+      "description": "Specialized in systems architecture, advanced database management, network algorithms, and embedded IoT development."
+    },
+    {
+      "period": "2021 – 2022",
+      "role": "Freelance Web Developer",
+      "organization": "Independent Contractor",
+      "description": "Designed and deployed responsive websites and lightweight administrative interfaces for local Pampanga retail businesses."
+    }
+  ],
+  "services": [
+    "Web Application Engineering (Custom full-stack web apps, role-based dashboards, automated workflows)",
+    "Cloud Backend & REST APIs (Express.js, Node.js, Laravel, authentication, Supabase, Firestore)",
+    "Frontend Engineering & UI/UX (Responsive layouts, mobile-first design, Apple HIG aesthetic)",
+    "Database Architecture (MySQL, MongoDB, PostgreSQL, schema design, indexing)",
+    "Hardware & IoT Dashboards (Arduino, C++ firmware, ultrasonic sensors, real-time telemetry)",
+    "System Maintenance & Optimization (Code modernization, bug fixes, performance tuning)"
+  ],
+  "process": [
+    "Phase 1: Discovery — Mapping requirements, user goals, and system constraints.",
+    "Phase 2: Architecture — Designing database schemas, API contracts, and wireframes.",
+    "Phase 3: Engineering — Writing modular, clean code with regular milestone demos.",
+    "Phase 4: Deploy & Scale — Rigorous testing, cloud deployment, and post-launch maintenance."
+  ],
+  "siteSections": {
+    "#home": "Hero with developer communities, verified metrics, featured work (Likha Apps & Tipid App), currently building at CHO, and final client CTA",
+    "#about": "Professional background, philosophy, and core capability pillars",
+    "#services": "Detailed service breakdown and 4-phase engineering lifecycle",
+    "#projects": "Complete portfolio of 13+ production and client web applications",
+    "#stack": "Languages, frameworks, databases, and IoT tools",
+    "#credentials": "Institutional awards, DTI placement, degree, and developer communities",
+    "#gallery": "Curated photos of milestone presentations, graduation, and project defenses",
+    "#experience": "Chronological career progression from freelance to DTI and City Health Office",
+    "#testimonials": "Endorsements from clients, thesis advisers, and engineering peers",
+    "#contact": "Start a Project inquiry panel, verified channels, and FAQ accordion"
+  }
+}
+
