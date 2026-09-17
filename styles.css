@@ -26,16 +26,28 @@
   --separator: rgba(60, 60, 67, 0.14);
   --separator-strong: rgba(60, 60, 67, 0.24);
 
-  /* Elevation Shadows */
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  /* Elevation Shadows (Apple HIG Soft Shadows) */
+  --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03);
   --shadow-drawer: 0 16px 48px rgba(0, 0, 0, 0.14);
 
-  /* Geometry */
+  /* Geometry & Radii */
   --radius-sm: 8px;
   --radius-btn: 12px;
-  --radius-card: 20px;
+  --radius-card: 18px;
   --radius-pill: 9999px;
+
+  /* 8px Spacing System Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
 
   /* Layout Dimensions */
   --sidebar-w: 280px;
@@ -43,7 +55,7 @@
   --content-max-w: 1040px;
 
   /* Fonts */
-  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Transition Curves */
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
@@ -994,19 +1006,18 @@ body.sidebar-collapsed .sidebar-copy {
 .stats-grid,
 .stats-grid-3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
-  gap: 1.25rem;
-  margin-top: 2rem;
-  margin-bottom: 3.5rem;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
 }
 
 .stat-box {
   background-color: var(--surface);
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   border: 1px solid var(--separator);
   box-shadow: var(--shadow-card);
-  padding: 1.35rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   text-align: left;
 }
 
@@ -1019,15 +1030,101 @@ body.sidebar-collapsed .sidebar-copy {
 }
 
 .stat-label {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   font-weight: 500;
   margin-top: 0.45rem;
 }
 
+/* Academic Achievement Card on Home (Compact & Understated) */
+.home-academic-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background-color: var(--surface);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1rem 1.25rem;
+  margin-bottom: var(--space-8);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: transform 220ms var(--ease-spring),
+              box-shadow 220ms var(--ease-spring),
+              border-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-academic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-color: var(--separator-strong);
+  }
+}
+
+.home-academic-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.home-academic-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.home-academic-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.home-academic-kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.home-academic-period {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.home-academic-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-top: 1px;
+}
+
+.home-academic-institution {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
 /* Compact Featured Work on Home */
 .featured-home-wrap {
-  margin-top: 2.5rem;
+  margin-top: 0;
 }
 
 .featured-home-header {
@@ -2119,7 +2216,15 @@ body.sidebar-collapsed .sidebar-copy {
 .credential-desc {
   font-size: 0.88rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+.credential-term {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
 }
 
 /* Developer Communities Subsection */
@@ -3121,7 +3226,8 @@ body.sidebar-collapsed .sidebar-copy {
   .home-community-card,
   .testimonial-card,
   .contact-card,
-  .stat-box {
+  .stat-box,
+  .home-academic-card {
     transition: transform 220ms var(--ease-spring),
                 box-shadow 220ms var(--ease-spring),
                 border-color 220ms ease;
@@ -3136,7 +3242,8 @@ body.sidebar-collapsed .sidebar-copy {
   .community-card:hover,
   .home-community-card:hover,
   .testimonial-card:hover,
-  .stat-box:hover {
+  .stat-box:hover,
+  .home-academic-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
     border-color: var(--separator-strong);
@@ -3255,7 +3362,6 @@ body.sidebar-collapsed .sidebar-copy {
 
   .main-wrapper {
     margin-left: 0 !important;
-    padding: 1.5rem 1.25rem;
     padding: 1.5rem 1.15rem;
     width: 100%;
     max-width: 100%;
@@ -3422,7 +3528,8 @@ body.sidebar-collapsed .sidebar-copy {
   .contact-card,
   .cho-building-card,
   .home-cta-card,
-  .start-project-panel {
+  .start-project-panel,
+  .home-academic-card {
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
@@ -3448,10 +3555,6 @@ body.sidebar-collapsed .sidebar-copy {
   }
 
   .chat-window {
-    width: calc(100vw - 32px);
-    right: 16px;
-    left: 16px;
-    bottom: 80px;
     width: min(400px, calc(100vw - 24px));
     max-height: calc(100dvh - 88px);
     right: 12px;
@@ -3463,8 +3566,26 @@ body.sidebar-collapsed .sidebar-copy {
 /* Small Phones (<= 480px) */
 @media (max-width: 480px) {
   .main-wrapper {
-    padding: 1.25rem 1rem;
     padding: 1.25rem 0.85rem;
+  }
+
+  .home-academic-card {
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .home-academic-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .home-academic-title {
+    font-size: 0.98rem;
+  }
+
+  .home-academic-institution {
+    font-size: 0.8rem;
   }
 
   .section-title {
@@ -3520,6 +3641,7 @@ body.sidebar-collapsed .sidebar-copy {
     transform: none !important;
   }
 
+  ::view-transition-group(root),
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none !important;
