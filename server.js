@@ -8,35 +8,38 @@ require('dotenv').config();
 const app = express();
 app.set('trust proxy', 1);
 
-// Limit JSON payload size to prevent DOS
-app.use(express.json({ limit: '10kb' }));
-
-// 1. CORS Configuration
-const allowedOrigins = [
-  'https://portfolio-website-iyv7.onrender.com',
-  'https://easyweb-ph.vercel.app',
-  'http://localhost:3000',
-  'http://localhost:5500',
+// 1. CORS Configuration (Mounted first to handle all preflight OPTIONS cleanly)
+const defaultAllowedOrigins = [
+  'https://renzdev-portfolio.vercel.app',
   'http://127.0.0.1:5500',
-  'http://localhost:8080'
+  'http://localhost:5500',
+  'https://portfolio-website-iyv7.onrender.com',
+  'https://easyweb-ph.vercel.app'
 ];
 
-app.use(cors({
-  origin: (origin, callback) => {
+const envOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
+  : [];
+
+const allowedOrigins = new Set([...defaultAllowedOrigins, ...envOrigins]);
+
+const corsOptions = {
+  origin(origin, callback) {
     // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
-    if (!origin) return callback(null, true);
-    if (
-      allowedOrigins.includes(origin) ||
-      /^http:\/\/localhost(:\d+)?$/.test(origin) ||
-      /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin)
-    ) {
+    if (!origin || allowedOrigins.has(origin)) {
       return callback(null, true);
     }
-    return callback(new Error('Not allowed by CORS'));
+    return callback(null, false);
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+  allowedHeaders: ['Content-Type'],
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+// Limit JSON payload size to prevent DOS
+app.use(express.json({ limit: '10kb' }));
 
 // In-Memory Rate Limiting (20 requests per minute per IP)
 const rateLimitMap = new Map();
@@ -68,10 +71,10 @@ setInterval(() => {
 }, 5 * 60 * 1000).unref();
 
 const PORT = process.env.PORT || 3000;
-const apiKey = process.env.GEMEN_API_KEYS;
+const apiKey = process.env.GEMEN_API_KEYS || process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-  console.error("❌ ERROR: GEMEN_API_KEYS is missing.");
+  console.error("❌ ERROR: GEMEN_API_KEYS or GEMINI_API_KEY is missing.");
   process.exit(1);
 }
 
@@ -158,7 +161,12 @@ const model = genAI.getGenerativeModel({
   systemInstruction: buildSystemInstruction(portfolioKnowledge)
 });
 
-// Health check endpoint
+// Lightweight Health Check Endpoint (Returns fast without invoking Gemini or exposing secrets)
+app.get('/api/health', (req, res) => {
+  res.json({ status: "ok" });
+});
+
+// Root Health check endpoint
 app.get('/', (req, res) => {
   res.json({
     status: "Online",

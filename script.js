@@ -515,17 +515,80 @@
      5. AI CHATBOT INTEGRATION
      ========================================================================== */
 
-  /* ==========================================================================
-     5. AI CHATBOT INTEGRATION
-     ========================================================================== */
-
-  const API_ENDPOINT = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? 'http://localhost:3000/api/chat'
-    : 'https://portfolio-website-iyv7.onrender.com/api/chat';
+  const BACKEND_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000'
+    : 'https://portfolio-website-iyv7.onrender.com';
+  const API_ENDPOINT = `${BACKEND_BASE_URL}/api/chat`;
+  const HEALTH_ENDPOINT = `${BACKEND_BASE_URL}/api/health`;
 
   let chatHistory = [];
   let isSubmitting = false;
   let activeAbortController = null;
+  let healthCheckActive = false;
+
+  const chatStatusEl = document.getElementById('chat-header-status') || document.querySelector('.chat-header-status');
+
+  function setChatStatus(state) {
+    if (!chatStatusEl) return;
+    chatStatusEl.classList.remove('status-online', 'status-connecting', 'status-starting', 'status-unavailable');
+
+    switch (state) {
+      case 'online':
+        chatStatusEl.textContent = 'Online · Ready';
+        chatStatusEl.classList.add('status-online');
+        break;
+      case 'starting':
+        chatStatusEl.textContent = 'Starting assistant…';
+        chatStatusEl.classList.add('status-starting');
+        break;
+      case 'unavailable':
+        chatStatusEl.textContent = 'Temporarily unavailable';
+        chatStatusEl.classList.add('status-unavailable');
+        break;
+      case 'connecting':
+      default:
+        chatStatusEl.textContent = 'Connecting…';
+        chatStatusEl.classList.add('status-connecting');
+        break;
+    }
+  }
+
+  async function checkBackendHealth() {
+    if (healthCheckActive) return;
+    healthCheckActive = true;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    try {
+      const res = await fetch(HEALTH_ENDPOINT, {
+        method: 'GET',
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data && data.status === 'ok') {
+          setChatStatus('online');
+          return;
+        }
+      }
+      if (res.status === 502 || res.status === 503) {
+        setChatStatus('starting');
+      } else {
+        setChatStatus('unavailable');
+      }
+    } catch (err) {
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        // Cold start in progress on Render free tier
+        setChatStatus('starting');
+      } else {
+        setChatStatus('unavailable');
+      }
+    } finally {
+      healthCheckActive = false;
+    }
+  }
 
   function toggleChat(forceState) {
     if (!chatWin) return;
@@ -533,6 +596,9 @@
     if (shouldOpen) {
       chatWin.classList.add('active');
       if (chatInput) chatInput.focus();
+      if (!chatStatusEl || !chatStatusEl.classList.contains('status-online')) {
+        checkBackendHealth();
+      }
     } else {
       chatWin.classList.remove('active');
     }
@@ -636,7 +702,7 @@
     return msgDiv;
   }
 
-  function createTypingIndicator() {
+  function createTypingIndicator(customText) {
     if (!chatMsgs) return null;
     const typingDiv = document.createElement('div');
     typingDiv.className = 'chat-msg ai';
@@ -644,7 +710,26 @@
 
     const indicator = document.createElement('div');
     indicator.className = 'chat-typing-indicator';
-    indicator.innerHTML = '<span class="chat-typing-dot"></span><span class="chat-typing-dot"></span><span class="chat-typing-dot"></span>';
+
+    if (customText) {
+      const textSpan = document.createElement('span');
+      textSpan.className = 'chat-typing-text';
+      textSpan.textContent = customText;
+      textSpan.style.fontSize = '0.82rem';
+      textSpan.style.marginRight = '6px';
+      indicator.appendChild(textSpan);
+    }
+
+    const dot1 = document.createElement('span');
+    dot1.className = 'chat-typing-dot';
+    const dot2 = document.createElement('span');
+    dot2.className = 'chat-typing-dot';
+    const dot3 = document.createElement('span');
+    dot3.className = 'chat-typing-dot';
+
+    indicator.appendChild(dot1);
+    indicator.appendChild(dot2);
+    indicator.appendChild(dot3);
 
     typingDiv.appendChild(indicator);
     chatMsgs.appendChild(typingDiv);
@@ -697,13 +782,22 @@
     // Render Typing Indicator
     createTypingIndicator();
 
-    // AbortController with 15s timeout
+    // Cold-start notification timer for Render spin-down
+    const coldStartTimer = setTimeout(() => {
+      if (isSubmitting) {
+        setChatStatus('starting');
+        removeTypingIndicator();
+        createTypingIndicator('Starting assistant…');
+      }
+    }, 5000);
+
+    // AbortController with 45s timeout to gracefully accommodate Render cold starts
     activeAbortController = new AbortController();
     const timeoutId = setTimeout(() => {
       if (activeAbortController) {
         activeAbortController.abort();
       }
-    }, 15000);
+    }, 45000);
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -717,6 +811,7 @@
       });
 
       clearTimeout(timeoutId);
+      clearTimeout(coldStartTimer);
       removeTypingIndicator();
 
       if (!response.ok) {
@@ -729,19 +824,25 @@
         } catch (_) {}
 
         if (response.status === 429) {
+          setChatStatus('online');
           appendChatMessage('ai', errMessage || 'Request limit reached. Please wait a moment before sending another message.', true, () => handleSendMessage(userText));
           return;
         }
-        if (response.status >= 500 || response.status === 504) {
-          appendChatMessage('ai', errMessage || 'Server is waking up or timed out. Please retry in a few seconds.', true, () => handleSendMessage(userText));
+
+        if (response.status === 502 || response.status === 503 || response.status === 504) {
+          setChatStatus('starting');
+          appendChatMessage('ai', 'Starting the assistant. This may take a moment… Please retry in a few seconds.', true, () => handleSendMessage(userText));
           return;
         }
+
+        setChatStatus('unavailable');
         appendChatMessage('ai', errMessage, true, () => handleSendMessage(userText));
         return;
       }
 
-      const data = await response.json();
-      if (data && data.text) {
+      const data = await response.json().catch(() => null);
+      if (data && typeof data.text === 'string' && data.text) {
+        setChatStatus('online');
         appendChatMessage('ai', data.text);
         chatHistory.push({ role: 'user', parts: [{ text: userText }] });
         chatHistory.push({ role: 'model', parts: [{ text: data.text }] });
@@ -750,11 +851,14 @@
       }
     } catch (err) {
       clearTimeout(timeoutId);
+      clearTimeout(coldStartTimer);
       removeTypingIndicator();
 
       if (err.name === 'AbortError') {
-        appendChatMessage('ai', 'Request timed out after 15 seconds. Please try asking again.', true, () => handleSendMessage(userText));
+        setChatStatus('unavailable');
+        appendChatMessage('ai', 'Request timed out after waiting for the assistant to respond. Please try asking again.', true, () => handleSendMessage(userText));
       } else {
+        setChatStatus('unavailable');
         appendChatMessage('ai', 'Unable to reach the assistant right now. You can retry or email rennielsalazar948@gmail.com directly.', true, () => handleSendMessage(userText));
       }
     } finally {
@@ -776,7 +880,7 @@
     });
   }
 
-  // Suggested Prompt Chips
+  // Suggested Prompt Chips (Clickable and keyboard focusable with smooth scroll)
   const chipButtons = document.querySelectorAll('.chat-chip');
   chipButtons.forEach((chip) => {
     chip.addEventListener('click', () => {
@@ -785,6 +889,10 @@
       if (query) {
         handleSendMessage(query);
       }
+    });
+
+    chip.addEventListener('focus', () => {
+      chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     });
   });
 
@@ -864,6 +972,8 @@
     initSidebarCollapse();
     handleHashRoute();
     initFAQ();
+    setChatStatus('connecting');
+    checkBackendHealth();
     // Ensure initial alignment of selection capsule
     requestAnimationFrame(function () {
       updateNavIndicator();
