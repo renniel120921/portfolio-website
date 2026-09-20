@@ -1,36 +1,41 @@
 /**
  * Apple HIG-Inspired Portfolio Application Logic
- * Gliding Nav Indicator, Smooth Section Transitions, Drawer, Lightbox & Chatbot
+ * Human-Centered Systems Lab (Renz.dev)
+ * 7-Route Architecture, Legacy Aliases, OverlayManager, Spotlight AI, Case Studies & Chatbot
  */
 
 (function () {
   'use strict';
 
-  // Valid Navigation Sections
+  // 7 Primary Navigation Sections
   const VALID_SECTIONS = [
     'home',
-    'about',
+    'work',
+    'lab',
     'services',
-    'projects',
-    'stack',
-    'credentials',
-    'gallery',
-    'experience',
-    'testimonials',
+    'journey',
+    'about',
     'contact'
   ];
 
+  // Legacy Hash Aliases mapped to 7 primary destinations
+  const LEGACY_HASH_MAP = {
+    projects: 'work',
+    gallery: 'work',
+    stack: 'lab',
+    credentials: 'journey',
+    experience: 'journey',
+    testimonials: 'journey'
+  };
+
   const SECTION_TITLES = {
     home: 'Home',
-    about: 'About',
+    work: 'Work & Systems',
+    lab: 'Systems Lab',
     services: 'Services',
-    projects: 'Projects',
-    stack: 'Tech Stack',
-    credentials: 'Credentials',
-    gallery: 'Gallery',
-    experience: 'Experience',
-    testimonials: 'Testimonials',
-    contact: 'Contact'
+    journey: 'Engineering Journey',
+    about: 'About Me',
+    contact: 'Contact & Inquiries'
   };
 
   // DOM Elements
@@ -65,6 +70,19 @@
   }
 
   /* ==========================================================================
+     PRIVACY-FRIENDLY EVENT DISPATCHER (Vercel Web Analytics Safe Wrapper)
+     ========================================================================== */
+  window.trackEvent = function (name, data) {
+    try {
+      if (typeof window.va === 'function') {
+        window.va('event', { name, ...data });
+      }
+    } catch (_) {
+      // Safe no-op on free tier or local development
+    }
+  };
+
+  /* ==========================================================================
      1. GLIDING NAV INDICATOR (Selection Capsule)
      ========================================================================== */
 
@@ -84,7 +102,6 @@
       return;
     }
 
-    // Measure positions relative to scrollable sidebarNav
     const navRect = sidebarNav.getBoundingClientRect();
     const linkRect = currentLink.getBoundingClientRect();
 
@@ -117,13 +134,17 @@
   });
 
   /* ==========================================================================
-     2. NAVIGATION & SECTION TRANSITIONS
+     2. NAVIGATION & SECTION TRANSITIONS (7 Routes + 6 Legacy Aliases)
      ========================================================================== */
 
   function getActiveHash() {
     const raw = window.location.hash.replace(/^#/, '').toLowerCase().trim();
+    if (LEGACY_HASH_MAP[raw]) {
+      return LEGACY_HASH_MAP[raw];
+    }
     return VALID_SECTIONS.includes(raw) ? raw : 'home';
   }
+
   let activeViewTransition = null;
   let renderedRoute = null;
   let requestedRoute = null;
@@ -159,8 +180,8 @@
     updateNavIndicator(activeLink);
 
     // Update Document Title
-    const label = SECTION_TITLES[targetId] || 'Portfolio';
-    document.title = `${label} — Renniel Salazar | Software Engineer & Founder`;
+    const label = SECTION_TITLES[targetId] || 'Systems Lab';
+    document.title = `${label} — Renz.dev | Human-Centered Systems Lab`;
 
     // Scroll to Top
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -254,7 +275,8 @@
     const href = link.getAttribute('href');
     if (href === '#' || !href) return;
 
-    const targetSection = href.replace(/^#/, '').toLowerCase().trim();
+    const rawTarget = href.replace(/^#/, '').toLowerCase().trim();
+    const targetSection = LEGACY_HASH_MAP[rawTarget] || rawTarget;
     if (VALID_SECTIONS.includes(targetSection)) {
       e.preventDefault();
       const currentHash = window.location.hash.replace(/^#/, '').toLowerCase().trim();
@@ -268,7 +290,391 @@
   window.addEventListener('hashchange', handleHashRoute);
 
   /* ==========================================================================
-     3. MOBILE SIDEBAR DRAWER
+     3. OVERLAY MANAGER (Centralized Focus Trap, Scroll Locking & Escape Stack)
+     ========================================================================== */
+
+  const OverlayManager = (function () {
+    const stack = [];
+
+    function open(overlayEl, initialFocusEl, triggerEl) {
+      if (!overlayEl || stack.some(item => item.el === overlayEl)) return;
+
+      const trigger = triggerEl || document.activeElement;
+      stack.push({
+        el: overlayEl,
+        trigger: trigger
+      });
+
+      overlayEl.classList.add('active');
+      overlayEl.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      const focusTarget = initialFocusEl || overlayEl.querySelector('input, button, [tabindex="0"]');
+      if (focusTarget) {
+        requestAnimationFrame(() => {
+          focusTarget.focus();
+        });
+      }
+    }
+
+    function close(overlayEl) {
+      let index = -1;
+      if (overlayEl) {
+        index = stack.findIndex(item => item.el === overlayEl);
+      } else if (stack.length > 0) {
+        index = stack.length - 1;
+      }
+
+      if (index === -1) return;
+
+      const item = stack.splice(index, 1)[0];
+      item.el.classList.remove('active');
+      item.el.setAttribute('aria-hidden', 'true');
+
+      if (stack.length === 0) {
+        document.body.style.overflow = '';
+      }
+
+      if (item.trigger && typeof item.trigger.focus === 'function') {
+        item.trigger.focus();
+      }
+    }
+
+    function closeTop() {
+      if (stack.length > 0) {
+        close(stack[stack.length - 1].el);
+      }
+    }
+
+    function getTop() {
+      return stack.length > 0 ? stack[stack.length - 1] : null;
+    }
+
+    // Global Key Listener for Overlays
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (stack.length > 0) {
+          e.preventDefault();
+          closeTop();
+          return;
+        }
+        if (lightbox && lightbox.classList.contains('active')) {
+          window.closeLightbox();
+        }
+        if (sidebar && sidebar.classList.contains('open')) {
+          closeMobileSidebar();
+        }
+        if (chatWin && chatWin.classList.contains('active')) {
+          toggleChat(false);
+        }
+        return;
+      }
+
+      if (e.key === 'Tab' && stack.length > 0) {
+        const current = getTop();
+        if (!current) return;
+        const focusables = current.el.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    });
+
+    return {
+      open,
+      close,
+      closeTop,
+      getTop
+    };
+  })();
+
+  /* ==========================================================================
+     4. SPOTLIGHT AI NAVIGATOR (Command Palette)
+     ========================================================================== */
+
+  function initSpotlight() {
+    const spotlightModal = document.getElementById('spotlight-modal');
+    const spotlightOpenBtn = document.getElementById('spotlight-open-btn');
+    const spotlightCloseBtn = document.getElementById('spotlight-close-btn');
+    const spotlightInput = document.getElementById('spotlight-search');
+    const spotlightResults = document.getElementById('spotlight-results');
+
+    if (!spotlightModal || !spotlightInput) return;
+
+    function openSpotlight(triggerEl) {
+      spotlightInput.value = '';
+      filterSpotlightItems('');
+      OverlayManager.open(spotlightModal, spotlightInput, triggerEl || spotlightOpenBtn);
+      window.trackEvent('spotlight_opened', { source: triggerEl ? 'button' : 'shortcut' });
+    }
+
+    function closeSpotlight() {
+      OverlayManager.close(spotlightModal);
+    }
+
+    if (spotlightOpenBtn) {
+      spotlightOpenBtn.addEventListener('click', function () {
+        openSpotlight(spotlightOpenBtn);
+      });
+    }
+
+    if (spotlightCloseBtn) {
+      spotlightCloseBtn.addEventListener('click', closeSpotlight);
+    }
+
+    spotlightModal.addEventListener('click', function (e) {
+      if (e.target === spotlightModal) {
+        closeSpotlight();
+      }
+    });
+
+    // Keyboard shortcut listener: Command+K / Ctrl+K
+    document.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        const isEditable = document.activeElement && (document.activeElement.isContentEditable || activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select');
+
+        // Typing safety guard: ignore if typing inside another form input
+        if (isEditable && document.activeElement !== spotlightInput) {
+          return;
+        }
+
+        e.preventDefault();
+        if (spotlightModal.classList.contains('active')) {
+          closeSpotlight();
+        } else {
+          openSpotlight();
+        }
+      }
+    });
+
+    function filterSpotlightItems(query) {
+      const q = (query || '').toLowerCase().trim();
+      const items = spotlightResults.querySelectorAll('.spotlight-item');
+      const groups = spotlightResults.querySelectorAll('.spotlight-group-label');
+
+      items.forEach(item => {
+        const title = (item.getAttribute('data-title') || item.textContent || '').toLowerCase();
+        const desc = (item.getAttribute('data-desc') || '').toLowerCase();
+        if (!q || title.includes(q) || desc.includes(q)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      groups.forEach(group => {
+        let next = group.nextElementSibling;
+        let hasVisible = false;
+        while (next && !next.classList.contains('spotlight-group-label')) {
+          if (next.classList.contains('spotlight-item') && next.style.display !== 'none') {
+            hasVisible = true;
+            break;
+          }
+          next = next.nextElementSibling;
+        }
+        group.style.display = hasVisible ? 'block' : 'none';
+      });
+    }
+
+    spotlightInput.addEventListener('input', function () {
+      filterSpotlightItems(spotlightInput.value);
+    });
+
+    spotlightInput.addEventListener('keydown', function (e) {
+      const visibleItems = Array.from(spotlightResults.querySelectorAll('.spotlight-item')).filter(el => el.style.display !== 'none');
+      if (visibleItems.length === 0) return;
+
+      const currentIndex = visibleItems.findIndex(el => el.classList.contains('selected'));
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % visibleItems.length;
+        visibleItems.forEach(el => el.classList.remove('selected'));
+        visibleItems[nextIndex].classList.add('selected');
+        visibleItems[nextIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+        visibleItems.forEach(el => el.classList.remove('selected'));
+        visibleItems[prevIndex].classList.add('selected');
+        visibleItems[prevIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selected = visibleItems.find(el => el.classList.contains('selected')) || visibleItems[0];
+        if (selected) {
+          selected.click();
+        } else if (spotlightInput.value.trim()) {
+          submitChatQuery(spotlightInput.value.trim(), 'spotlight');
+          closeSpotlight();
+        }
+      }
+    });
+
+    spotlightResults.addEventListener('click', function (e) {
+      const item = e.target.closest('.spotlight-item');
+      if (!item) return;
+
+      if (item.id === 'spotlight-ask-ai-btn') {
+        e.preventDefault();
+        closeSpotlight();
+        const query = spotlightInput.value.trim();
+        submitChatQuery(query || '', 'spotlight');
+        return;
+      }
+
+      if (item.classList.contains('case-study-trigger')) {
+        e.preventDefault();
+        const caseId = item.getAttribute('data-case');
+        closeSpotlight();
+        openCaseStudy(caseId, item);
+        return;
+      }
+
+      const href = item.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        closeSpotlight();
+      }
+    });
+  }
+
+  /* ==========================================================================
+     5. CASE STUDY SHEETS (Likha Apps & Tipid App)
+     ========================================================================== */
+
+  function openCaseStudy(caseId, triggerEl) {
+    const sheetId = `case-study-${caseId}`;
+    const sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    OverlayManager.open(sheet, sheet.querySelector('.sheet-close-btn'), triggerEl);
+    window.trackEvent('case_study_opened', { project: caseId });
+  }
+
+  function initCaseStudies() {
+    document.addEventListener('click', function (e) {
+      const trigger = e.target.closest('.case-study-trigger');
+      if (trigger) {
+        e.preventDefault();
+        const caseId = trigger.getAttribute('data-case');
+        if (caseId) {
+          openCaseStudy(caseId, trigger);
+        }
+        return;
+      }
+
+      const closeBtn = e.target.closest('.sheet-close-btn');
+      if (closeBtn) {
+        const sheet = closeBtn.closest('.sheet-overlay');
+        if (sheet) {
+          OverlayManager.close(sheet);
+        }
+        return;
+      }
+
+      if (e.target.classList.contains('sheet-overlay')) {
+        OverlayManager.close(e.target);
+      }
+    });
+  }
+
+  /* ==========================================================================
+     6. WORK ARCHIVE FILTERS & PAGINATION
+     ========================================================================== */
+
+  function initProjectArchive() {
+    const filterButtons = document.querySelectorAll('.archive-filter-btn');
+    const archiveGrid = document.getElementById('project-archive-grid');
+    const moreBtn = document.getElementById('archive-more-btn');
+    const countBadge = document.getElementById('archive-count-badge');
+
+    if (!archiveGrid) return;
+    const allCards = Array.from(archiveGrid.querySelectorAll('.archive-item'));
+
+    let currentFilter = 'all';
+    let isExpanded = false;
+
+    function applyFilterAndPagination() {
+      let matchingCards = [];
+
+      allCards.forEach(card => {
+        const categories = (card.getAttribute('data-categories') || '').split(' ');
+        const matches = currentFilter === 'all' || categories.includes(currentFilter);
+        if (matches) {
+          matchingCards.push(card);
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const limit = (currentFilter === 'all' && !isExpanded) ? 6 : matchingCards.length;
+
+      matchingCards.forEach((card, index) => {
+        if (index < limit) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const visibleCount = Math.min(limit, matchingCards.length);
+      if (countBadge) {
+        countBadge.textContent = `Showing ${visibleCount} of ${matchingCards.length} Projects`;
+      }
+
+      if (moreBtn) {
+        const moreContainer = moreBtn.parentElement;
+        if (currentFilter === 'all' && !isExpanded && matchingCards.length > 6) {
+          moreContainer.style.display = 'flex';
+          moreBtn.innerHTML = '<span>Show More Projects</span> <i class="fa-solid fa-chevron-down"></i>';
+        } else if (currentFilter === 'all' && isExpanded && matchingCards.length > 6) {
+          moreContainer.style.display = 'flex';
+          moreBtn.innerHTML = '<span>Show Less Projects</span> <i class="fa-solid fa-chevron-up"></i>';
+        } else {
+          moreContainer.style.display = 'none';
+        }
+      }
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        filterButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        applyFilterAndPagination();
+        window.trackEvent('archive_filtered', { category: currentFilter });
+      });
+    });
+
+    if (moreBtn) {
+      moreBtn.addEventListener('click', function () {
+        isExpanded = !isExpanded;
+        applyFilterAndPagination();
+        window.trackEvent('archive_expansion_toggled', { expanded: isExpanded });
+      });
+    }
+
+    applyFilterAndPagination();
+  }
+
+  /* ==========================================================================
+     7. MOBILE SIDEBAR DRAWER
      ========================================================================== */
 
   function openMobileSidebar() {
@@ -281,7 +687,6 @@
     }
     document.body.style.overflow = 'hidden';
 
-    // Update indicator after drawer opens
     requestAnimationFrame(function () {
       updateNavIndicator();
     });
@@ -314,7 +719,7 @@
   }
 
   /* ==========================================================================
-     3b. COLLAPSIBLE DESKTOP SIDEBAR & FLOATING ACCESSIBLE TOOLTIPS
+     8. COLLAPSIBLE DESKTOP SIDEBAR & FLOATING ACCESSIBLE TOOLTIPS
      ========================================================================== */
 
   const STORAGE_KEY_SIDEBAR = 'portfolio.sidebarCollapsed';
@@ -338,7 +743,6 @@
     }
   }
 
-  // Floating accessible tooltip attached to body to prevent overflow clipping
   let sidebarTooltip = document.querySelector('.sidebar-tooltip');
   if (!sidebarTooltip) {
     sidebarTooltip = document.createElement('div');
@@ -398,7 +802,6 @@
 
     hideSidebarTooltip();
 
-    // Fallback timer ensures indicator aligns accurately if transitionend is missed
     setTimeout(function () {
       updateNavIndicator();
     }, 280);
@@ -407,13 +810,10 @@
   function syncSidebarResponsive() {
     const width = window.innerWidth;
     if (width <= 768) {
-      // Mobile drawer mode: ignore desktop collapsed preference, ensure standard drawer
       document.body.classList.remove('sidebar-collapsed');
       if (sidebar) sidebar.classList.remove('collapsed');
       hideSidebarTooltip();
     } else if (width <= 1024) {
-      // Tablet mode (769px–1024px):
-      // Respect explicit user choice if stored; otherwise default to compact
       const pref = getStoredSidebarPreference();
       if (pref !== null) {
         applySidebarState(pref, false);
@@ -421,8 +821,6 @@
         applySidebarState(true, false);
       }
     } else {
-      // Desktop mode (> 1024px):
-      // Restore user choice if stored; otherwise default to expanded
       const pref = getStoredSidebarPreference();
       if (pref !== null) {
         applySidebarState(pref, false);
@@ -465,7 +863,7 @@
   }
 
   /* ==========================================================================
-     4. ACCESSIBLE LIGHTBOX
+     9. ACCESSIBLE LIGHTBOX
      ========================================================================== */
 
   window.openLightbox = function (src, alt) {
@@ -475,6 +873,7 @@
     if (lbCaption) lbCaption.textContent = alt || '';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    window.trackEvent('lightbox_opened', { image: src });
   };
 
   window.closeLightbox = function () {
@@ -496,23 +895,8 @@
     });
   }
 
-  /* Global Escape Key Listener */
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      if (lightbox && lightbox.classList.contains('active')) {
-        window.closeLightbox();
-      }
-      if (sidebar && sidebar.classList.contains('open')) {
-        closeMobileSidebar();
-      }
-      if (chatWin && chatWin.classList.contains('active')) {
-        toggleChat(false);
-      }
-    }
-  });
-
   /* ==========================================================================
-     5. AI CHATBOT INTEGRATION
+     10. AI CHATBOT INTEGRATION (Single Authoritative Backend)
      ========================================================================== */
 
   const BACKEND_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
@@ -580,7 +964,6 @@
     } catch (err) {
       clearTimeout(timeoutId);
       if (err.name === 'AbortError') {
-        // Cold start in progress on Render free tier
         setChatStatus('starting');
       } else {
         setChatStatus('unavailable');
@@ -599,8 +982,18 @@
       if (!chatStatusEl || !chatStatusEl.classList.contains('status-online')) {
         checkBackendHealth();
       }
+      window.trackEvent('chat_opened');
     } else {
       chatWin.classList.remove('active');
+    }
+  }
+
+  // Single-source Natural Language Question Handoff (Spotlight -> Authoritative AI)
+  function submitChatQuery(userText, source = 'standard') {
+    toggleChat(true);
+    if (userText) {
+      handleSendMessage(userText);
+      window.trackEvent('ai_query_submitted', { source });
     }
   }
 
@@ -612,7 +1005,6 @@
     chatClose.addEventListener('click', () => toggleChat(false));
   }
 
-  // Safe DOM Content Formatter (XSS-safe text nodes + clickable anchors)
   function formatSafeContent(container, rawText) {
     const lines = (rawText || '').split('\n');
     lines.forEach((line, lineIdx) => {
@@ -620,7 +1012,6 @@
         container.appendChild(document.createElement('br'));
       }
 
-      // Match URLs or section hashes
       const tokenRegex = /(https?:\/\/[^\s)]+)|(#[a-zA-Z0-9_-]+)/g;
       let lastIdx = 0;
       let match;
@@ -632,26 +1023,21 @@
 
         const token = match[0];
         if (token.startsWith('#')) {
-          // Internal section anchor
+          const rawHash = token.replace('#', '').toLowerCase();
+          const targetRoute = LEGACY_HASH_MAP[rawHash] || rawHash;
           const link = document.createElement('a');
-          link.href = token;
+          link.href = `#${targetRoute}`;
           link.className = 'chat-link';
           link.textContent = token;
           link.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetSec = document.querySelector(token);
-            if (targetSec) {
-              const navLink = document.querySelector(`.nav-link[href="${token}"]`);
-              if (navLink) navLink.click();
-              else if (typeof showSection === 'function') showSection(token.replace('#', ''));
-              if (window.innerWidth <= 768) {
-                toggleChat(false);
-              }
+            window.location.hash = targetRoute;
+            if (window.innerWidth <= 768) {
+              toggleChat(false);
             }
           });
           container.appendChild(link);
         } else {
-          // External URL
           const link = document.createElement('a');
           link.href = token;
           link.className = 'chat-link';
@@ -757,7 +1143,6 @@
     chatInput.addEventListener('input', updateCharCounter);
   }
 
-  // Send Message Handler
   async function handleSendMessage(rawText) {
     if (isSubmitting) return;
     const userText = (rawText || '').trim();
@@ -776,13 +1161,9 @@
     if (chatSendBtn) chatSendBtn.disabled = true;
     updateCharCounter();
 
-    // Render User Message
     appendChatMessage('user', userText);
-
-    // Render Typing Indicator
     createTypingIndicator();
 
-    // Cold-start notification timer for Render spin-down
     const coldStartTimer = setTimeout(() => {
       if (isSubmitting) {
         setChatStatus('starting');
@@ -791,7 +1172,6 @@
       }
     }, 5000);
 
-    // AbortController with 45s timeout to gracefully accommodate Render cold starts
     activeAbortController = new AbortController();
     const timeoutId = setTimeout(() => {
       if (activeAbortController) {
@@ -880,7 +1260,6 @@
     });
   }
 
-  // Suggested Prompt Chips (Clickable and keyboard focusable with smooth scroll)
   const chipButtons = document.querySelectorAll('.chat-chip');
   chipButtons.forEach((chip) => {
     chip.addEventListener('click', () => {
@@ -896,7 +1275,6 @@
     });
   });
 
-  // Conversation Reset
   if (chatReset) {
     chatReset.addEventListener('click', () => {
       if (activeAbortController) {
@@ -925,7 +1303,7 @@
   }
 
   /* ==========================================================================
-     6. ACCESSIBLE FAQ ACCORDION
+     11. ACCESSIBLE FAQ ACCORDION
      ========================================================================== */
 
   function initFAQ() {
@@ -936,7 +1314,6 @@
         const contentId = button.getAttribute('aria-controls');
         const content = document.getElementById(contentId);
 
-        // Close other accordion items
         faqButtons.forEach(otherBtn => {
           if (otherBtn !== button) {
             otherBtn.setAttribute('aria-expanded', 'false');
@@ -966,15 +1343,19 @@
   }
 
   /* ==========================================================================
-     7. INITIALIZATION
+     12. INITIALIZATION
      ========================================================================== */
+
   function initApp() {
     initSidebarCollapse();
     handleHashRoute();
+    initSpotlight();
+    initCaseStudies();
+    initProjectArchive();
     initFAQ();
     setChatStatus('connecting');
     checkBackendHealth();
-    // Ensure initial alignment of selection capsule
+
     requestAnimationFrame(function () {
       updateNavIndicator();
     });
