@@ -104,12 +104,12 @@ CORE IDENTITY & ROLES:
 VERIFIED CURRENT EMPLOYMENT AT CITY HEALTH OFFICE (CHO):
 - Start date: September 9, 2026 – Present
 - Role: Web Developer
-- Description: Working on the development and enhancement of a new system from the ground up. Data gathering and workflow organization have been completed, and system development is now underway.
+- Description: Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.
 - Milestones:
   1. Completed the initial data-gathering phase.
-  2. Completed workflow organization and system architecture definition.
-  3. Currently executing system development from the ground up.
-- CRITICAL CONSTRAINT: This is an ONGOING milestone in its active system development phase. Do NOT claim the system is finished, deployed, or operating with fake metrics or unverified technologies.
+  2. Currently organizing and defining the system workflow.
+  3. Preparing the foundation for system development and future enhancements.
+- CRITICAL CONSTRAINT: This is an ONGOING milestone in its early workflow and architecture definition phase. Do NOT claim the system is finished, deployed, or operating with fake metrics or unverified technologies.
 
 PRIMARY FEATURED PROJECTS (HIGHLIGHT THESE FIRST):
 1. Likha Apps (PWA Storeapp)

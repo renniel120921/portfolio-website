@@ -20,13 +20,13 @@
     "startDate": "2026-09-09",
     "displayDate": "September 9, 2026 – Present",
     "status": "Active / Ongoing System Development",
-    "officialDescription": "Working on the development and enhancement of a new system from the ground up. Data gathering and workflow organization are complete, and system development is now underway.",
+    "officialDescription": "Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.",
     "milestones": [
       "Completed the initial data-gathering phase.",
-      "Completed workflow organization and system architecture definition.",
-      "Currently executing system development from the ground up."
+      "Currently organizing and defining the system workflow.",
+      "Preparing the foundation for system development and future enhancements."
     ],
-    "importantNotes": "The system is currently in its active system development stage. Data gathering and workflow organization have been completed. It is an ongoing milestone, not a completed or deployed system. No unannounced technologies or government metrics should be invented."
+    "importantNotes": "The system is currently in its initial workflow-organization and architectural definition stage. It is an ongoing milestone, not a completed or deployed system. No unannounced technologies or government metrics should be invented."
   },
   "featuredProjects": [
     {
@@ -144,7 +144,7 @@
       "period": "September 9, 2026 – Present",
       "role": "Web Developer",
       "organization": "City Health Office (CHO)",
-      "description": "Working on the development and enhancement of a new system from the ground up, with data gathering and workflow organization completed and system development underway."
+      "description": "Working on the development and enhancement of a new system from the ground up through data-gathering and workflow definition."
     },
     {
       "period": "2026 – Present",
