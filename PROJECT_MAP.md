@@ -7,13 +7,15 @@
   - **Frontend**: Vanilla HTML5 (`index.html`), External Modular CSS3 (`styles.css`), Vanilla JavaScript (`script.js`), Font Awesome 6.
 - **Brand & Identity**: **Renz.dev — Human-Centered Systems Lab** by Renniel Salazar.
 - **Headline**: *"I build digital systems made for real people."*
-- **Design Language**: Apple Human Interface Guidelines (HIG)-inspired light mode aesthetic (`#F5F5F7` background, `#FFFFFF` surfaces, `#007AFF` accent, `#1D1D1F` text, `#6E6E73` secondary, system font stack, restrained shadows, 18–20px card radii, 8px spacing grid).
+- **Design Language**: **INC Tricolor (Green, White, and Red) Modern SaaS Personal Portfolio** celebrating the user's membership in the Iglesia Ni Cristo (INC) with high-fidelity contrast:
+  - **Default Dark Mode**: Deep Pine Obsidian canvas (`#060D08`), frosted pine surfaces (`#0E1C13`), Emerald Green primary accent (`#10B981`), Radiant Crimson Red secondary accent (`#EF4444`), and pure White text (`#FFFFFF`) with 100% WCAG AAA readability for buttons, filter pills, and navigation.
+  - **Light Mode**: Misty pale pine slate (`#F3F7F4`), crisp pure white surfaces (`#FFFFFF`), Forest Green (`#0D6B3C`), and Cardinal Red (`#DC2626`).
+  - **Theme Toggle**: Accessible header button with instant `localStorage` memory and no-flash pre-render initialization.
+  - **Live GitHub Telemetry**: Verified shipping dashboard featuring 292 contributions in the last year, 57 active shipping days, 35 commits single-day peak velocity, 52-week interactive activity heatmap with hover tooltips, and a 9-repository quick-launch shelf.
 - **Core Technology Stack**:
-  - **Frontend**: Semantic HTML5 (`index.html`), Apple HIG CSS3 design system (`styles.css`), Vanilla ES6+ JavaScript (`script.js`), Font Awesome 6.
+  - **Frontend**: Semantic HTML5 (`index.html`), Modern SaaS CSS3 design system (`styles.css`), Vanilla ES6+ JavaScript (`script.js`), Font Awesome 6.
   - **Backend**: Node.js, Express.js (`server.js`), Google Generative AI SDK (`@google/generative-ai` with Gemini 2.5 Flash), `cors`, `dotenv`.
-  - **Knowledge Base**: Structured verified portfolio knowledge (`data/portfolio-knowledge.json`).
-  - **Hosting/Deployment**: Frontend hosted via static deployment (e.g., Vercel); Backend API hosted on Render (`https://portfolio-website-iyv7.onrender.com`).
-  - **Knowledge Base**: Structured grounded portfolio facts (`data/portfolio-knowledge.json`).
+  - **Knowledge Base**: Structured grounded portfolio facts (`data/portfolio-knowledge.json`) + Chronological GitHub contributions dataset (`data/github-contributions.json`).
   - **Analytics**: Cookieless, privacy-friendly Vercel Web Analytics (`ANALYTICS_SETUP.md`).
   - **Hosting/Deployment**: Frontend on Vercel (`https://renzdev-portfolio.vercel.app/`); Backend API on Render (`https://portfolio-website-iyv7.onrender.com`).
 - **Main Entry Points**:
@@ -74,7 +76,7 @@ portfolio-website/
 | Spotlight AI Navigator | Keyboard-accessible (`⌘ K` / `Ctrl + K`) centered command palette with fuzzy search across sections, case studies, quick actions, and single-source natural language question handoff to AI Assistant | `index.html`, `styles.css`, `script.js` | `server.js` |
 | Home Section (`#home`) | Restructured sequence: 1. Hero with dual role pills & active community memberships; 2. Spotlight trigger bar (`⌘ K`); 3. Compact Proof Bento (3 numeric metrics, President's Lister, CHO role, EasyWeb PH); 4. Featured Systems (Likha Apps & Tipid App with mascot); 5. Systems Lab / CHO Workflow preview; 6. Services preview; 7. Final Client CTA banner | `index.html` | `images/tipid_mascot_full.png`, `images/likha-app.png`, `styles.css` |
 | Work & Case Studies (`#work`) | Featured Case Study cards + Interactive modal sheets for Likha Apps & Tipid App (with verified architecture flows) + Filterable Project Archive (8 category pills, initial 6 pagination, "Show More" expansion) + Milestones & Photographic Gallery with Lightbox | `index.html`, `styles.css`, `script.js` | `images/*.jpg`, `images/*.png` |
-| Systems Lab (`#lab`) | Public-safe CHO ground-up workflow milestones (Data Gathering completed, Workflow Organization in progress, System Development upcoming) + 7 categorized technical competencies + Chronological Public Build Log | `index.html`, `styles.css` | `styles.css` |
+| Systems Lab (`#lab`) | Public-safe CHO ground-up workflow milestones (Data Gathering completed, Workflow Organization completed, System Development in progress) + 7 categorized technical competencies + Chronological Public Build Log | `index.html`, `styles.css` | `styles.css` |
 | Services & Process (`#services`) | 6 structured service cards (Web Apps, Frontend, APIs, IoT, DevOps, Databases) + 4-phase Engineering Lifecycle (Discovery, Architecture, Engineering, Deploy & Scale) | `index.html` | `styles.css` |
 | Engineering Journey (`#journey`) | Career Experience timeline (CHO, DTI Region 3, EasyWeb PH, City College SF, Freelance) + Accreditations (President's Lister 2nd Sem A.Y. 2025–2026, DTI Placement, BSIT Degree, SmartBasura Lead) + Developer Communities + Peer/Client Endorsements | `index.html` | `styles.css`, `images/zan-community.png`, `images/app-builders.png` |
 | About Me (`#about`) | Background & philosophy, systems engineering approach, EasyWeb PH agency foundation, and 4 capability pillars | `index.html` | `styles.css` |

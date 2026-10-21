@@ -5,7 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="description" content="Renz.dev — Human-Centered Systems Lab by Renniel Salazar. Web Developer at City Health Office (CHO) and Founder of EasyWeb PH. I build digital systems made for real people.">
   <meta name="author" content="Renniel Salazar">
-  <meta name="theme-color" content="#F5F5F7">
+  <meta name="theme-color" content="#080C14">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Instant Theme Initializer to Prevent Flash -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Renz.dev — Human-Centered Systems Lab | Renniel Salazar">
@@ -71,6 +88,9 @@
   <!-- Apple HIG-Inspired Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Embedded GitHub Telemetry (Instant 0ms Heatmap Render) -->
+  <script id="github-contributions-data" type="application/json">[{"date":"2025-10-19","level":0,"count":0},{"date":"2025-10-20","level":1,"count":3},{"date":"2025-10-21","level":1,"count":1},{"date":"2025-10-22","level":1,"count":2},{"date":"2025-10-23","level":0,"count":0},{"date":"2025-10-24","level":0,"count":0},{"date":"2025-10-25","level":0,"count":0},{"date":"2025-10-26","level":0,"count":0},{"date":"2025-10-27","level":0,"count":0},{"date":"2025-10-28","level":0,"count":0},{"date":"2025-10-29","level":1,"count":1},{"date":"2025-10-30","level":0,"count":0},{"date":"2025-10-31","level":0,"count":0},{"date":"2025-11-01","level":0,"count":0},{"date":"2025-11-02","level":0,"count":0},{"date":"2025-11-03","level":0,"count":0},{"date":"2025-11-04","level":0,"count":0},{"date":"2025-11-05","level":0,"count":0},{"date":"2025-11-06","level":0,"count":0},{"date":"2025-11-07","level":0,"count":0},{"date":"2025-11-08","level":0,"count":0},{"date":"2025-11-09","level":0,"count":0},{"date":"2025-11-10","level":0,"count":0},{"date":"2025-11-11","level":0,"count":0},{"date":"2025-11-12","level":0,"count":0},{"date":"2025-11-13","level":0,"count":0},{"date":"2025-11-14","level":0,"count":0},{"date":"2025-11-15","level":0,"count":0},{"date":"2025-11-16","level":1,"count":1},{"date":"2025-11-17","level":0,"count":0},{"date":"2025-11-18","level":0,"count":0},{"date":"2025-11-19","level":0,"count":0},{"date":"2025-11-20","level":0,"count":0},{"date":"2025-11-21","level":0,"count":0},{"date":"2025-11-22","level":0,"count":0},{"date":"2025-11-23","level":0,"count":0},{"date":"2025-11-24","level":0,"count":0},{"date":"2025-11-25","level":0,"count":0},{"date":"2025-11-26","level":0,"count":0},{"date":"2025-11-27","level":0,"count":0},{"date":"2025-11-28","level":0,"count":0},{"date":"2025-11-29","level":0,"count":0},{"date":"2025-11-30","level":0,"count":0},{"date":"2025-12-01","level":0,"count":0},{"date":"2025-12-02","level":0,"count":0},{"date":"2025-12-03","level":0,"count":0},{"date":"2025-12-04","level":0,"count":0},{"date":"2025-12-05","level":0,"count":0},{"date":"2025-12-06","level":0,"count":0},{"date":"2025-12-07","level":0,"count":0},{"date":"2025-12-08","level":0,"count":0},{"date":"2025-12-09","level":0,"count":0},{"date":"2025-12-10","level":0,"count":0},{"date":"2025-12-11","level":0,"count":0},{"date":"2025-12-12","level":0,"count":0},{"date":"2025-12-13","level":0,"count":0},{"date":"2025-12-14","level":0,"count":0},{"date":"2025-12-15","level":0,"count":0},{"date":"2025-12-16","level":0,"count":0},{"date":"2025-12-17","level":0,"count":0},{"date":"2025-12-18","level":0,"count":0},{"date":"2025-12-19","level":0,"count":0},{"date":"2025-12-20","level":0,"count":0},{"date":"2025-12-21","level":0,"count":0},{"date":"2025-12-22","level":0,"count":0},{"date":"2025-12-23","level":0,"count":0},{"date":"2025-12-24","level":0,"count":0},{"date":"2025-12-25","level":0,"count":0},{"date":"2025-12-26","level":0,"count":0},{"date":"2025-12-27","level":0,"count":0},{"date":"2025-12-28","level":0,"count":0},{"date":"2025-12-29","level":0,"count":0},{"date":"2025-12-30","level":0,"count":0},{"date":"2025-12-31","level":0,"count":0},{"date":"2026-01-01","level":0,"count":0},{"date":"2026-01-02","level":0,"count":0},{"date":"2026-01-03","level":0,"count":0},{"date":"2026-01-04","level":0,"count":0},{"date":"2026-01-05","level":0,"count":0},{"date":"2026-01-06","level":0,"count":0},{"date":"2026-01-07","level":0,"count":0},{"date":"2026-01-08","level":0,"count":0},{"date":"2026-01-09","level":0,"count":0},{"date":"2026-01-10","level":0,"count":0},{"date":"2026-01-11","level":1,"count":1},{"date":"2026-01-12","level":0,"count":0},{"date":"2026-01-13","level":0,"count":0},{"date":"2026-01-14","level":0,"count":0},{"date":"2026-01-15","level":0,"count":0},{"date":"2026-01-16","level":0,"count":0},{"date":"2026-01-17","level":0,"count":0},{"date":"2026-01-18","level":0,"count":0},{"date":"2026-01-19","level":0,"count":0},{"date":"2026-01-20","level":0,"count":0},{"date":"2026-01-21","level":0,"count":0},{"date":"2026-01-22","level":0,"count":0},{"date":"2026-01-23","level":1,"count":1},{"date":"2026-01-24","level":0,"count":0},{"date":"2026-01-25","level":1,"count":2},{"date":"2026-01-26","level":0,"count":0},{"date":"2026-01-27","level":1,"count":8},{"date":"2026-01-28","level":1,"count":6},{"date":"2026-01-29","level":0,"count":0},{"date":"2026-01-30","level":0,"count":0},{"date":"2026-01-31","level":0,"count":0},{"date":"2026-02-01","level":0,"count":0},{"date":"2026-02-02","level":0,"count":0},{"date":"2026-02-03","level":0,"count":0},{"date":"2026-02-04","level":0,"count":0},{"date":"2026-02-05","level":0,"count":0},{"date":"2026-02-06","level":0,"count":0},{"date":"2026-02-07","level":0,"count":0},{"date":"2026-02-08","level":0,"count":0},{"date":"2026-02-09","level":0,"count":0},{"date":"2026-02-10","level":0,"count":0},{"date":"2026-02-11","level":0,"count":0},{"date":"2026-02-12","level":0,"count":0},{"date":"2026-02-13","level":0,"count":0},{"date":"2026-02-14","level":0,"count":0},{"date":"2026-02-15","level":0,"count":0},{"date":"2026-02-16","level":0,"count":0},{"date":"2026-02-17","level":0,"count":0},{"date":"2026-02-18","level":0,"count":0},{"date":"2026-02-19","level":1,"count":1},{"date":"2026-02-20","level":0,"count":0},{"date":"2026-02-21","level":0,"count":0},{"date":"2026-02-22","level":0,"count":0},{"date":"2026-02-23","level":0,"count":0},{"date":"2026-02-24","level":0,"count":0},{"date":"2026-02-25","level":0,"count":0},{"date":"2026-02-26","level":0,"count":0},{"date":"2026-02-27","level":0,"count":0},{"date":"2026-02-28","level":0,"count":0},{"date":"2026-03-01","level":0,"count":0},{"date":"2026-03-02","level":0,"count":0},{"date":"2026-03-03","level":0,"count":0},{"date":"2026-03-04","level":0,"count":0},{"date":"2026-03-05","level":0,"count":0},{"date":"2026-03-06","level":0,"count":0},{"date":"2026-03-07","level":0,"count":0},{"date":"2026-03-08","level":0,"count":0},{"date":"2026-03-09","level":0,"count":0},{"date":"2026-03-10","level":0,"count":0},{"date":"2026-03-11","level":0,"count":0},{"date":"2026-03-12","level":0,"count":0},{"date":"2026-03-13","level":0,"count":0},{"date":"2026-03-14","level":0,"count":0},{"date":"2026-03-15","level":0,"count":0},{"date":"2026-03-16","level":0,"count":0},{"date":"2026-03-17","level":0,"count":0},{"date":"2026-03-18","level":0,"count":0},{"date":"2026-03-19","level":1,"count":2},{"date":"2026-03-20","level":1,"count":2},{"date":"2026-03-21","level":0,"count":0},{"date":"2026-03-22","level":0,"count":0},{"date":"2026-03-23","level":0,"count":0},{"date":"2026-03-24","level":0,"count":0},{"date":"2026-03-25","level":0,"count":0},{"date":"2026-03-26","level":0,"count":0},{"date":"2026-03-27","level":0,"count":0},{"date":"2026-03-28","level":0,"count":0},{"date":"2026-03-29","level":0,"count":0},{"date":"2026-03-30","level":0,"count":0},{"date":"2026-03-31","level":0,"count":0},{"date":"2026-04-01","level":0,"count":0},{"date":"2026-04-02","level":1,"count":3},{"date":"2026-04-03","level":1,"count":2},{"date":"2026-04-04","level":1,"count":4},{"date":"2026-04-05","level":0,"count":0},{"date":"2026-04-06","level":1,"count":3},{"date":"2026-04-07","level":0,"count":0},{"date":"2026-04-08","level":0,"count":0},{"date":"2026-04-09","level":0,"count":0},{"date":"2026-04-10","level":0,"count":0},{"date":"2026-04-11","level":0,"count":0},{"date":"2026-04-12","level":1,"count":1},{"date":"2026-04-13","level":1,"count":2},{"date":"2026-04-14","level":1,"count":4},{"date":"2026-04-15","level":1,"count":6},{"date":"2026-04-16","level":0,"count":0},{"date":"2026-04-17","level":0,"count":0},{"date":"2026-04-18","level":0,"count":0},{"date":"2026-04-19","level":0,"count":0},{"date":"2026-04-20","level":1,"count":7},{"date":"2026-04-21","level":0,"count":0},{"date":"2026-04-22","level":0,"count":0},{"date":"2026-04-23","level":2,"count":14},{"date":"2026-04-24","level":1,"count":3},{"date":"2026-04-25","level":0,"count":0},{"date":"2026-04-26","level":1,"count":3},{"date":"2026-04-27","level":0,"count":0},{"date":"2026-04-28","level":2,"count":10},{"date":"2026-04-29","level":3,"count":21},{"date":"2026-04-30","level":1,"count":5},{"date":"2026-05-01","level":3,"count":24},{"date":"2026-05-02","level":0,"count":0},{"date":"2026-05-03","level":0,"count":0},{"date":"2026-05-04","level":0,"count":0},{"date":"2026-05-05","level":0,"count":0},{"date":"2026-05-06","level":0,"count":0},{"date":"2026-05-07","level":0,"count":0},{"date":"2026-05-08","level":0,"count":0},{"date":"2026-05-09","level":2,"count":12},{"date":"2026-05-10","level":4,"count":35},{"date":"2026-05-11","level":1,"count":3},{"date":"2026-05-12","level":1,"count":5},{"date":"2026-05-13","level":1,"count":1},{"date":"2026-05-14","level":1,"count":1},{"date":"2026-05-15","level":1,"count":2},{"date":"2026-05-16","level":0,"count":0},{"date":"2026-05-17","level":0,"count":0},{"date":"2026-05-18","level":0,"count":0},{"date":"2026-05-19","level":0,"count":0},{"date":"2026-05-20","level":0,"count":0},{"date":"2026-05-21","level":0,"count":0},{"date":"2026-05-22","level":0,"count":0},{"date":"2026-05-23","level":0,"count":0},{"date":"2026-05-24","level":0,"count":0},{"date":"2026-05-25","level":0,"count":0},{"date":"2026-05-26","level":0,"count":0},{"date":"2026-05-27","level":0,"count":0},{"date":"2026-05-28","level":0,"count":0},{"date":"2026-05-29","level":0,"count":0},{"date":"2026-05-30","level":0,"count":0},{"date":"2026-05-31","level":0,"count":0},{"date":"2026-06-01","level":0,"count":0},{"date":"2026-06-02","level":0,"count":0},{"date":"2026-06-03","level":0,"count":0},{"date":"2026-06-04","level":0,"count":0},{"date":"2026-06-05","level":0,"count":0},{"date":"2026-06-06","level":0,"count":0},{"date":"2026-06-07","level":0,"count":0},{"date":"2026-06-08","level":0,"count":0},{"date":"2026-06-09","level":0,"count":0},{"date":"2026-06-10","level":0,"count":0},{"date":"2026-06-11","level":0,"count":0},{"date":"2026-06-12","level":0,"count":0},{"date":"2026-06-13","level":0,"count":0},{"date":"2026-06-14","level":0,"count":0},{"date":"2026-06-15","level":0,"count":0},{"date":"2026-06-16","level":1,"count":2},{"date":"2026-06-17","level":0,"count":0},{"date":"2026-06-18","level":0,"count":0},{"date":"2026-06-19","level":0,"count":0},{"date":"2026-06-20","level":0,"count":0},{"date":"2026-06-21","level":0,"count":0},{"date":"2026-06-22","level":0,"count":0},{"date":"2026-06-23","level":0,"count":0},{"date":"2026-06-24","level":0,"count":0},{"date":"2026-06-25","level":0,"count":0},{"date":"2026-06-26","level":0,"count":0},{"date":"2026-06-27","level":0,"count":0},{"date":"2026-06-28","level":0,"count":0},{"date":"2026-06-29","level":0,"count":0},{"date":"2026-06-30","level":0,"count":0},{"date":"2026-07-01","level":0,"count":0},{"date":"2026-07-02","level":0,"count":0},{"date":"2026-07-03","level":0,"count":0},{"date":"2026-07-04","level":0,"count":0},{"date":"2026-07-05","level":0,"count":0},{"date":"2026-07-06","level":0,"count":0},{"date":"2026-07-07","level":0,"count":0},{"date":"2026-07-08","level":0,"count":0},{"date":"2026-07-09","level":0,"count":0},{"date":"2026-07-10","level":0,"count":0},{"date":"2026-07-11","level":0,"count":0},{"date":"2026-07-12","level":0,"count":0},{"date":"2026-07-13","level":0,"count":0},{"date":"2026-07-14","level":0,"count":0},{"date":"2026-07-15","level":0,"count":0},{"date":"2026-07-16","level":0,"count":0},{"date":"2026-07-17","level":0,"count":0},{"date":"2026-07-18","level":0,"count":0},{"date":"2026-07-19","level":0,"count":0},{"date":"2026-07-20","level":0,"count":0},{"date":"2026-07-21","level":0,"count":0},{"date":"2026-07-22","level":0,"count":0},{"date":"2026-07-23","level":0,"count":0},{"date":"2026-07-24","level":0,"count":0},{"date":"2026-07-25","level":0,"count":0},{"date":"2026-07-26","level":0,"count":0},{"date":"2026-07-27","level":0,"count":0},{"date":"2026-07-28","level":0,"count":0},{"date":"2026-07-29","level":0,"count":0},{"date":"2026-07-30","level":0,"count":0},{"date":"2026-07-31","level":0,"count":0},{"date":"2026-08-01","level":0,"count":0},{"date":"2026-08-02","level":1,"count":1},{"date":"2026-08-03","level":1,"count":4},{"date":"2026-08-04","level":1,"count":2},{"date":"2026-08-05","level":1,"count":7},{"date":"2026-08-06","level":1,"count":8},{"date":"2026-08-07","level":0,"count":0},{"date":"2026-08-08","level":0,"count":0},{"date":"2026-08-09","level":0,"count":0},{"date":"2026-08-10","level":1,"count":1},{"date":"2026-08-11","level":0,"count":0},{"date":"2026-08-12","level":0,"count":0},{"date":"2026-08-13","level":0,"count":0},{"date":"2026-08-14","level":0,"count":0},{"date":"2026-08-15","level":0,"count":0},{"date":"2026-08-16","level":0,"count":0},{"date":"2026-08-17","level":0,"count":0},{"date":"2026-08-18","level":1,"count":2},{"date":"2026-08-19","level":0,"count":0},{"date":"2026-08-20","level":0,"count":0},{"date":"2026-08-21","level":0,"count":0},{"date":"2026-08-22","level":0,"count":0},{"date":"2026-08-23","level":0,"count":0},{"date":"2026-08-24","level":0,"count":0},{"date":"2026-08-25","level":0,"count":0},{"date":"2026-08-26","level":0,"count":0},{"date":"2026-08-27","level":1,"count":1},{"date":"2026-08-28","level":1,"count":3},{"date":"2026-08-29","level":0,"count":0},{"date":"2026-08-30","level":1,"count":8},{"date":"2026-08-31","level":2,"count":13},{"date":"2026-09-01","level":2,"count":11},{"date":"2026-09-02","level":2,"count":14},{"date":"2026-09-03","level":0,"count":0},{"date":"2026-09-04","level":0,"count":0},{"date":"2026-09-05","level":0,"count":0},{"date":"2026-09-06","level":0,"count":0},{"date":"2026-09-07","level":0,"count":0},{"date":"2026-09-08","level":1,"count":1},{"date":"2026-09-09","level":1,"count":5},{"date":"2026-09-10","level":0,"count":0},{"date":"2026-09-11","level":0,"count":0},{"date":"2026-09-12","level":0,"count":0},{"date":"2026-09-13","level":0,"count":0},{"date":"2026-09-14","level":0,"count":0},{"date":"2026-09-15","level":1,"count":1},{"date":"2026-09-16","level":0,"count":0},{"date":"2026-09-17","level":1,"count":2},{"date":"2026-09-18","level":0,"count":0},{"date":"2026-09-19","level":0,"count":0},{"date":"2026-09-20","level":1,"count":1},{"date":"2026-09-21","level":0,"count":0},{"date":"2026-09-22","level":0,"count":0},{"date":"2026-09-23","level":0,"count":0},{"date":"2026-09-24","level":0,"count":0},{"date":"2026-09-25","level":0,"count":0},{"date":"2026-09-26","level":0,"count":0},{"date":"2026-09-27","level":1,"count":2},{"date":"2026-09-28","level":0,"count":0},{"date":"2026-09-29","level":0,"count":0},{"date":"2026-09-30","level":0,"count":0},{"date":"2026-10-01","level":0,"count":0},{"date":"2026-10-02","level":0,"count":0},{"date":"2026-10-03","level":0,"count":0},{"date":"2026-10-04","level":0,"count":0},{"date":"2026-10-05","level":0,"count":0},{"date":"2026-10-06","level":0,"count":0},{"date":"2026-10-07","level":0,"count":0},{"date":"2026-10-08","level":0,"count":0},{"date":"2026-10-09","level":0,"count":0},{"date":"2026-10-10","level":0,"count":0},{"date":"2026-10-11","level":0,"count":0},{"date":"2026-10-12","level":0,"count":0},{"date":"2026-10-13","level":0,"count":0},{"date":"2026-10-14","level":0,"count":0},{"date":"2026-10-15","level":1,"count":1},{"date":"2026-10-16","level":0,"count":0},{"date":"2026-10-17","level":0,"count":0},{"date":"2026-10-18","level":0,"count":0},{"date":"2026-10-19","level":0,"count":0},{"date":"2026-10-20","level":0,"count":0},{"date":"2026-10-21","level":0,"count":0}]</script>
+
   <!-- Application Logic -->
   <script src="script.js" defer></script>
 </head>
@@ -87,9 +107,15 @@
         <span class="mobile-tagline">Systems Lab</span>
       </div>
     </a>
-    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+    <div class="mobile-header-actions">
+      <button class="theme-toggle-btn" id="mobile-theme-toggle" aria-label="Toggle dark or light theme" title="Toggle theme">
+        <i class="fa-solid fa-moon theme-icon-dark" aria-hidden="true"></i>
+        <i class="fa-solid fa-sun theme-icon-light" aria-hidden="true"></i>
+      </button>
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
   </header>
 
   <!-- Sidebar Backdrop Overlay for Mobile -->
@@ -113,9 +139,15 @@
           <span class="profile-badge"><span class="profile-badge-dot"></span> Available for work</span>
         </div>
       </div>
-      <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-controls="sidebar" aria-expanded="true" aria-label="Collapse sidebar" title="Collapse sidebar">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
+      <div class="sidebar-header-actions">
+        <button class="theme-toggle-btn desktop-theme-toggle" id="desktop-theme-toggle" aria-label="Toggle dark or light theme" title="Toggle theme">
+          <i class="fa-solid fa-moon theme-icon-dark" aria-hidden="true"></i>
+          <i class="fa-solid fa-sun theme-icon-light" aria-hidden="true"></i>
+        </button>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-controls="sidebar" aria-expanded="true" aria-label="Collapse sidebar" title="Collapse sidebar">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Navigation Menu (7 Curated Destinations with Gliding Capsule) -->
@@ -198,7 +230,7 @@
           </h1>
 
           <p class="hero-bio">
-            Web Developer at City Health Office (CHO) and Founder &amp; CEO of EasyWeb PH. I design and engineer practical web applications, cloud backends, and hardware-integrated IoT systems with a focus on human simplicity, speed, and dependability.
+            Web Developer at City Health Office (CHO) and Founder &amp; CEO of EasyWeb PH. Grounded in integrity, discipline, and purpose, I engineer scalable web applications, mission-critical workflow systems, and hardware-integrated IoT solutions with an uncompromising focus on human simplicity, speed, and dependability.
           </p>
 
           <div class="btn-row">
@@ -288,7 +320,7 @@
               <span class="bento-status-pill"><span class="bento-status-dot"></span> Active</span>
             </div>
             <div class="bento-title">City Health Office (CHO)</div>
-            <div class="bento-subtitle">Web Developer · Ground-up System Workflow</div>
+            <div class="bento-subtitle">Web Developer · Ground-up System Development</div>
           </div>
 
           <!-- Bento Card: Startup Agency -->
@@ -299,6 +331,140 @@
             </div>
             <div class="bento-title">EasyWeb PH</div>
             <div class="bento-subtitle">Founder &amp; CEO · Digital Systems Agency</div>
+          </div>
+        </div>
+
+        <!-- Modern SaaS Live GitHub Telemetry & Interactive Shipping Heatmap -->
+        <div class="github-telemetry-card stagger-2" id="github-telemetry-card">
+          <div class="telemetry-card-glow" aria-hidden="true"></div>
+
+          <div class="telemetry-header">
+            <div class="telemetry-header-info">
+              <div class="telemetry-status-pill">
+                <span class="telemetry-pulse-dot" aria-hidden="true"></span>
+                <span class="telemetry-status-text">GitHub Telemetry · Live Shipping Activity</span>
+              </div>
+              <h2 class="telemetry-title">Engineering Velocity</h2>
+              <p class="telemetry-subtitle">Verified public shipping telemetry and repository activity from <a href="https://github.com/renniel120921" target="_blank" rel="noopener noreferrer" class="telemetry-gh-handle"><i class="fa-brands fa-github"></i> @renniel120921</a></p>
+            </div>
+            <div class="telemetry-header-actions">
+              <a href="https://github.com/renniel120921" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-secondary telemetry-profile-btn" aria-label="Visit Renniel's GitHub Profile">
+                <i class="fa-brands fa-github"></i> GitHub Profile <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- SaaS Telemetry Metrics Grid -->
+          <div class="telemetry-metrics-grid">
+            <div class="telemetry-metric-item">
+              <span class="telemetry-metric-num" id="telemetry-contrib-count">292</span>
+              <span class="telemetry-metric-label">Contributions in 2026</span>
+              <span class="telemetry-metric-trend"><i class="fa-solid fa-arrow-trend-up"></i> Last 365 Days</span>
+            </div>
+            <div class="telemetry-metric-item">
+              <span class="telemetry-metric-num">9</span>
+              <span class="telemetry-metric-label">Public Repositories</span>
+              <span class="telemetry-metric-trend"><i class="fa-solid fa-code-fork"></i> Production &amp; Open Source</span>
+            </div>
+            <div class="telemetry-metric-item">
+              <span class="telemetry-metric-num">57</span>
+              <span class="telemetry-metric-label">Active Shipping Days</span>
+              <span class="telemetry-metric-trend"><i class="fa-solid fa-fire"></i> 15.5% Calendar Frequency</span>
+            </div>
+            <div class="telemetry-metric-item">
+              <span class="telemetry-metric-num">35</span>
+              <span class="telemetry-metric-label">Peak Velocity (Commits/Day)</span>
+              <span class="telemetry-metric-trend"><i class="fa-solid fa-bolt"></i> May 10, 2026 Sprint</span>
+            </div>
+          </div>
+
+          <!-- Interactive 52-Week Contribution Heatmap -->
+          <div class="telemetry-heatmap-wrapper">
+            <div class="telemetry-heatmap-scroll" id="telemetry-heatmap-container">
+              <div class="heatmap-months-row" id="heatmap-months-row" aria-hidden="true"></div>
+              <div class="heatmap-body">
+                <div class="heatmap-days-legend" aria-hidden="true">
+                  <span>Mon</span>
+                  <span>Wed</span>
+                  <span>Fri</span>
+                </div>
+                <div class="heatmap-grid" id="github-heatmap-grid" role="region" aria-label="52-week GitHub contribution heatmap">
+                  <!-- Generated dynamically via script.js from data/github-contributions.json -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Heatmap Tooltip Popover -->
+            <div class="heatmap-tooltip" id="heatmap-tooltip" role="tooltip" aria-hidden="true"></div>
+
+            <!-- Heatmap Legend & Footer -->
+            <div class="heatmap-footer">
+              <span class="heatmap-footer-note"><i class="fa-solid fa-circle-check"></i> Verified via GitHub GraphQL public commit activity</span>
+              <div class="heatmap-legend" aria-hidden="true">
+                <span class="legend-label">Less</span>
+                <span class="legend-swatch level-0"></span>
+                <span class="legend-swatch level-1"></span>
+                <span class="legend-swatch level-2"></span>
+                <span class="legend-swatch level-3"></span>
+                <span class="legend-swatch level-4"></span>
+                <span class="legend-label">More</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- All 9 GitHub Repositories Quick-Launch Shelf -->
+          <div class="telemetry-repo-shelf">
+            <div class="repo-shelf-header">
+              <span class="repo-shelf-title"><i class="fa-solid fa-cubes-stacked"></i> All 9 Repositories Shipped</span>
+              <a href="#work" class="repo-shelf-more">Filter by GitHub in Archive <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="repo-shelf-grid">
+              <a href="https://github.com/renniel120921/Expenses-Tracker" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot js-dot"></span>
+                <span class="repo-pill-name">Expenses-Tracker</span>
+                <span class="repo-pill-badge">PWA</span>
+              </a>
+              <a href="https://github.com/renniel120921/PWA-Storeapp" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot ts-dot"></span>
+                <span class="repo-pill-name">PWA-Storeapp</span>
+                <span class="repo-pill-badge">Next.js 16</span>
+              </a>
+              <a href="https://github.com/renniel120921/portfolio-website" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot js-dot"></span>
+                <span class="repo-pill-name">portfolio-website</span>
+                <span class="repo-pill-badge">Renz.dev</span>
+              </a>
+              <a href="https://github.com/renniel120921/EasyThesis" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot py-dot"></span>
+                <span class="repo-pill-name">EasyThesis</span>
+                <span class="repo-pill-badge">AI Assistant</span>
+              </a>
+              <a href="https://github.com/renniel120921/contract-generator" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot js-dot"></span>
+                <span class="repo-pill-name">contract-generator</span>
+                <span class="repo-pill-badge">Legal Tech</span>
+              </a>
+              <a href="https://github.com/renniel120921/photobooth" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot html-dot"></span>
+                <span class="repo-pill-name">photobooth</span>
+                <span class="repo-pill-badge">Camera PWA</span>
+              </a>
+              <a href="https://github.com/renniel120921/coffeeshop" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot css-dot"></span>
+                <span class="repo-pill-name">coffeeshop</span>
+                <span class="repo-pill-badge">Branding</span>
+              </a>
+              <a href="https://github.com/renniel120921/business-website" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot html-dot"></span>
+                <span class="repo-pill-name">business-website</span>
+                <span class="repo-pill-badge">Corporate</span>
+              </a>
+              <a href="https://github.com/renniel120921/Mini-project" target="_blank" rel="noopener noreferrer" class="repo-shelf-pill">
+                <span class="repo-lang-dot js-dot"></span>
+                <span class="repo-pill-name">Mini-project</span>
+                <span class="repo-pill-badge">Frontend Lab</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -416,7 +582,7 @@
             </a>
           </div>
           <p class="cho-card-desc">
-            Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.
+            Working on the development and enhancement of a new system from the ground up. Data gathering and workflow organization are complete, and active system development is now underway.
           </p>
           <div class="cho-workflow-track">
             <div class="cho-track-step completed">
@@ -428,21 +594,21 @@
                 <span class="step-name">Data Gathering</span>
               </div>
             </div>
+            <div class="cho-track-step completed">
+              <div class="step-indicator">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <div class="step-content">
+                <span class="step-status">Completed</span>
+                <span class="step-name">Workflow Organization</span>
+              </div>
+            </div>
             <div class="cho-track-step active">
               <div class="step-indicator">
                 <span class="step-pulse"></span>
               </div>
               <div class="step-content">
                 <span class="step-status">In Progress</span>
-                <span class="step-name">Workflow Organization</span>
-              </div>
-            </div>
-            <div class="cho-track-step upcoming">
-              <div class="step-indicator">
-                <i class="fa-solid fa-ellipsis"></i>
-              </div>
-              <div class="step-content">
-                <span class="step-status">Upcoming</span>
                 <span class="step-name">System Development</span>
               </div>
             </div>
@@ -611,8 +777,9 @@
             <span class="archive-counter" id="archive-count-badge">Showing 6 of 13 Projects</span>
           </div>
           <div class="archive-filter-tabs" role="tablist" aria-label="Filter projects by category">
-            <button type="button" class="archive-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (13)</button>
+            <button type="button" class="archive-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (17)</button>
             <button type="button" class="archive-filter-btn" data-filter="featured" role="tab" aria-selected="false">Featured</button>
+            <button type="button" class="archive-filter-btn" data-filter="github" role="tab" aria-selected="false">GitHub Repos (9)</button>
             <button type="button" class="archive-filter-btn" data-filter="client" role="tab" aria-selected="false">Client Work</button>
             <button type="button" class="archive-filter-btn" data-filter="pwa" role="tab" aria-selected="false">PWA</button>
             <button type="button" class="archive-filter-btn" data-filter="internal" role="tab" aria-selected="false">Internal Systems</button>
@@ -625,7 +792,7 @@
         <!-- Filterable Project Cards Grid -->
         <div class="projects-grid stagger-2" id="project-archive-grid">
           <!-- 1: Likha Apps -->
-          <div class="project-card archive-item" data-categories="featured pwa opensource">
+          <div class="project-card archive-item" data-categories="featured pwa opensource github">
             <div class="browser-frame">
               <div class="browser-header">
                 <span class="browser-dot"></span>
@@ -661,11 +828,14 @@
               <a href="https://likha-app-web.vercel.app" target="_blank" rel="noopener noreferrer">
                 <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
+              <a href="https://github.com/renniel120921/PWA-Storeapp" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
+              </a>
             </div>
           </div>
 
           <!-- 2: Tipid App -->
-          <div class="project-card archive-item" data-categories="featured pwa">
+          <div class="project-card archive-item" data-categories="featured pwa github">
             <div class="browser-frame">
               <div class="browser-header">
                 <span class="browser-dot"></span>
@@ -700,6 +870,9 @@
               </button>
               <a href="https://tipid-tracker-nu.vercel.app" target="_blank" rel="noopener noreferrer">
                 <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/renniel120921/Expenses-Tracker" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
               </a>
             </div>
           </div>
@@ -743,7 +916,7 @@
           </div>
 
           <!-- 4: EasyThesis Solution -->
-          <div class="project-card archive-item" data-categories="featured ai">
+          <div class="project-card archive-item" data-categories="featured ai github">
             <div class="browser-frame">
               <div class="browser-header">
                 <span class="browser-dot"></span>
@@ -774,6 +947,9 @@
             <div class="project-footer">
               <a href="https://easy-thesis-solution.vercel.app/" target="_blank" rel="noopener noreferrer">
                 <span>View Live Site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/renniel120921/EasyThesis" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
               </a>
             </div>
           </div>
@@ -854,7 +1030,7 @@
           </div>
 
           <!-- 7: CoffeeShop -->
-          <div class="project-card archive-item" data-categories="client">
+          <div class="project-card archive-item" data-categories="client github">
             <div class="browser-frame">
               <div class="browser-header">
                 <span class="browser-dot"></span>
@@ -882,11 +1058,14 @@
               <a href="https://coffeeshop-mu.vercel.app/" target="_blank" rel="noopener noreferrer">
                 <span>View Live Site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
+              <a href="https://github.com/renniel120921/coffeeshop" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
+              </a>
             </div>
           </div>
 
           <!-- 8: Renz.dev -->
-          <div class="project-card archive-item" data-categories="featured">
+          <div class="project-card archive-item" data-categories="featured github">
             <div class="project-top">
               <div class="project-logo-box"><i class="fa-solid fa-user-astronaut"></i></div>
               <span class="project-badge">Live</span>
@@ -902,6 +1081,9 @@
             <div class="project-footer">
               <a href="https://renzdev-portfolio.vercel.app/" target="_blank" rel="noopener">
                 <span>View Live Site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/renniel120921/portfolio-website" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
               </a>
             </div>
           </div>
@@ -969,22 +1151,27 @@
             </div>
           </div>
 
-          <!-- 12: INC AOFLAH -->
-          <div class="project-card archive-item" data-categories="client">
+          <!-- 12: INC AOFLAH Portal -->
+          <div class="project-card archive-item" data-categories="client community">
             <div class="project-top">
-              <div class="project-logo-box"><i class="fa-solid fa-people-group"></i></div>
-              <span class="project-badge">Live</span>
+              <div class="project-logo-box"><i class="fa-solid fa-church"></i></div>
+              <span class="project-badge honor"><i class="fa-solid fa-heart"></i> INC Community</span>
             </div>
-            <div class="project-role">Organization Website · Community</div>
-            <h4 class="project-title">INC AOFLAH</h4>
-            <p class="project-desc">A community portal designed for event coordination, announcements, activity schedules, and institutional identity.</p>
+            <div class="project-role">Lead Web Architect · Church Community Platform</div>
+            <h4 class="project-title">INC AOFLAH Portal</h4>
+            <p class="project-desc">A centralized digital community portal engineered for the Iglesia Ni Cristo (INC) AOFLAH district to streamline institutional announcements, activity schedules, event logistics, and youth ministry coordination.</p>
+            <div class="project-breakdown">
+              <div class="breakdown-row"><span class="breakdown-lbl">Purpose:</span><span class="breakdown-val">District-wide event schedules and announcements for brethren.</span></div>
+              <div class="breakdown-row"><span class="breakdown-lbl">Key Tech:</span><span class="breakdown-val">HTML5, CSS3, Modern JavaScript, Cloud Deployment, Vercel</span></div>
+            </div>
             <div class="project-tags">
+              <span class="tag-pill">Iglesia Ni Cristo</span>
               <span class="tag-pill">Community</span>
-              <span class="tag-pill">Organization</span>
-              <span class="tag-pill">Portal</span>
+              <span class="tag-pill">Coordination</span>
+              <span class="tag-pill">Live Production</span>
             </div>
             <div class="project-footer">
-              <a href="https://inc-aoflah.vercel.app/" target="_blank" rel="noopener">
+              <a href="https://inc-aoflah.vercel.app/" target="_blank" rel="noopener noreferrer">
                 <span>View Live Site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
             </div>
@@ -1007,6 +1194,116 @@
             <div class="project-footer">
               <a href="https://bloom-bites.vercel.app/" target="_blank" rel="noopener">
                 <span>View Live Site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 14: Contract Generator -->
+          <div class="project-card archive-item" data-categories="client internal github opensource">
+            <div class="project-top">
+              <div class="project-logo-box"><i class="fa-solid fa-file-contract"></i></div>
+              <span class="project-badge">Open Source</span>
+            </div>
+            <div class="project-role">Creator &amp; Architect · Legal Tech PWA</div>
+            <h4 class="project-title">Contract Generator</h4>
+            <p class="project-desc">A client-ready legal contract and agreement generator for freelancers and micro-agencies. Generates customized contracts with terms, milestone payments, and print/export readiness.</p>
+            <div class="project-breakdown">
+              <div class="breakdown-row"><span class="breakdown-lbl">Purpose:</span><span class="breakdown-val">Automating freelance client contracts and payment terms.</span></div>
+              <div class="breakdown-row"><span class="breakdown-lbl">Key Tech:</span><span class="breakdown-val">Vanilla JS (ES6+), HTML5, CSS3, DOM Print APIs</span></div>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">JavaScript</span>
+              <span class="tag-pill">Legal Tech</span>
+              <span class="tag-pill">Contracts</span>
+              <span class="tag-pill">Open Source</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://contract-generator-orcin.vercel.app" target="_blank" rel="noopener noreferrer">
+                <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/renniel120921/contract-generator" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i> <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 15: Photobooth PWA -->
+          <div class="project-card archive-item" data-categories="internal github opensource">
+            <div class="project-top">
+              <div class="project-logo-box"><i class="fa-solid fa-camera-retro"></i></div>
+              <span class="project-badge">Interactive</span>
+            </div>
+            <div class="project-role">Frontend Engineer · MediaDevices &amp; Canvas</div>
+            <h4 class="project-title">Photobooth</h4>
+            <p class="project-desc">An interactive browser camera photobooth web application utilizing the HTML5 MediaDevices camera API with instant multi-shot photo strip captures, vintage filters, and one-click photo export.</p>
+            <div class="project-breakdown">
+              <div class="breakdown-row"><span class="breakdown-lbl">Purpose:</span><span class="breakdown-val">In-browser photo-strip captures with instant canvas export.</span></div>
+              <div class="breakdown-row"><span class="breakdown-lbl">Key Tech:</span><span class="breakdown-val">MediaDevices API, Canvas API, Modern JavaScript</span></div>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">MediaDevices</span>
+              <span class="tag-pill">Canvas API</span>
+              <span class="tag-pill">Camera</span>
+              <span class="tag-pill">JavaScript</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/renniel120921/photobooth" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i> <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 16: Business Website -->
+          <div class="project-card archive-item" data-categories="client github">
+            <div class="project-top">
+              <div class="project-logo-box"><i class="fa-solid fa-briefcase"></i></div>
+              <span class="project-badge">Live</span>
+            </div>
+            <div class="project-role">Web Developer · Corporate Platform</div>
+            <h4 class="project-title">Business Website</h4>
+            <p class="project-desc">A multi-page corporate business website featuring interactive service pricing calculators, modern typography, customer inquiry forms, and responsive mobile-first UI.</p>
+            <div class="project-breakdown">
+              <div class="breakdown-row"><span class="breakdown-lbl">Purpose:</span><span class="breakdown-val">High-conversion commercial presence for small enterprises.</span></div>
+              <div class="breakdown-row"><span class="breakdown-lbl">Key Tech:</span><span class="breakdown-val">HTML5, CSS3, Modern JavaScript, Vercel</span></div>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Corporate</span>
+              <span class="tag-pill">Responsive</span>
+              <span class="tag-pill">UI/UX</span>
+              <span class="tag-pill">Vercel</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://business-website-two-mocha.vercel.app" target="_blank" rel="noopener noreferrer">
+                <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/renniel120921/business-website" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i> <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 17: Mini-project (Frontend Lab) -->
+          <div class="project-card archive-item" data-categories="opensource github">
+            <div class="project-top">
+              <div class="project-logo-box"><i class="fa-solid fa-flask-vial"></i></div>
+              <span class="project-badge">Open Source</span>
+            </div>
+            <div class="project-role">Frontend Explorer · UI Component Lab</div>
+            <h4 class="project-title">Mini-project</h4>
+            <p class="project-desc">A repository of frontend web experiments and interactive UI components showcasing vanilla DOM manipulation, CSS micro-interactions, responsive layouts, and utility algorithms.</p>
+            <div class="project-breakdown">
+              <div class="breakdown-row"><span class="breakdown-lbl">Purpose:</span><span class="breakdown-val">Rapid prototyping and vanilla JavaScript experimentation.</span></div>
+              <div class="breakdown-row"><span class="breakdown-lbl">Key Tech:</span><span class="breakdown-val">Vanilla JS, CSS Animations, Modern DOM APIs</span></div>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Vanilla JS</span>
+              <span class="tag-pill">UI Experiments</span>
+              <span class="tag-pill">Algorithms</span>
+              <span class="tag-pill">Open Source</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/renniel120921/Mini-project" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i> <span>GitHub</span>
               </a>
             </div>
           </div>
@@ -1108,7 +1405,7 @@
             </span>
           </div>
           <p class="cho-card-desc">
-            Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.
+            Working on the development and enhancement of a new system from the ground up. Data gathering and workflow organization are complete, and active system development is now underway.
           </p>
           <div class="cho-workflow-track">
             <div class="cho-track-step completed">
@@ -1120,21 +1417,21 @@
                 <span class="step-name">Data Gathering</span>
               </div>
             </div>
+            <div class="cho-track-step completed">
+              <div class="step-indicator">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <div class="step-content">
+                <span class="step-status">Completed</span>
+                <span class="step-name">Workflow Organization</span>
+              </div>
+            </div>
             <div class="cho-track-step active">
               <div class="step-indicator">
                 <span class="step-pulse"></span>
               </div>
               <div class="step-content">
                 <span class="step-status">In Progress</span>
-                <span class="step-name">Workflow Organization</span>
-              </div>
-            </div>
-            <div class="cho-track-step upcoming">
-              <div class="step-indicator">
-                <i class="fa-solid fa-ellipsis"></i>
-              </div>
-              <div class="step-content">
-                <span class="step-status">Upcoming</span>
                 <span class="step-name">System Development</span>
               </div>
             </div>
@@ -1276,7 +1573,7 @@
                 <span class="build-log-badge active">In Progress</span>
               </div>
               <h4 class="build-log-title">City Health Office (CHO) System Workflow Architecture</h4>
-              <p class="build-log-desc">Completed initial data-gathering phase. Currently organizing and defining system workflows for ground-up development.</p>
+              <p class="build-log-desc">Completed data gathering and workflow organization. System development is actively in progress for ground-up delivery.</p>
             </div>
 
             <!-- Entry 2 -->
@@ -1587,11 +1884,11 @@
               <div class="timeline-period">September 9, 2026 – Present</div>
               <h3 class="timeline-role">Web Developer</h3>
               <div class="timeline-org">City Health Office (CHO)</div>
-              <p class="timeline-desc">Working on the development and enhancement of a new system from the ground up. The initial data-gathering phase has been completed, and the project is now progressing into organizing and defining the system workflow.</p>
+              <p class="timeline-desc">Working on the development and enhancement of a new system from the ground up. Data gathering and workflow organization are completed, and active system development is now underway.</p>
               <ul class="timeline-milestones">
-                <li>Completed the initial data-gathering phase.</li>
-                <li>Currently organizing and defining the system workflow.</li>
-                <li>Preparing the foundation for system development and future enhancements.</li>
+                <li>Completed initial data-gathering phase.</li>
+                <li>Completed organizing and defining the system workflow.</li>
+                <li>System development actively in progress for ground-up delivery.</li>
               </ul>
             </div>
 
@@ -1825,13 +2122,13 @@
           <div class="hig-card about-text">
             <h3 style="font-size: 1.18rem; font-weight: 600; margin-bottom: 0.85rem; color: var(--text-primary);">Background &amp; Philosophy</h3>
             <p>
-              I am currently working as a <strong>Web Developer at City Health Office (CHO)</strong>, focusing on the development and enhancement of a new system from the ground up through ongoing workflow organization. Alongside my professional role, I am the Founder &amp; CEO of <strong>EasyWeb PH</strong>, an independent digital technology agency.
+              I am currently working as a <strong>Web Developer at City Health Office (CHO)</strong>, spearheading the ground-up system development of a centralized public health workflow architecture (with data gathering and workflow organization completed). Alongside this role, I am the Founder &amp; CEO of <strong>EasyWeb PH</strong>, an independent digital technology agency.
             </p>
             <p>
-              I build practical software solutions by uniting hardware logic and modern web frameworks. My background spans backend system engineering, scalable REST API gateways, responsive frontend interfaces, and embedded microcontroller systems.
+              As a dedicated developer and proud member of the <strong>Iglesia Ni Cristo (INC)</strong>, my work is deeply rooted in values of uprightness, discipline, excellence, and genuine service. I believe software engineering should not merely be functional—it must be dependable, transparent, and built with sincere care for the people who rely on it every day.
             </p>
             <p>
-              Whether engineering custom daily time-tracking software, deploying an AI-assisted thesis drafting tool, or writing C++ firmware for sensor arrays, I focus on clean maintainability, secure database standards, and seamless user interaction.
+              My technical foundation unites physical hardware logic with modern, high-performance web frameworks. Whether engineering mission-critical healthcare workflows, deploying the <strong>INC AOFLAH Portal</strong> for church community coordination, architecting offline-first PWAs like <strong>Tipid App</strong>, or programming microcontroller C++ firmware for IoT arrays, I treat every project with meticulous attention to clean architecture, data security, and human simplicity.
             </p>
           </div>
 
@@ -1840,15 +2137,23 @@
               <div class="pillar-icon"><i class="fa-solid fa-code"></i></div>
               <div>
                 <div class="pillar-title">Web Developer at City Health Office (CHO)</div>
-                <div class="pillar-desc">Developing a new system from the ground up, currently organizing and defining system workflows.</div>
+                <div class="pillar-desc">Developing a new system from the ground up, with data gathering and workflow organization completed, and system development actively underway.</div>
               </div>
             </div>
 
             <div class="pillar-item">
               <div class="pillar-icon"><i class="fa-solid fa-laptop-code"></i></div>
               <div>
-                <div class="pillar-title">Founder, EasyWeb PH</div>
-                <div class="pillar-desc">Delivering custom full-stack web applications, UI/UX architecture, and cloud deployments.</div>
+                <div class="pillar-title">Founder &amp; CEO, EasyWeb PH</div>
+                <div class="pillar-desc">Delivering custom full-stack web applications, UI/UX architecture, and cloud deployments for businesses and enterprises.</div>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-icon"><i class="fa-solid fa-church"></i></div>
+              <div>
+                <div class="pillar-title">Community &amp; Purpose-Driven Engineering</div>
+                <div class="pillar-desc">Architecting church community platforms like the INC AOFLAH Portal, prioritizing integrity, service, and seamless communication.</div>
               </div>
             </div>
 
@@ -1856,15 +2161,7 @@
               <div class="pillar-icon"><i class="fa-solid fa-microchip"></i></div>
               <div>
                 <div class="pillar-title">Hardware &amp; IoT Solutions</div>
-                <div class="pillar-desc">Writing custom C++ firmware on Arduino microcontrollers connected to real-time dashboards.</div>
-              </div>
-            </div>
-
-            <div class="pillar-item">
-              <div class="pillar-icon"><i class="fa-solid fa-building-columns"></i></div>
-              <div>
-                <div class="pillar-title">DTI Government Engineering</div>
-                <div class="pillar-desc">486-hour software engineering placement automating internal regional document systems.</div>
+                <div class="pillar-desc">Writing custom C++ firmware on Arduino microcontrollers paired with real-time cloud analytics and sensors.</div>
               </div>
             </div>
           </div>
@@ -2140,7 +2437,9 @@
           <span class="spotlight-item-badge">PDF</span>
         </a>
         <button type="button" class="spotlight-item spotlight-ai-action" id="spotlight-ask-ai-btn" role="option" data-title="Ask AI Assistant" data-desc="Ask questions about current role, stack, projects">
-          <i class="fa-solid fa-robot spotlight-item-icon"></i>
+          <div class="spotlight-mascot-box">
+            <img src="images/my_own_mascot.webp" alt="AI Mascot" class="spotlight-mascot-img">
+          </div>
           <div class="spotlight-item-meta">
             <span class="spotlight-item-title">Ask AI Assistant</span>
             <span class="spotlight-item-desc">Instant answers regarding CHO work, stack, or projects</span>
@@ -2341,18 +2640,19 @@
   <!-- ==========================================================================
        AI CHATBOT WIDGET (Preserved Backend Integration)
        ========================================================================== -->
-  <button class="chat-button" id="chat-btn" aria-label="Open AI Assistant">
-    <i class="fa-solid fa-comment-dots"></i>
+  <button class="chat-button" id="chat-btn" aria-label="Open AI Assistant" title="Open AI Assistant">
+    <img src="images/my_own_mascot.webp" alt="AI Mascot" class="chat-btn-mascot" width="42" height="42">
+    <span class="chat-btn-status-dot" aria-hidden="true"></span>
   </button>
 
-  <div class="chat-window" id="chat-win" role="dialog" aria-modal="false" aria-label="EasyWeb AI Assistant">
+  <div class="chat-window" id="chat-win" role="dialog" aria-modal="false" aria-label="Rennie AI Assistant">
     <div class="chat-header">
       <div class="chat-header-user">
         <div class="chat-header-avatar">
-          <i class="fa-solid fa-robot"></i>
+          <img src="images/my_own_mascot.webp" alt="AI Mascot" class="chat-avatar-img">
         </div>
         <div>
-          <div class="chat-header-name">EasyWeb AI Assistant</div>
+          <div class="chat-header-name">Rennie AI Assistant</div>
           <div class="chat-header-status status-connecting" id="chat-header-status">Connecting…</div>
         </div>
       </div>
@@ -2368,8 +2668,13 @@
 
     <div class="chat-messages" id="chat-msgs" aria-live="polite">
       <div class="chat-msg ai">
-        <div class="chat-bubble">
-          Hi! I'm Renniel's AI portfolio assistant. Ask me about his current work at City Health Office (CHO), featured projects like Likha Apps &amp; Tipid Tracker, tech stack, or services at EasyWeb PH!
+        <div class="chat-msg-row">
+          <div class="chat-msg-avatar-wrap">
+            <img src="images/my_own_mascot.webp" alt="AI Mascot" class="chat-msg-avatar">
+          </div>
+          <div class="chat-bubble">
+            Hi! I'm Rennie, Renniel's AI portfolio assistant. Ask me about his current work at City Health Office (CHO), featured projects like Likha Apps &amp; Tipid Tracker, tech stack, or services at EasyWeb PH!
+          </div>
         </div>
       </div>
     </div>

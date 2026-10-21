@@ -1012,17 +1012,31 @@
         container.appendChild(document.createElement('br'));
       }
 
-      const tokenRegex = /(https?:\/\/[^\s)]+)|(#[a-zA-Z0-9_-]+)/g;
+      let currentLine = line;
+      if (/^\s*[-*•]\s+/.test(currentLine)) {
+        currentLine = currentLine.replace(/^\s*[-*•]\s+/, '• ');
+      }
+
+      const tokenRegex = /(https?:\/\/[^\s)]+)|(#[a-zA-Z0-9_-]+)|(\*\*[^*]+\*\*)|(`[^`]+`)/g;
       let lastIdx = 0;
       let match;
 
-      while ((match = tokenRegex.exec(line)) !== null) {
+      while ((match = tokenRegex.exec(currentLine)) !== null) {
         if (match.index > lastIdx) {
-          container.appendChild(document.createTextNode(line.substring(lastIdx, match.index)));
+          container.appendChild(document.createTextNode(currentLine.substring(lastIdx, match.index)));
         }
 
         const token = match[0];
-        if (token.startsWith('#')) {
+        if (token.startsWith('**') && token.endsWith('**')) {
+          const strong = document.createElement('strong');
+          strong.textContent = token.slice(2, -2);
+          container.appendChild(strong);
+        } else if (token.startsWith('`') && token.endsWith('`')) {
+          const code = document.createElement('code');
+          code.className = 'chat-inline-code';
+          code.textContent = token.slice(1, -1);
+          container.appendChild(code);
+        } else if (token.startsWith('#')) {
           const rawHash = token.replace('#', '').toLowerCase();
           const targetRoute = LEGACY_HASH_MAP[rawHash] || rawHash;
           const link = document.createElement('a');
@@ -1049,8 +1063,8 @@
         lastIdx = match.index + token.length;
       }
 
-      if (lastIdx < line.length) {
-        container.appendChild(document.createTextNode(line.substring(lastIdx)));
+      if (lastIdx < currentLine.length) {
+        container.appendChild(document.createTextNode(currentLine.substring(lastIdx)));
       }
     });
   }
@@ -1065,8 +1079,24 @@
 
     if (role === 'user') {
       bubble.textContent = text;
+      msgDiv.appendChild(bubble);
     } else {
       formatSafeContent(bubble, text);
+
+      const msgRow = document.createElement('div');
+      msgRow.className = 'chat-msg-row';
+
+      const avatarWrap = document.createElement('div');
+      avatarWrap.className = 'chat-msg-avatar-wrap';
+      const avatarImg = document.createElement('img');
+      avatarImg.src = 'images/my_own_mascot.webp';
+      avatarImg.alt = 'AI Mascot';
+      avatarImg.className = 'chat-msg-avatar';
+      avatarWrap.appendChild(avatarImg);
+
+      msgRow.appendChild(avatarWrap);
+      msgRow.appendChild(bubble);
+      msgDiv.appendChild(msgRow);
     }
 
     if (isError && typeof onRetry === 'function') {
@@ -1082,7 +1112,6 @@
       bubble.appendChild(retryBtn);
     }
 
-    msgDiv.appendChild(bubble);
     chatMsgs.appendChild(msgDiv);
     chatMsgs.scrollTop = chatMsgs.scrollHeight;
     return msgDiv;
@@ -1093,6 +1122,18 @@
     const typingDiv = document.createElement('div');
     typingDiv.className = 'chat-msg ai';
     typingDiv.id = 'chat-typing-bubble';
+
+    const msgRow = document.createElement('div');
+    msgRow.className = 'chat-msg-row';
+
+    const avatarWrap = document.createElement('div');
+    avatarWrap.className = 'chat-msg-avatar-wrap';
+    const avatarImg = document.createElement('img');
+    avatarImg.src = 'images/my_own_mascot.webp';
+    avatarImg.alt = 'AI Mascot';
+    avatarImg.className = 'chat-msg-avatar';
+    avatarWrap.appendChild(avatarImg);
+    msgRow.appendChild(avatarWrap);
 
     const indicator = document.createElement('div');
     indicator.className = 'chat-typing-indicator';
@@ -1117,7 +1158,8 @@
     indicator.appendChild(dot2);
     indicator.appendChild(dot3);
 
-    typingDiv.appendChild(indicator);
+    msgRow.appendChild(indicator);
+    typingDiv.appendChild(msgRow);
     chatMsgs.appendChild(typingDiv);
     chatMsgs.scrollTop = chatMsgs.scrollHeight;
     return typingDiv;
@@ -1296,7 +1338,7 @@
         if (firstBubble) {
           chatMsgs.appendChild(firstBubble);
         } else {
-          appendChatMessage('ai', "Hi! I'm Renniel's AI portfolio assistant. Ask me about his current work at City Health Office (CHO), featured projects like Likha Apps & Tipid App, tech stack, or services at EasyWeb PH!");
+          appendChatMessage('ai', "Hi! I'm Rennie, Renniel's AI portfolio assistant. Ask me about his current work at City Health Office (CHO), featured projects like Likha Apps & Tipid App, tech stack, or services at EasyWeb PH!");
         }
       }
     });
@@ -1343,15 +1385,184 @@
   }
 
   /* ==========================================================================
+     11B. THEME TOGGLE (Modern SaaS Dark / Apple Light)
+     ========================================================================== */
+
+  function initThemeToggle() {
+    const desktopToggle = document.getElementById('desktop-theme-toggle');
+    const mobileToggle = document.getElementById('mobile-theme-toggle');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+    function getPreferredTheme() {
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+      } catch (e) {}
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('theme', theme);
+      } catch (e) {}
+      if (themeMeta) {
+        themeMeta.setAttribute('content', theme === 'light' ? '#F5F5F7' : '#080C14');
+      }
+      const label = theme === 'light' ? 'Switch to Dark SaaS Theme' : 'Switch to Light Theme';
+      if (desktopToggle) desktopToggle.setAttribute('aria-label', label);
+      if (mobileToggle) mobileToggle.setAttribute('aria-label', label);
+    }
+
+    const currentTheme = getPreferredTheme();
+    setTheme(currentTheme);
+
+    function toggleTheme() {
+      const active = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = active === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    }
+
+    if (desktopToggle) desktopToggle.addEventListener('click', toggleTheme);
+    if (mobileToggle) mobileToggle.addEventListener('click', toggleTheme);
+
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        try {
+          if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+          }
+        } catch (err) {}
+      });
+    }
+  }
+
+  /* ==========================================================================
+     11C. LIVE GITHUB TELEMETRY & 52-WEEK HEATMAP
+     ========================================================================== */
+
+  async function initGitHubHeatmap() {
+    const grid = document.getElementById('github-heatmap-grid');
+    const monthsRow = document.getElementById('heatmap-months-row');
+    const tooltip = document.getElementById('heatmap-tooltip');
+    const container = document.getElementById('telemetry-heatmap-container');
+
+    if (!grid || !monthsRow) return;
+
+    let contributions = [];
+    const embeddedScript = document.getElementById('github-contributions-data');
+    if (embeddedScript && embeddedScript.textContent) {
+      try {
+        contributions = JSON.parse(embeddedScript.textContent);
+      } catch (e) {}
+    }
+
+    if (!contributions || !contributions.length) {
+      try {
+        const res = await fetch('data/github-contributions.json');
+        if (res.ok) {
+          contributions = await res.json();
+        }
+      } catch (err) {
+        console.warn('Could not load github-contributions.json', err);
+      }
+    }
+
+    if (!contributions || !contributions.length) return;
+
+    contributions.sort((a, b) => a.date.localeCompare(b.date));
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let lastMonth = -1;
+    const weekCount = Math.ceil(contributions.length / 7);
+
+    monthsRow.innerHTML = '';
+    for (let w = 0; w < weekCount; w++) {
+      const dayIdx = w * 7;
+      if (dayIdx < contributions.length) {
+        const d = new Date(contributions[dayIdx].date + 'T00:00:00');
+        const m = d.getMonth();
+        if (m !== lastMonth) {
+          lastMonth = m;
+          const label = document.createElement('span');
+          label.className = 'heatmap-month-label';
+          label.textContent = monthNames[m];
+          label.style.width = '56px';
+          monthsRow.appendChild(label);
+        }
+      }
+    }
+
+    grid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
+    contributions.forEach((item) => {
+      const cell = document.createElement('div');
+      cell.className = `heatmap-cell level-${item.level}`;
+      cell.setAttribute('data-date', item.date);
+      cell.setAttribute('data-count', item.count);
+      cell.setAttribute('tabindex', '0');
+      cell.setAttribute('role', 'button');
+
+      const dateObj = new Date(item.date + 'T00:00:00');
+      const formattedDate = dateObj.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      const countLabel = `${item.count} contribution${item.count === 1 ? '' : 's'}`;
+      cell.setAttribute('aria-label', `${formattedDate}: ${countLabel}`);
+
+      function showTooltip() {
+        if (!tooltip || !container) return;
+        tooltip.textContent = `${countLabel} on ${formattedDate}`;
+        tooltip.classList.add('visible');
+
+        const cellRect = cell.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        const left = cellRect.left - containerRect.left + cellRect.width / 2 + container.scrollLeft;
+        const top = cellRect.top - containerRect.top + container.scrollTop;
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+      }
+
+      function hideTooltip() {
+        if (tooltip) {
+          tooltip.classList.remove('visible');
+        }
+      }
+
+      cell.addEventListener('mouseenter', showTooltip);
+      cell.addEventListener('mouseleave', hideTooltip);
+      cell.addEventListener('focus', showTooltip);
+      cell.addEventListener('blur', hideTooltip);
+
+      fragment.appendChild(cell);
+    });
+
+    grid.appendChild(fragment);
+
+    if (container) {
+      requestAnimationFrame(() => {
+        container.scrollLeft = container.scrollWidth;
+      });
+    }
+  }
+
+  /* ==========================================================================
      12. INITIALIZATION
      ========================================================================== */
 
   function initApp() {
+    initThemeToggle();
     initSidebarCollapse();
     handleHashRoute();
     initSpotlight();
     initCaseStudies();
     initProjectArchive();
+    initGitHubHeatmap();
     initFAQ();
     setChatStatus('connecting');
     checkBackendHealth();
