@@ -13,10 +13,12 @@
     "agency": "https://easyweb-ph.vercel.app/",
     "github": "https://github.com/renniel120921",
     "githubStats": {
-      "totalContributions": 292,
-      "publicRepos": 9,
+      "totalContributions": 561,
+      "publicRepos": 10,
       "activeDays": 57,
-      "shippingYear": 2026
+      "shippingYear": 2026,
+      "totalMultiYearContributions": 597,
+      "years": [2024, 2025, 2026]
     },
     "bio": "Full-stack software engineer and startup founder based in Pampanga, Philippines. Specializes in practical web applications, cloud architectures, and hardware-integrated IoT systems with a focus on simplicity, speed, and dependability.",
     "faithAndValues": "Active member of the Iglesia Ni Cristo (INC). Dedicated to uprightness, discipline, excellence, and community service. Architect of the INC AOFLAH Portal."
@@ -161,6 +163,15 @@
       "summary": "Collection of algorithmic frontend utilities, micro-interactions, and responsive interface components.",
       "technologies": ["HTML5", "CSS3", "JavaScript"],
       "github": "https://github.com/renniel120921/Mini-project"
+    },
+    {
+      "name": "InvitationalWebsite",
+      "fullName": "InvitationalWebsite (The 21st Chapter)",
+      "role": "Frontend Engineer · Event & Milestone Portal",
+      "summary": "An event celebration invitation portal featuring responsive hero sections, interactive countdown timer, itinerary timeline, dress code guide, Google Maps venue integration, and RSVP workflow.",
+      "technologies": ["HTML5", "Tailwind CSS", "JavaScript", "Vercel"],
+      "liveDemo": "https://invitational-website.vercel.app",
+      "github": "https://github.com/renniel120921/InvitationalWebsite"
     }
   ],
   "developerCommunities": [
